@@ -1,4 +1,6 @@
 openapi: 3.0.0
+security:
+  - bearer: []
 paths:
   "/v1/projects":
     get:
@@ -17,8 +19,6 @@ paths:
                   "$ref": "#/components/schemas/ProjectResponse"
       tags:
         - projects
-      security:
-        - bearer: []
     post:
       x-speakeasy-entity-operation: Project#create
       operationId: createProject
@@ -45,8 +45,6 @@ paths:
                 "$ref": "#/components/schemas/ProjectResponse"
       tags:
         - projects
-      security:
-        - bearer: []
   "/v1/organizations":
     get:
       operationId: getOrganizations
@@ -66,8 +64,6 @@ paths:
           description: Unexpected error listing organizations
       tags:
         - organizations
-      security:
-        - bearer: []
     post:
       operationId: createOrganization
       summary: Create an organization
@@ -89,10 +85,9 @@ paths:
           description: Unexpected error creating an organization
       tags:
         - organizations
-      security:
-        - bearer: []
   "/v1/projects/{ref}/functions":
     post:
+      x-speakeasy-entity-operation: Function#create
       operationId: createFunction
       summary: Create a function
       description: Creates a function and adds it to the specified project.
@@ -133,6 +128,7 @@ paths:
             schema:
               "$ref": "#/components/schemas/CreateFunctionBody"
           application/vnd.denoland.eszip:
+            x-speakeasy-ignore: true
             schema:
               "$ref": "#/components/schemas/CreateFunctionBody"
       responses:
@@ -148,10 +144,6 @@ paths:
           description: Failed to create project's function
       tags:
         - functions
-      security:
-        - apiKeyHeader: []
-          apiKeyParam: []
-        - bearer: []
     get:
       operationId: getFunctions
       summary: List all functions
@@ -181,13 +173,10 @@ paths:
           description: Failed to retrieve project's functions
       tags:
         - functions
-      security:
-        - apiKeyHeader: []
-          apiKeyParam: []
-        - bearer: []
   "/v1/projects/{ref}/functions/{function_slug}":
     get:
       operationId: getFunction
+      x-speakeasy-entity-operation: Function#get
       summary: Retrieve a function
       description: Retrieves a function with the specified slug and project.
       parameters:
@@ -200,6 +189,7 @@ paths:
             maxLength: 20
             type: string
         - name: function_slug
+          x-speakeasy-match: slug
           required: true
           in: path
           description: Function slug
@@ -219,11 +209,8 @@ paths:
           description: Failed to retrieve function with given slug
       tags:
         - functions
-      security:
-        - apiKeyHeader: []
-          apiKeyParam: []
-        - bearer: []
     patch:
+      x-speakeasy-entity-operation: Function#update
       operationId: updateFunction
       summary: Update a function
       description: Updates a function with the specified slug and project.
@@ -239,6 +226,7 @@ paths:
         - name: function_slug
           required: true
           in: path
+          x-speakeasy-match: slug
           description: Function slug
           schema:
             pattern: "/^[A-Za-z0-9_-]+$/"
@@ -271,6 +259,7 @@ paths:
             schema:
               "$ref": "#/components/schemas/UpdateFunctionBody"
           application/vnd.denoland.eszip:
+            x-speakeasy-ignore: true
             schema:
               "$ref": "#/components/schemas/UpdateFunctionBody"
       responses:
@@ -286,11 +275,8 @@ paths:
           description: Failed to update function with given slug
       tags:
         - functions
-      security:
-        - apiKeyHeader: []
-          apiKeyParam: []
-        - bearer: []
     delete:
+      x-speakeasy-entity-operation: Function#delete
       operationId: deleteFunction
       summary: Delete a function
       description: Deletes a function with the specified slug from the specified project.
@@ -305,6 +291,7 @@ paths:
             type: string
         - name: function_slug
           required: true
+          x-speakeasy-match: slug
           in: path
           description: Function slug
           schema:
@@ -319,10 +306,6 @@ paths:
           description: Failed to delete function with given slug
       tags:
         - functions
-      security:
-        - apiKeyHeader: []
-          apiKeyParam: []
-        - bearer: []
   "/v1/projects/{ref}/functions/{function_slug}/body":
     get:
       operationId: getFunctionBody
@@ -353,10 +336,6 @@ paths:
           description: Failed to retrieve function body with given slug
       tags:
         - functions
-      security:
-        - apiKeyHeader: []
-          apiKeyParam: []
-        - bearer: []
   "/v1/projects/{ref}/custom-hostname":
     get:
       operationId: getCustomHostnameConfig
@@ -383,8 +362,6 @@ paths:
           description: Failed to retrieve project's custom hostname config
       tags:
         - custom hostname (beta)
-      security:
-        - bearer: []
     delete:
       operationId: removeCustomHostnameConfig
       summary: Deletes a project's custom hostname configuration
@@ -406,8 +383,6 @@ paths:
           description: Failed to delete project custom hostname configuration
       tags:
         - custom hostname (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/custom-hostname/initialize":
     post:
       operationId: createCustomHostnameConfig
@@ -440,8 +415,6 @@ paths:
           description: Failed to update project custom hostname configuration
       tags:
         - custom hostname (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/custom-hostname/reverify":
     post:
       operationId: reverify
@@ -469,8 +442,6 @@ paths:
           description: Failed to verify project custom hostname configuration
       tags:
         - custom hostname (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/custom-hostname/activate":
     post:
       operationId: activate
@@ -497,8 +468,6 @@ paths:
           description: Failed to activate project custom hostname configuration
       tags:
         - custom hostname (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/network-bans/retrieve":
     post:
       operationId: getNetworkBans
@@ -525,8 +494,6 @@ paths:
           description: Failed to retrieve project's network bans
       tags:
         - network bans (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/network-bans":
     delete:
       operationId: removeNetworkBan
@@ -555,8 +522,6 @@ paths:
           description: Failed to remove network bans.
       tags:
         - network bans (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/network-restrictions":
     get:
       operationId: getNetworkRestrictions
@@ -583,8 +548,6 @@ paths:
           description: Failed to retrieve project's network restrictions
       tags:
         - network restrictions (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/network-restrictions/apply":
     post:
       operationId: applyNetworkRestrictions
@@ -617,11 +580,9 @@ paths:
           description: Failed to update project network restrictions
       tags:
         - network restrictions (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/pgsodium":
     get:
-      operationId: getConfig
+      operationId: getPGSodiumConfig
       summary: Gets project's pgsodium config
       parameters:
         - name: ref
@@ -645,10 +606,8 @@ paths:
           description: Failed to retrieve project's pgsodium config
       tags:
         - pgsodium (beta)
-      security:
-        - bearer: []
     put:
-      operationId: updateConfig
+      operationId: updatePGSodiumConfig
       summary: Updates project's pgsodium config. Updating the root_key can cause
         all data encrypted with the older key to become inaccessible.
       parameters:
@@ -679,8 +638,6 @@ paths:
           description: Failed to update project's pgsodium config
       tags:
         - pgsodium (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/postgrest":
     get:
       operationId: getPostgRESTConfig
@@ -707,8 +664,6 @@ paths:
           description: Failed to retrieve project's postgrest config
       tags:
         - services
-      security:
-        - bearer: []
     patch:
       operationId: updatePostgRESTConfig
       summary: Updates project's postgrest config
@@ -740,8 +695,6 @@ paths:
           description: Failed to update project's postgrest config
       tags:
         - services
-      security:
-        - bearer: []
   "/v1/projects/{ref}/secrets":
     get:
       operationId: getSecrets
@@ -771,10 +724,6 @@ paths:
           description: Failed to retrieve project's secrets
       tags:
         - secrets
-      security:
-        - apiKeyHeader: []
-          apiKeyParam: []
-        - bearer: []
     post:
       operationId: createSecrets
       summary: Bulk create secrets
@@ -805,10 +754,6 @@ paths:
           description: Failed to create project's secrets
       tags:
         - secrets
-      security:
-        - apiKeyHeader: []
-          apiKeyParam: []
-        - bearer: []
     delete:
       operationId: deleteSecrets
       summary: Bulk delete secrets
@@ -843,10 +788,6 @@ paths:
           description: Failed to delete secrets with given names
       tags:
         - secrets
-      security:
-        - apiKeyHeader: []
-          apiKeyParam: []
-        - bearer: []
   "/v1/projects/{ref}/ssl-enforcement":
     get:
       operationId: getSslEnforcementConfig
@@ -873,8 +814,6 @@ paths:
           description: Failed to retrieve project's SSL enforcement config
       tags:
         - ssl enforcement (beta)
-      security:
-        - bearer: []
     put:
       operationId: updateSslEnforcementConfig
       summary: Update project's SSL enforcement configuration.
@@ -906,8 +845,6 @@ paths:
           description: Failed to update project's SSL enforcement configuration.
       tags:
         - ssl enforcement (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/types/typescript":
     get:
       operationId: getTypescriptTypes
@@ -941,10 +878,6 @@ paths:
           description: Failed to generate TypeScript types
       tags:
         - projects
-      security:
-        - apiKeyHeader: []
-          apiKeyParam: []
-        - bearer: []
   "/v1/projects/{ref}/vanity-subdomain":
     get:
       operationId: getVanitySubdomainConfig
@@ -971,8 +904,6 @@ paths:
           description: Failed to get project vanity subdomain configuration
       tags:
         - vanity subdomain (beta)
-      security:
-        - bearer: []
     delete:
       operationId: removeVanitySubdomainConfig
       summary: Deletes a project's vanity subdomain configuration
@@ -994,8 +925,6 @@ paths:
           description: Failed to delete project vanity subdomain configuration
       tags:
         - vanity subdomain (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/vanity-subdomain/check-availability":
     post:
       operationId: checkVanitySubdomainAvailability
@@ -1028,8 +957,6 @@ paths:
           description: Failed to check project vanity subdomain configuration
       tags:
         - vanity subdomain (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/vanity-subdomain/activate":
     post:
       operationId: activateVanitySubdomainPlease
@@ -1062,8 +989,6 @@ paths:
           description: Failed to activate project vanity subdomain configuration
       tags:
         - vanity subdomain (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/upgrade":
     post:
       operationId: upgradeProject
@@ -1092,8 +1017,6 @@ paths:
           description: Failed to initiate project upgrade
       tags:
         - database version upgrade (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/upgrade/eligibility":
     get:
       operationId: upgradeEligibilityInformation
@@ -1120,8 +1043,6 @@ paths:
           description: Failed to determine project upgrade eligibility
       tags:
         - database version upgrade (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/upgrade/status":
     get:
       operationId: getUpgradeStatus
@@ -1148,8 +1069,6 @@ paths:
           description: Failed to retrieve project upgrade status
       tags:
         - database version upgrade (beta)
-      security:
-        - bearer: []
   "/v1/projects/{ref}/readonly":
     get:
       operationId: getReadOnlyModeStatus
@@ -1174,8 +1093,6 @@ paths:
           description: Failed to get project readonly mode status
       tags:
         - database readonly mode
-      security:
-        - bearer: []
   "/v1/projects/{ref}/readonly/temporary-disable":
     post:
       operationId: temporarilyDisableReadonlyMode
@@ -1196,11 +1113,9 @@ paths:
           description: Failed to disable project's readonly mode
       tags:
         - database readonly mode
-      security:
-        - bearer: []
   "/v1/projects/{ref}/config/database/postgres":
     get:
-      operationId: getConfig
+      operationId: getPostgresConfig
       summary: Gets project's Postgres config
       parameters:
         - name: ref
@@ -1221,12 +1136,10 @@ paths:
         '500':
           description: Failed to retrieve project's Postgres config
       tags:
-        - projects config
-      security:
-        - bearer: []
-        - bearer: []
+        - projects
+        - config
     put:
-      operationId: updateConfig
+      operationId: updatePostgresConfig
       summary: Updates project's Postgres config
       parameters:
         - name: ref
@@ -1253,10 +1166,8 @@ paths:
         '500':
           description: Failed to update project's Postgres config
       tags:
-        - projects config
-      security:
-        - bearer: []
-        - bearer: []
+        - projects
+        - config
   "/v1/projects/{ref}/config/auth/sso/providers":
     post:
       operationId: createProviderForProject
@@ -1289,8 +1200,6 @@ paths:
           description: SAML 2.0 support is not enabled for this project
       tags:
         - sso
-      security:
-        - bearer: []
     get:
       operationId: listAllProviders
       summary: Lists all SSO providers
@@ -1316,8 +1225,6 @@ paths:
           description: SAML 2.0 support is not enabled for this project
       tags:
         - sso
-      security:
-        - bearer: []
   "/v1/projects/{ref}/config/auth/sso/providers/{provider_id}":
     get:
       operationId: getProviderById
@@ -1350,8 +1257,6 @@ paths:
             does not exist
       tags:
         - sso
-      security:
-        - bearer: []
     put:
       operationId: updateProviderById
       summary: Updates a SSO provider by its UUID
@@ -1389,8 +1294,6 @@ paths:
             does not exist
       tags:
         - sso
-      security:
-        - bearer: []
     delete:
       operationId: removeProviderById
       summary: Removes a SSO provider by its UUID
@@ -1422,8 +1325,6 @@ paths:
             does not exist
       tags:
         - sso
-      security:
-        - bearer: []
 info:
   title: Supabase API (v1)
   description: ''
@@ -1548,6 +1449,7 @@ components:
       required:
         - name
     CreateFunctionBody:
+      x-speakeasy-entity: Function
       type: object
       properties:
         slug:
@@ -1564,6 +1466,7 @@ components:
         - name
         - body
     FunctionResponse:
+      x-speakeasy-entity: Function
       type: object
       properties:
         id:
@@ -1598,6 +1501,7 @@ components:
         - updated_at
     FunctionSlugResponse:
       type: object
+      x-speakeasy-entity: Function
       properties:
         id:
           type: string
@@ -1631,6 +1535,7 @@ components:
         - updated_at
     UpdateFunctionBody:
       type: object
+      x-speakeasy-entity: Function
       properties:
         name:
           type: string
@@ -1911,7 +1816,7 @@ components:
             - 8_attached_volume_to_upgraded_instance
             - 9_completed_upgrade
         status:
-          type: number
+          type: integer
           enum:
             - 0
             - 1

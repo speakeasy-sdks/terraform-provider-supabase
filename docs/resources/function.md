@@ -17,18 +17,22 @@ Function Resource
 
 ### Required
 
+- `body` (String)
+- `name` (String)
 - `ref` (String) Project ref
+- `slug` (String)
+
+### Optional
+
+- `verify_jwt` (Boolean)
 
 ### Read-Only
 
 - `created_at` (Number)
 - `id` (String) The ID of this resource.
 - `import_map` (Boolean)
-- `name` (String)
-- `slug` (String)
 - `status` (String)
 - `updated_at` (Number)
-- `verify_jwt` (Boolean)
 - `version` (Number)
 
 

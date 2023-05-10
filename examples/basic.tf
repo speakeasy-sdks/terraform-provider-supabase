@@ -8,7 +8,7 @@ terraform {
 }
 
 resource "random_string" "db_pass" {
-  length           = 16
+  length = 16
 }
 
 provider "supabase" {
@@ -16,16 +16,16 @@ provider "supabase" {
 }
 
 resource "supabase_project" "example" {
-  name = "example"
-  db_pass = random_string.db_pass.result
+  name            = "example"
+  db_pass         = random_string.db_pass.result
   organization_id = file("../test.orgid")
-  region = "eu-west-2"
-  plan = "free"
+  region          = "eu-west-2"
+  plan            = "free"
 }
 
 resource "supabase_function" "example_func" {
   body = file("./geoip-echo.ts")
   name = "geoip"
-  ref = supabase_project.example.id
+  ref  = supabase_project.example.id
   slug = "geoip"
 }

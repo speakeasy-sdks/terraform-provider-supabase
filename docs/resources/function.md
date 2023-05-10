@@ -17,13 +17,13 @@ Function Resource
 
 ### Required
 
-- `body` (String)
 - `name` (String)
 - `ref` (String) Project ref
 - `slug` (String)
 
 ### Optional
 
+- `body` (String)
 - `verify_jwt` (Boolean)
 
 ### Read-Only

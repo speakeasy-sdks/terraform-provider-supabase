@@ -21,11 +21,7 @@ Project Resource
 - `name` (String)
 - `organization_id` (String)
 - `plan` (String) Subscription plan
-- `region` (String)
-
-### Optional
-
-- `kps_enabled` (Boolean)
+- `region` (String) Region you want your server to reside in
 
 ### Read-Only
 

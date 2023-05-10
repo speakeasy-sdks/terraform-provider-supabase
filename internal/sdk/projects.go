@@ -34,7 +34,17 @@ func newProjects(defaultClient, securityClient HTTPClient, serverURL, language, 
 }
 
 // CreateProject - Create a project
-func (s *projects) CreateProject(ctx context.Context, request shared.CreateProjectBody) (*operations.CreateProjectResponse, error) {
+func (s *projects) CreateProject(ctx context.Context, request shared.CreateProjectBody, opts ...operations.Option) (*operations.CreateProjectResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/projects"
 
@@ -55,7 +65,28 @@ func (s *projects) CreateProject(ctx context.Context, request shared.CreateProje
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -88,7 +119,17 @@ func (s *projects) CreateProject(ctx context.Context, request shared.CreateProje
 }
 
 // GetPostgresConfig - Gets project's Postgres config
-func (s *projects) GetPostgresConfig(ctx context.Context, request operations.GetPostgresConfigRequest) (*operations.GetPostgresConfigResponse, error) {
+func (s *projects) GetPostgresConfig(ctx context.Context, request operations.GetPostgresConfigRequest, opts ...operations.Option) (*operations.GetPostgresConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/config/database/postgres", request, nil)
 	if err != nil {
@@ -102,7 +143,28 @@ func (s *projects) GetPostgresConfig(ctx context.Context, request operations.Get
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -137,7 +199,17 @@ func (s *projects) GetPostgresConfig(ctx context.Context, request operations.Get
 
 // GetProjects - List all projects
 // Returns a list of all projects you've previously created.
-func (s *projects) GetProjects(ctx context.Context) (*operations.GetProjectsResponse, error) {
+func (s *projects) GetProjects(ctx context.Context, opts ...operations.Option) (*operations.GetProjectsResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/projects"
 
@@ -148,7 +220,28 @@ func (s *projects) GetProjects(ctx context.Context) (*operations.GetProjectsResp
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -182,7 +275,17 @@ func (s *projects) GetProjects(ctx context.Context) (*operations.GetProjectsResp
 
 // GetTypescriptTypes - Generate TypeScript types
 // Returns the TypeScript types of your schema for use with supabase-js.
-func (s *projects) GetTypescriptTypes(ctx context.Context, request operations.GetTypescriptTypesRequest) (*operations.GetTypescriptTypesResponse, error) {
+func (s *projects) GetTypescriptTypes(ctx context.Context, request operations.GetTypescriptTypesRequest, opts ...operations.Option) (*operations.GetTypescriptTypesResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/types/typescript", request, nil)
 	if err != nil {
@@ -200,7 +303,28 @@ func (s *projects) GetTypescriptTypes(ctx context.Context, request operations.Ge
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -236,7 +360,17 @@ func (s *projects) GetTypescriptTypes(ctx context.Context, request operations.Ge
 }
 
 // UpdatePostgresConfig - Updates project's Postgres config
-func (s *projects) UpdatePostgresConfig(ctx context.Context, request operations.UpdatePostgresConfigRequest) (*operations.UpdatePostgresConfigResponse, error) {
+func (s *projects) UpdatePostgresConfig(ctx context.Context, request operations.UpdatePostgresConfigRequest, opts ...operations.Option) (*operations.UpdatePostgresConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/config/database/postgres", request, nil)
 	if err != nil {
@@ -260,7 +394,28 @@ func (s *projects) UpdatePostgresConfig(ctx context.Context, request operations.
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}

@@ -32,7 +32,17 @@ func newDatabaseVersionUpgradeBeta(defaultClient, securityClient HTTPClient, ser
 }
 
 // GetUpgradeStatus - Gets the latest status of the project's upgrade
-func (s *databaseVersionUpgradeBeta) GetUpgradeStatus(ctx context.Context, request operations.GetUpgradeStatusRequest) (*operations.GetUpgradeStatusResponse, error) {
+func (s *databaseVersionUpgradeBeta) GetUpgradeStatus(ctx context.Context, request operations.GetUpgradeStatusRequest, opts ...operations.Option) (*operations.GetUpgradeStatusResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/upgrade/status", request, nil)
 	if err != nil {
@@ -46,7 +56,28 @@ func (s *databaseVersionUpgradeBeta) GetUpgradeStatus(ctx context.Context, reque
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -82,7 +113,17 @@ func (s *databaseVersionUpgradeBeta) GetUpgradeStatus(ctx context.Context, reque
 }
 
 // UpgradeEligibilityInformation - Returns the project's eligibility for upgrades
-func (s *databaseVersionUpgradeBeta) UpgradeEligibilityInformation(ctx context.Context, request operations.UpgradeEligibilityInformationRequest) (*operations.UpgradeEligibilityInformationResponse, error) {
+func (s *databaseVersionUpgradeBeta) UpgradeEligibilityInformation(ctx context.Context, request operations.UpgradeEligibilityInformationRequest, opts ...operations.Option) (*operations.UpgradeEligibilityInformationResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/upgrade/eligibility", request, nil)
 	if err != nil {
@@ -96,7 +137,28 @@ func (s *databaseVersionUpgradeBeta) UpgradeEligibilityInformation(ctx context.C
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -132,7 +194,17 @@ func (s *databaseVersionUpgradeBeta) UpgradeEligibilityInformation(ctx context.C
 }
 
 // UpgradeProject - Upgrades the project's Postgres version
-func (s *databaseVersionUpgradeBeta) UpgradeProject(ctx context.Context, request operations.UpgradeProjectRequest) (*operations.UpgradeProjectResponse, error) {
+func (s *databaseVersionUpgradeBeta) UpgradeProject(ctx context.Context, request operations.UpgradeProjectRequest, opts ...operations.Option) (*operations.UpgradeProjectResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/upgrade", request, nil)
 	if err != nil {
@@ -156,7 +228,28 @@ func (s *databaseVersionUpgradeBeta) UpgradeProject(ctx context.Context, request
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}

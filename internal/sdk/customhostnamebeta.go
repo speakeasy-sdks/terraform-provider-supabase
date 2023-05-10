@@ -32,7 +32,17 @@ func newCustomHostnameBeta(defaultClient, securityClient HTTPClient, serverURL, 
 }
 
 // Activate - Activates a custom hostname for a project.
-func (s *customHostnameBeta) Activate(ctx context.Context, request operations.ActivateRequest) (*operations.ActivateResponse, error) {
+func (s *customHostnameBeta) Activate(ctx context.Context, request operations.ActivateRequest, opts ...operations.Option) (*operations.ActivateResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/custom-hostname/activate", request, nil)
 	if err != nil {
@@ -46,7 +56,28 @@ func (s *customHostnameBeta) Activate(ctx context.Context, request operations.Ac
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -82,7 +113,17 @@ func (s *customHostnameBeta) Activate(ctx context.Context, request operations.Ac
 }
 
 // CreateCustomHostnameConfig - Updates project's custom hostname configuration
-func (s *customHostnameBeta) CreateCustomHostnameConfig(ctx context.Context, request operations.CreateCustomHostnameConfigRequest) (*operations.CreateCustomHostnameConfigResponse, error) {
+func (s *customHostnameBeta) CreateCustomHostnameConfig(ctx context.Context, request operations.CreateCustomHostnameConfigRequest, opts ...operations.Option) (*operations.CreateCustomHostnameConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/custom-hostname/initialize", request, nil)
 	if err != nil {
@@ -106,7 +147,28 @@ func (s *customHostnameBeta) CreateCustomHostnameConfig(ctx context.Context, req
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -142,7 +204,17 @@ func (s *customHostnameBeta) CreateCustomHostnameConfig(ctx context.Context, req
 }
 
 // GetCustomHostnameConfig - Gets project's custom hostname config
-func (s *customHostnameBeta) GetCustomHostnameConfig(ctx context.Context, request operations.GetCustomHostnameConfigRequest) (*operations.GetCustomHostnameConfigResponse, error) {
+func (s *customHostnameBeta) GetCustomHostnameConfig(ctx context.Context, request operations.GetCustomHostnameConfigRequest, opts ...operations.Option) (*operations.GetCustomHostnameConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/custom-hostname", request, nil)
 	if err != nil {
@@ -156,7 +228,28 @@ func (s *customHostnameBeta) GetCustomHostnameConfig(ctx context.Context, reques
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -192,7 +285,17 @@ func (s *customHostnameBeta) GetCustomHostnameConfig(ctx context.Context, reques
 }
 
 // RemoveCustomHostnameConfig - Deletes a project's custom hostname configuration
-func (s *customHostnameBeta) RemoveCustomHostnameConfig(ctx context.Context, request operations.RemoveCustomHostnameConfigRequest) (*operations.RemoveCustomHostnameConfigResponse, error) {
+func (s *customHostnameBeta) RemoveCustomHostnameConfig(ctx context.Context, request operations.RemoveCustomHostnameConfigRequest, opts ...operations.Option) (*operations.RemoveCustomHostnameConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/custom-hostname", request, nil)
 	if err != nil {
@@ -206,7 +309,28 @@ func (s *customHostnameBeta) RemoveCustomHostnameConfig(ctx context.Context, req
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -234,7 +358,17 @@ func (s *customHostnameBeta) RemoveCustomHostnameConfig(ctx context.Context, req
 }
 
 // Reverify - Attempts to verify the DNS configuration for project's custom hostname configuration
-func (s *customHostnameBeta) Reverify(ctx context.Context, request operations.ReverifyRequest) (*operations.ReverifyResponse, error) {
+func (s *customHostnameBeta) Reverify(ctx context.Context, request operations.ReverifyRequest, opts ...operations.Option) (*operations.ReverifyResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/custom-hostname/reverify", request, nil)
 	if err != nil {
@@ -248,7 +382,28 @@ func (s *customHostnameBeta) Reverify(ctx context.Context, request operations.Re
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}

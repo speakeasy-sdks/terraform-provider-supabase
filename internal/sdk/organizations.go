@@ -34,7 +34,17 @@ func newOrganizations(defaultClient, securityClient HTTPClient, serverURL, langu
 }
 
 // CreateOrganization - Create an organization
-func (s *organizations) CreateOrganization(ctx context.Context, request shared.CreateOrganizationBody) (*operations.CreateOrganizationResponse, error) {
+func (s *organizations) CreateOrganization(ctx context.Context, request shared.CreateOrganizationBody, opts ...operations.Option) (*operations.CreateOrganizationResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/organizations"
 
@@ -55,7 +65,28 @@ func (s *organizations) CreateOrganization(ctx context.Context, request shared.C
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -90,7 +121,17 @@ func (s *organizations) CreateOrganization(ctx context.Context, request shared.C
 
 // GetOrganizations - List all organizations
 // Returns a list of organizations that you currently belong to.
-func (s *organizations) GetOrganizations(ctx context.Context) (*operations.GetOrganizationsResponse, error) {
+func (s *organizations) GetOrganizations(ctx context.Context, opts ...operations.Option) (*operations.GetOrganizationsResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/organizations"
 
@@ -101,7 +142,28 @@ func (s *organizations) GetOrganizations(ctx context.Context) (*operations.GetOr
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}

@@ -32,7 +32,17 @@ func newVanitySubdomainBeta(defaultClient, securityClient HTTPClient, serverURL,
 }
 
 // ActivateVanitySubdomainPlease - Activates a vanity subdomain for a project.
-func (s *vanitySubdomainBeta) ActivateVanitySubdomainPlease(ctx context.Context, request operations.ActivateVanitySubdomainPleaseRequest) (*operations.ActivateVanitySubdomainPleaseResponse, error) {
+func (s *vanitySubdomainBeta) ActivateVanitySubdomainPlease(ctx context.Context, request operations.ActivateVanitySubdomainPleaseRequest, opts ...operations.Option) (*operations.ActivateVanitySubdomainPleaseResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/vanity-subdomain/activate", request, nil)
 	if err != nil {
@@ -56,7 +66,28 @@ func (s *vanitySubdomainBeta) ActivateVanitySubdomainPlease(ctx context.Context,
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -92,7 +123,17 @@ func (s *vanitySubdomainBeta) ActivateVanitySubdomainPlease(ctx context.Context,
 }
 
 // CheckVanitySubdomainAvailability - Checks vanity subdomain availability
-func (s *vanitySubdomainBeta) CheckVanitySubdomainAvailability(ctx context.Context, request operations.CheckVanitySubdomainAvailabilityRequest) (*operations.CheckVanitySubdomainAvailabilityResponse, error) {
+func (s *vanitySubdomainBeta) CheckVanitySubdomainAvailability(ctx context.Context, request operations.CheckVanitySubdomainAvailabilityRequest, opts ...operations.Option) (*operations.CheckVanitySubdomainAvailabilityResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/vanity-subdomain/check-availability", request, nil)
 	if err != nil {
@@ -116,7 +157,28 @@ func (s *vanitySubdomainBeta) CheckVanitySubdomainAvailability(ctx context.Conte
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -152,7 +214,17 @@ func (s *vanitySubdomainBeta) CheckVanitySubdomainAvailability(ctx context.Conte
 }
 
 // GetVanitySubdomainConfig - Gets current vanity subdomain config
-func (s *vanitySubdomainBeta) GetVanitySubdomainConfig(ctx context.Context, request operations.GetVanitySubdomainConfigRequest) (*operations.GetVanitySubdomainConfigResponse, error) {
+func (s *vanitySubdomainBeta) GetVanitySubdomainConfig(ctx context.Context, request operations.GetVanitySubdomainConfigRequest, opts ...operations.Option) (*operations.GetVanitySubdomainConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/vanity-subdomain", request, nil)
 	if err != nil {
@@ -166,7 +238,28 @@ func (s *vanitySubdomainBeta) GetVanitySubdomainConfig(ctx context.Context, requ
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -202,7 +295,17 @@ func (s *vanitySubdomainBeta) GetVanitySubdomainConfig(ctx context.Context, requ
 }
 
 // RemoveVanitySubdomainConfig - Deletes a project's vanity subdomain configuration
-func (s *vanitySubdomainBeta) RemoveVanitySubdomainConfig(ctx context.Context, request operations.RemoveVanitySubdomainConfigRequest) (*operations.RemoveVanitySubdomainConfigResponse, error) {
+func (s *vanitySubdomainBeta) RemoveVanitySubdomainConfig(ctx context.Context, request operations.RemoveVanitySubdomainConfigRequest, opts ...operations.Option) (*operations.RemoveVanitySubdomainConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/vanity-subdomain", request, nil)
 	if err != nil {
@@ -216,7 +319,28 @@ func (s *vanitySubdomainBeta) RemoveVanitySubdomainConfig(ctx context.Context, r
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}

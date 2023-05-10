@@ -25,7 +25,7 @@ resource "supabase_project" "example" {
 
 resource "supabase_function" "example_func" {
   body = file("./geoip-echo.ts")
-  name = "geoip"
+  name = "geoip-echo"
   ref  = supabase_project.example.id
-  slug = "geoip"
+  slug = "geoip-echo"
 }

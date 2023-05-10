@@ -32,7 +32,17 @@ func newSslEnforcementBeta(defaultClient, securityClient HTTPClient, serverURL, 
 }
 
 // GetSslEnforcementConfig - Get project's SSL enforcement configuration.
-func (s *sslEnforcementBeta) GetSslEnforcementConfig(ctx context.Context, request operations.GetSslEnforcementConfigRequest) (*operations.GetSslEnforcementConfigResponse, error) {
+func (s *sslEnforcementBeta) GetSslEnforcementConfig(ctx context.Context, request operations.GetSslEnforcementConfigRequest, opts ...operations.Option) (*operations.GetSslEnforcementConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/ssl-enforcement", request, nil)
 	if err != nil {
@@ -46,7 +56,28 @@ func (s *sslEnforcementBeta) GetSslEnforcementConfig(ctx context.Context, reques
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -82,7 +113,17 @@ func (s *sslEnforcementBeta) GetSslEnforcementConfig(ctx context.Context, reques
 }
 
 // UpdateSslEnforcementConfig - Update project's SSL enforcement configuration.
-func (s *sslEnforcementBeta) UpdateSslEnforcementConfig(ctx context.Context, request operations.UpdateSslEnforcementConfigRequest) (*operations.UpdateSslEnforcementConfigResponse, error) {
+func (s *sslEnforcementBeta) UpdateSslEnforcementConfig(ctx context.Context, request operations.UpdateSslEnforcementConfigRequest, opts ...operations.Option) (*operations.UpdateSslEnforcementConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/ssl-enforcement", request, nil)
 	if err != nil {
@@ -106,7 +147,28 @@ func (s *sslEnforcementBeta) UpdateSslEnforcementConfig(ctx context.Context, req
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}

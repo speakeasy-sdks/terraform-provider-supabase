@@ -152,3 +152,4 @@ internal/provider/function_resource.go
 internal/provider/function_resource_sdk.go
 internal/provider/project_resource.go
 internal/provider/project_resource_sdk.go
+internal/sdk/pkg/models/operations/options.go

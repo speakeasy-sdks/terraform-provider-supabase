@@ -33,7 +33,17 @@ func newFunctions(defaultClient, securityClient HTTPClient, serverURL, language,
 
 // CreateFunction - Create a function
 // Creates a function and adds it to the specified project.
-func (s *functions) CreateFunction(ctx context.Context, request operations.CreateFunctionRequest) (*operations.CreateFunctionResponse, error) {
+func (s *functions) CreateFunction(ctx context.Context, request operations.CreateFunctionRequest, opts ...operations.Option) (*operations.CreateFunctionResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/functions", request, nil)
 	if err != nil {
@@ -61,7 +71,28 @@ func (s *functions) CreateFunction(ctx context.Context, request operations.Creat
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -98,7 +129,17 @@ func (s *functions) CreateFunction(ctx context.Context, request operations.Creat
 
 // DeleteFunction - Delete a function
 // Deletes a function with the specified slug from the specified project.
-func (s *functions) DeleteFunction(ctx context.Context, request operations.DeleteFunctionRequest) (*operations.DeleteFunctionResponse, error) {
+func (s *functions) DeleteFunction(ctx context.Context, request operations.DeleteFunctionRequest, opts ...operations.Option) (*operations.DeleteFunctionResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/functions/{function_slug}", request, nil)
 	if err != nil {
@@ -112,7 +153,28 @@ func (s *functions) DeleteFunction(ctx context.Context, request operations.Delet
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -141,7 +203,17 @@ func (s *functions) DeleteFunction(ctx context.Context, request operations.Delet
 
 // GetFunction - Retrieve a function
 // Retrieves a function with the specified slug and project.
-func (s *functions) GetFunction(ctx context.Context, request operations.GetFunctionRequest) (*operations.GetFunctionResponse, error) {
+func (s *functions) GetFunction(ctx context.Context, request operations.GetFunctionRequest, opts ...operations.Option) (*operations.GetFunctionResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/functions/{function_slug}", request, nil)
 	if err != nil {
@@ -155,7 +227,28 @@ func (s *functions) GetFunction(ctx context.Context, request operations.GetFunct
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -192,7 +285,17 @@ func (s *functions) GetFunction(ctx context.Context, request operations.GetFunct
 
 // GetFunctionBody - Retrieve a function body
 // Retrieves a function body for the specified slug and project.
-func (s *functions) GetFunctionBody(ctx context.Context, request operations.GetFunctionBodyRequest) (*operations.GetFunctionBodyResponse, error) {
+func (s *functions) GetFunctionBody(ctx context.Context, request operations.GetFunctionBodyRequest, opts ...operations.Option) (*operations.GetFunctionBodyResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/functions/{function_slug}/body", request, nil)
 	if err != nil {
@@ -206,7 +309,28 @@ func (s *functions) GetFunctionBody(ctx context.Context, request operations.GetF
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -235,7 +359,17 @@ func (s *functions) GetFunctionBody(ctx context.Context, request operations.GetF
 
 // GetFunctions - List all functions
 // Returns all functions you've previously added to the specified project.
-func (s *functions) GetFunctions(ctx context.Context, request operations.GetFunctionsRequest) (*operations.GetFunctionsResponse, error) {
+func (s *functions) GetFunctions(ctx context.Context, request operations.GetFunctionsRequest, opts ...operations.Option) (*operations.GetFunctionsResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/functions", request, nil)
 	if err != nil {
@@ -249,7 +383,28 @@ func (s *functions) GetFunctions(ctx context.Context, request operations.GetFunc
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -286,7 +441,17 @@ func (s *functions) GetFunctions(ctx context.Context, request operations.GetFunc
 
 // UpdateFunction - Update a function
 // Updates a function with the specified slug and project.
-func (s *functions) UpdateFunction(ctx context.Context, request operations.UpdateFunctionRequest) (*operations.UpdateFunctionResponse, error) {
+func (s *functions) UpdateFunction(ctx context.Context, request operations.UpdateFunctionRequest, opts ...operations.Option) (*operations.UpdateFunctionResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/functions/{function_slug}", request, nil)
 	if err != nil {
@@ -314,7 +479,28 @@ func (s *functions) UpdateFunction(ctx context.Context, request operations.Updat
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}

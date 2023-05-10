@@ -2140,3 +2140,13 @@ components:
           type: string
       required:
         - id
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 5000 # 5 seconds
+    maxInterval: 60000 # 60 seconds
+    maxElapsedTime: 3600000 # 5 minutes
+    exponent: 1.5
+  statusCodes:
+    - 5XX
+  retryConnectionErrors: true

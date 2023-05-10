@@ -33,7 +33,17 @@ func newSecrets(defaultClient, securityClient HTTPClient, serverURL, language, s
 
 // CreateSecrets - Bulk create secrets
 // Creates multiple secrets and adds them to the specified project.
-func (s *secrets) CreateSecrets(ctx context.Context, request operations.CreateSecretsRequest) (*operations.CreateSecretsResponse, error) {
+func (s *secrets) CreateSecrets(ctx context.Context, request operations.CreateSecretsRequest, opts ...operations.Option) (*operations.CreateSecretsResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/secrets", request, nil)
 	if err != nil {
@@ -57,7 +67,28 @@ func (s *secrets) CreateSecrets(ctx context.Context, request operations.CreateSe
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -86,7 +117,17 @@ func (s *secrets) CreateSecrets(ctx context.Context, request operations.CreateSe
 
 // DeleteSecrets - Bulk delete secrets
 // Deletes all secrets with the given names from the specified project
-func (s *secrets) DeleteSecrets(ctx context.Context, request operations.DeleteSecretsRequest) (*operations.DeleteSecretsResponse, error) {
+func (s *secrets) DeleteSecrets(ctx context.Context, request operations.DeleteSecretsRequest, opts ...operations.Option) (*operations.DeleteSecretsResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/secrets", request, nil)
 	if err != nil {
@@ -110,7 +151,28 @@ func (s *secrets) DeleteSecrets(ctx context.Context, request operations.DeleteSe
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -147,7 +209,17 @@ func (s *secrets) DeleteSecrets(ctx context.Context, request operations.DeleteSe
 
 // GetSecrets - List all secrets
 // Returns all secrets you've previously added to the specified project.
-func (s *secrets) GetSecrets(ctx context.Context, request operations.GetSecretsRequest) (*operations.GetSecretsResponse, error) {
+func (s *secrets) GetSecrets(ctx context.Context, request operations.GetSecretsRequest, opts ...operations.Option) (*operations.GetSecretsResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/secrets", request, nil)
 	if err != nil {
@@ -161,7 +233,28 @@ func (s *secrets) GetSecrets(ctx context.Context, request operations.GetSecretsR
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}

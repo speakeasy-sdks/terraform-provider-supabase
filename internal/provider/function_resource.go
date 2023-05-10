@@ -71,7 +71,8 @@ func (r *FunctionResource) Schema(ctx context.Context, req resource.SchemaReques
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				Required: true,
+				Computed: true,
+				Optional: true,
 			},
 			"ref": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{

@@ -32,7 +32,17 @@ func newPgsodiumBeta(defaultClient, securityClient HTTPClient, serverURL, langua
 }
 
 // GetPGSodiumConfig - Gets project's pgsodium config
-func (s *pgsodiumBeta) GetPGSodiumConfig(ctx context.Context, request operations.GetPGSodiumConfigRequest) (*operations.GetPGSodiumConfigResponse, error) {
+func (s *pgsodiumBeta) GetPGSodiumConfig(ctx context.Context, request operations.GetPGSodiumConfigRequest, opts ...operations.Option) (*operations.GetPGSodiumConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/pgsodium", request, nil)
 	if err != nil {
@@ -46,7 +56,28 @@ func (s *pgsodiumBeta) GetPGSodiumConfig(ctx context.Context, request operations
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -82,7 +113,17 @@ func (s *pgsodiumBeta) GetPGSodiumConfig(ctx context.Context, request operations
 }
 
 // UpdatePGSodiumConfig - Updates project's pgsodium config. Updating the root_key can cause all data encrypted with the older key to become inaccessible.
-func (s *pgsodiumBeta) UpdatePGSodiumConfig(ctx context.Context, request operations.UpdatePGSodiumConfigRequest) (*operations.UpdatePGSodiumConfigResponse, error) {
+func (s *pgsodiumBeta) UpdatePGSodiumConfig(ctx context.Context, request operations.UpdatePGSodiumConfigRequest, opts ...operations.Option) (*operations.UpdatePGSodiumConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/pgsodium", request, nil)
 	if err != nil {
@@ -106,7 +147,28 @@ func (s *pgsodiumBeta) UpdatePGSodiumConfig(ctx context.Context, request operati
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}

@@ -32,7 +32,17 @@ func newNetworkRestrictionsBeta(defaultClient, securityClient HTTPClient, server
 }
 
 // ApplyNetworkRestrictions - Updates project's network restrictions
-func (s *networkRestrictionsBeta) ApplyNetworkRestrictions(ctx context.Context, request operations.ApplyNetworkRestrictionsRequest) (*operations.ApplyNetworkRestrictionsResponse, error) {
+func (s *networkRestrictionsBeta) ApplyNetworkRestrictions(ctx context.Context, request operations.ApplyNetworkRestrictionsRequest, opts ...operations.Option) (*operations.ApplyNetworkRestrictionsResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/network-restrictions/apply", request, nil)
 	if err != nil {
@@ -56,7 +66,28 @@ func (s *networkRestrictionsBeta) ApplyNetworkRestrictions(ctx context.Context, 
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -92,7 +123,17 @@ func (s *networkRestrictionsBeta) ApplyNetworkRestrictions(ctx context.Context, 
 }
 
 // GetNetworkRestrictions - Gets project's network restrictions
-func (s *networkRestrictionsBeta) GetNetworkRestrictions(ctx context.Context, request operations.GetNetworkRestrictionsRequest) (*operations.GetNetworkRestrictionsResponse, error) {
+func (s *networkRestrictionsBeta) GetNetworkRestrictions(ctx context.Context, request operations.GetNetworkRestrictionsRequest, opts ...operations.Option) (*operations.GetNetworkRestrictionsResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/network-restrictions", request, nil)
 	if err != nil {
@@ -106,7 +147,28 @@ func (s *networkRestrictionsBeta) GetNetworkRestrictions(ctx context.Context, re
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}

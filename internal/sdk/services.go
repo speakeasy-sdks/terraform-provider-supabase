@@ -32,7 +32,17 @@ func newServices(defaultClient, securityClient HTTPClient, serverURL, language, 
 }
 
 // GetPostgRESTConfig - Gets project's postgrest config
-func (s *services) GetPostgRESTConfig(ctx context.Context, request operations.GetPostgRESTConfigRequest) (*operations.GetPostgRESTConfigResponse, error) {
+func (s *services) GetPostgRESTConfig(ctx context.Context, request operations.GetPostgRESTConfigRequest, opts ...operations.Option) (*operations.GetPostgRESTConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/postgrest", request, nil)
 	if err != nil {
@@ -46,7 +56,28 @@ func (s *services) GetPostgRESTConfig(ctx context.Context, request operations.Ge
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
@@ -82,7 +113,17 @@ func (s *services) GetPostgRESTConfig(ctx context.Context, request operations.Ge
 }
 
 // UpdatePostgRESTConfig - Updates project's postgrest config
-func (s *services) UpdatePostgRESTConfig(ctx context.Context, request operations.UpdatePostgRESTConfigRequest) (*operations.UpdatePostgRESTConfigResponse, error) {
+func (s *services) UpdatePostgRESTConfig(ctx context.Context, request operations.UpdatePostgRESTConfigRequest, opts ...operations.Option) (*operations.UpdatePostgRESTConfigResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/postgrest", request, nil)
 	if err != nil {
@@ -106,7 +147,28 @@ func (s *services) UpdatePostgRESTConfig(ctx context.Context, request operations
 
 	client := s.securityClient
 
-	httpRes, err := client.Do(req)
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		retryConfig = &utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 5000,
+				MaxInterval:     60000,
+				Exponent:        1.5,
+				MaxElapsedTime:  3600000,
+			},
+			RetryConnectionErrors: true,
+		}
+	}
+
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+		},
+	}, func() (*http.Response, error) {
+		return client.Do(req)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}

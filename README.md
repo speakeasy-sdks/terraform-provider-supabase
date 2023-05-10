@@ -1,6 +1,8 @@
-![supabase-logo-wordmark--light](https://github.com/speakeasy-sdks/terraform-provider-supabase/assets/6267663/14804af9-8efe-46d7-83e1-aaec21f0866e#gh-light-mode-only)
-![supabase-logo-wordmark--dark](https://github.com/speakeasy-sdks/terraform-provider-supabase/assets/6267663/4e3b8ac5-97a4-42e4-8702-f03e537076dd#gh-dark-mode-only)
 <div align="center">
+    <picture>
+        <source srcset="https://github.com/speakeasy-sdks/terraform-provider-supabase/assets/6267663/4e3b8ac5-97a4-42e4-8702-f03e537076dd" media="(prefers-color-scheme: dark)">
+        <img src="https://github.com/speakeasy-sdks/terraform-provider-supabase/assets/6267663/14804af9-8efe-46d7-83e1-aaec21f0866e">
+    </picture>
     <h1>Terraform Provider</h1>
    <p>An open source Firebase alternative. Start your project with a Postgres database, Authentication, instant APIs, Edge Functions, Realtime subscriptions, and Storage.</p>
    <a href="https://supabase.com/docs/guides/getting-started"><img src="https://img.shields.io/static/v1?label=Docs&message=API Ref&color=32855f&style=for-the-badge" /></a>

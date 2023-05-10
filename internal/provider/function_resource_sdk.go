@@ -9,6 +9,7 @@ import (
 )
 
 func (r *FunctionResourceModel) ToCreateSDKType() *shared.CreateFunctionBody {
+	body := r.Body.ValueString()
 	name := r.Name.ValueString()
 	slug := r.Slug.ValueString()
 	verifyJwt := new(bool)
@@ -18,6 +19,7 @@ func (r *FunctionResourceModel) ToCreateSDKType() *shared.CreateFunctionBody {
 		verifyJwt = nil
 	}
 	out := shared.CreateFunctionBody{
+		Body:      body,
 		Name:      name,
 		Slug:      slug,
 		VerifyJwt: verifyJwt,
@@ -31,6 +33,12 @@ func (r *FunctionResourceModel) ToGetSDKType() *shared.CreateFunctionBody {
 }
 
 func (r *FunctionResourceModel) ToUpdateSDKType() *shared.UpdateFunctionBody {
+	body := new(string)
+	if !r.Body.IsUnknown() && !r.Body.IsNull() {
+		*body = r.Body.ValueString()
+	} else {
+		body = nil
+	}
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
@@ -44,6 +52,7 @@ func (r *FunctionResourceModel) ToUpdateSDKType() *shared.UpdateFunctionBody {
 		verifyJwt = nil
 	}
 	out := shared.UpdateFunctionBody{
+		Body:      body,
 		Name:      name,
 		VerifyJwt: verifyJwt,
 	}

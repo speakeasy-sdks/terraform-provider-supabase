@@ -35,6 +35,7 @@ type FunctionResource struct {
 
 // FunctionResourceModel describes the resource data model.
 type FunctionResourceModel struct {
+	Body      types.String `tfsdk:"body"`
 	CreatedAt types.Number `tfsdk:"created_at"`
 	ID        types.String `tfsdk:"id"`
 	ImportMap types.Bool   `tfsdk:"import_map"`
@@ -56,6 +57,9 @@ func (r *FunctionResource) Schema(ctx context.Context, req resource.SchemaReques
 		MarkdownDescription: "Function Resource",
 
 		Attributes: map[string]schema.Attribute{
+			"body": schema.StringAttribute{
+				Required: true,
+			},
 			"created_at": schema.NumberAttribute{
 				Computed: true,
 			},
@@ -66,7 +70,7 @@ func (r *FunctionResource) Schema(ctx context.Context, req resource.SchemaReques
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				Computed: true,
+				Required: true,
 			},
 			"ref": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -76,7 +80,7 @@ func (r *FunctionResource) Schema(ctx context.Context, req resource.SchemaReques
 				Description: `Project ref`,
 			},
 			"slug": schema.StringAttribute{
-				Computed: true,
+				Required: true,
 			},
 			"status": schema.StringAttribute{
 				Computed: true,
@@ -93,6 +97,7 @@ func (r *FunctionResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"verify_jwt": schema.BoolAttribute{
 				Computed: true,
+				Optional: true,
 			},
 			"version": schema.NumberAttribute{
 				Computed: true,

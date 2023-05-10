@@ -8,6 +8,9 @@ import (
 	"supabase/internal/sdk"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -67,22 +70,38 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"db_pass": schema.StringAttribute{
-				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Required: true,
 			},
 			"id": schema.StringAttribute{
 				Computed: true,
 			},
 			"kps_enabled": schema.BoolAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.Bool{
+					boolplanmodifier.RequiresReplace(),
+				},
+				Optional: true,
 			},
 			"name": schema.StringAttribute{
-				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Required: true,
 			},
 			"organization_id": schema.StringAttribute{
-				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Required: true,
 			},
 			"plan": schema.StringAttribute{
-				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Required: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"free",
@@ -92,26 +111,10 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Description: `Subscription plan`,
 			},
 			"region": schema.StringAttribute{
-				Computed: true,
-				Validators: []validator.String{
-					stringvalidator.OneOf(
-						"us-east-1",
-						"us-west-1",
-						"us-west-2",
-						"ap-southeast-1",
-						"ap-northeast-1",
-						"ap-northeast-2",
-						"ap-southeast-2",
-						"eu-west-1",
-						"eu-west-2",
-						"eu-west-3",
-						"eu-central-1",
-						"ca-central-1",
-						"ap-south-1",
-						"sa-east-1",
-					),
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
 				},
-				Description: `Region you want your server to reside in`,
+				Required: true,
 			},
 		},
 	}

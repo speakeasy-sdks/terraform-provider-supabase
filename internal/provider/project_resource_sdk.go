@@ -42,5 +42,5 @@ func (r *ProjectResourceModel) RefreshFromCreateResponse(resp *shared.ProjectRes
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
 	r.OrganizationID = types.StringValue(resp.OrganizationID)
-	r.Region = types.StringValue(string(resp.Region))
+	r.Region = types.StringValue(resp.Region)
 }

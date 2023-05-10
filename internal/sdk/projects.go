@@ -72,9 +72,7 @@ func (s *projects) CreateProject(ctx context.Context, request shared.CreateProje
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 200:
-		fallthrough
-	case httpRes.StatusCode == 201:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ProjectResponse

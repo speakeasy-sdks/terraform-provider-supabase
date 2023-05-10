@@ -9,19 +9,12 @@ import (
 
 func (r *ProjectResourceModel) ToCreateSDKType() *shared.CreateProjectBody {
 	dbPass := r.DbPass.ValueString()
-	kpsEnabled := new(bool)
-	if !r.KpsEnabled.IsUnknown() && !r.KpsEnabled.IsNull() {
-		*kpsEnabled = r.KpsEnabled.ValueBool()
-	} else {
-		kpsEnabled = nil
-	}
 	name := r.Name.ValueString()
 	organizationID := r.OrganizationID.ValueString()
 	plan := shared.CreateProjectBodyPlanEnum(r.Plan.ValueString())
 	region := shared.CreateProjectBodyRegionEnum(r.Region.ValueString())
 	out := shared.CreateProjectBody{
 		DbPass:         dbPass,
-		KpsEnabled:     kpsEnabled,
 		Name:           name,
 		OrganizationID: organizationID,
 		Plan:           plan,
@@ -42,5 +35,5 @@ func (r *ProjectResourceModel) RefreshFromCreateResponse(resp *shared.ProjectRes
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
 	r.OrganizationID = types.StringValue(resp.OrganizationID)
-	r.Region = types.StringValue(resp.Region)
+	r.Region = types.StringValue(string(resp.Region))
 }

@@ -31,13 +31,7 @@ paths:
             schema:
               "$ref": "#/components/schemas/CreateProjectBody"
       responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ProjectResponse"
-        '201':
+        2XX:
           description: ''
           content:
             application/json:
@@ -1424,6 +1418,7 @@ components:
           description: Region you want your server to reside in
           example: us-east-1
         kps_enabled:
+          x-speakeasy-terraform-ignore: true
           type: boolean
       required:
         - db_pass

@@ -8,7 +8,6 @@ import (
 	"supabase/internal/sdk"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -39,7 +38,6 @@ type ProjectResourceModel struct {
 	Database       *DatabaseResponse `tfsdk:"database"`
 	DbPass         types.String      `tfsdk:"db_pass"`
 	ID             types.String      `tfsdk:"id"`
-	KpsEnabled     types.Bool        `tfsdk:"kps_enabled"`
 	Name           types.String      `tfsdk:"name"`
 	OrganizationID types.String      `tfsdk:"organization_id"`
 	Plan           types.String      `tfsdk:"plan"`
@@ -78,13 +76,6 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 			"id": schema.StringAttribute{
 				Computed: true,
 			},
-			"kps_enabled": schema.BoolAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.Bool{
-					boolplanmodifier.RequiresReplace(),
-				},
-				Optional: true,
-			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -115,6 +106,25 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 					stringplanmodifier.RequiresReplace(),
 				},
 				Required: true,
+				Validators: []validator.String{
+					stringvalidator.OneOf(
+						"us-east-1",
+						"us-west-1",
+						"us-west-2",
+						"ap-southeast-1",
+						"ap-northeast-1",
+						"ap-northeast-2",
+						"ap-southeast-2",
+						"eu-west-1",
+						"eu-west-2",
+						"eu-west-3",
+						"eu-central-1",
+						"ca-central-1",
+						"ap-south-1",
+						"sa-east-1",
+					),
+				},
+				Description: `Region you want your server to reside in`,
 			},
 		},
 	}
@@ -168,7 +178,7 @@ func (r *ProjectResource) Create(ctx context.Context, req resource.CreateRequest
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 200 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

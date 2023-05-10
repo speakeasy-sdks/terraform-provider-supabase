@@ -6,4 +6,3 @@ speakeasy:
 
 docs:
 	go generate ./...
-

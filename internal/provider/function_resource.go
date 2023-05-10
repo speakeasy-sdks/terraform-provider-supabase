@@ -58,7 +58,8 @@ func (r *FunctionResource) Schema(ctx context.Context, req resource.SchemaReques
 
 		Attributes: map[string]schema.Attribute{
 			"body": schema.StringAttribute{
-				Required: true,
+				Computed: true,
+				Optional: true,
 			},
 			"created_at": schema.NumberAttribute{
 				Computed: true,

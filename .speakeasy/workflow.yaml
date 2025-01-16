@@ -1,0 +1,12 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    Supabase API (v1):
+        inputs:
+            - location: beta.yaml
+        registry:
+            location: registry.speakeasyapi.dev/supabase/terraform-provider/supabase-api-(v-1)
+targets:
+    supabase:
+        target: terraform
+        source: Supabase API (v1)

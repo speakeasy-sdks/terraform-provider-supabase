@@ -1,0 +1,1027 @@
+lockVersion: 2.0.0
+id: b4b7b7b2-a0a8-440d-aa19-4e992089d1f6
+management:
+  docChecksum: d95076c65307ea41f7af2bbb467906c5
+  docVersion: 1.0.0
+  speakeasyVersion: 1.468.9
+  generationVersion: 2.493.21
+  releaseVersion: 0.0.4
+  configChecksum: 820a1c5e58082b404c3a8184626989b4
+features:
+  terraform:
+    additionalDependencies: 0.1.0
+    constsAndDefaults: 0.2.0
+    core: 3.27.7
+    deprecations: 2.81.1
+    envVarSecurityUsage: 0.1.0
+    globalSecurity: 2.81.9
+    globalServerURLs: 2.82.1
+    nullables: 0.0.0
+    unions: 2.81.17
+generatedFiles:
+  - .gitattributes
+  - USAGE.md
+  - examples/README.md
+  - examples/data-sources/supabase_branch/data-source.tf
+  - examples/provider/provider.tf
+  - examples/resources/supabase_branch/import.sh
+  - examples/resources/supabase_branch/resource.tf
+  - go.mod
+  - go.sum
+  - internal/planmodifiers/boolplanmodifier/suppress_diff.go
+  - internal/planmodifiers/float64planmodifier/suppress_diff.go
+  - internal/planmodifiers/int64planmodifier/suppress_diff.go
+  - internal/planmodifiers/listplanmodifier/suppress_diff.go
+  - internal/planmodifiers/mapplanmodifier/suppress_diff.go
+  - internal/planmodifiers/numberplanmodifier/suppress_diff.go
+  - internal/planmodifiers/objectplanmodifier/suppress_diff.go
+  - internal/planmodifiers/setplanmodifier/suppress_diff.go
+  - internal/planmodifiers/stringplanmodifier/suppress_diff.go
+  - internal/planmodifiers/utils/state_check.go
+  - internal/provider/branch_data_source.go
+  - internal/provider/branch_data_source_sdk.go
+  - internal/provider/branch_resource.go
+  - internal/provider/branch_resource_sdk.go
+  - internal/provider/provider.go
+  - internal/provider/reflect/diags.go
+  - internal/provider/reflect/doc.go
+  - internal/provider/reflect/generic_attr_value.go
+  - internal/provider/reflect/helpers.go
+  - internal/provider/reflect/interfaces.go
+  - internal/provider/reflect/into.go
+  - internal/provider/reflect/map.go
+  - internal/provider/reflect/number.go
+  - internal/provider/reflect/options.go
+  - internal/provider/reflect/outof.go
+  - internal/provider/reflect/pointer.go
+  - internal/provider/reflect/primitive.go
+  - internal/provider/reflect/slice.go
+  - internal/provider/reflect/struct.go
+  - internal/provider/utils.go
+  - internal/sdk/.gitattributes
+  - internal/sdk/auth.go
+  - internal/sdk/database.go
+  - internal/sdk/domains.go
+  - internal/sdk/edgefunctions.go
+  - internal/sdk/environments.go
+  - internal/sdk/internal/hooks/hooks.go
+  - internal/sdk/internal/utils/contenttype.go
+  - internal/sdk/internal/utils/env.go
+  - internal/sdk/internal/utils/form.go
+  - internal/sdk/internal/utils/headers.go
+  - internal/sdk/internal/utils/json.go
+  - internal/sdk/internal/utils/pathparams.go
+  - internal/sdk/internal/utils/queryparams.go
+  - internal/sdk/internal/utils/requestbody.go
+  - internal/sdk/internal/utils/retries.go
+  - internal/sdk/internal/utils/security.go
+  - internal/sdk/internal/utils/utils.go
+  - internal/sdk/models/errors/apierror.go
+  - internal/sdk/models/operations/createapikey.go
+  - internal/sdk/models/operations/createtpaforproject.go
+  - internal/sdk/models/operations/deleteapikey.go
+  - internal/sdk/models/operations/deletetpaforproject.go
+  - internal/sdk/models/operations/getapikey.go
+  - internal/sdk/models/operations/gettpaforproject.go
+  - internal/sdk/models/operations/listtpaforproject.go
+  - internal/sdk/models/operations/options.go
+  - internal/sdk/models/operations/updateapikey.go
+  - internal/sdk/models/operations/v1activatecustomhostname.go
+  - internal/sdk/models/operations/v1activatevanitysubdomainconfig.go
+  - internal/sdk/models/operations/v1authorizeuser.go
+  - internal/sdk/models/operations/v1bulkcreatesecrets.go
+  - internal/sdk/models/operations/v1bulkdeletesecrets.go
+  - internal/sdk/models/operations/v1checkvanitysubdomainavailability.go
+  - internal/sdk/models/operations/v1createabranch.go
+  - internal/sdk/models/operations/v1createafunctionjson.go
+  - internal/sdk/models/operations/v1createafunctionraw.go
+  - internal/sdk/models/operations/v1createanorganization.go
+  - internal/sdk/models/operations/v1createaproject.go
+  - internal/sdk/models/operations/v1createassoprovider.go
+  - internal/sdk/models/operations/v1deactivatevanitysubdomainconfig.go
+  - internal/sdk/models/operations/v1deleteabranch.go
+  - internal/sdk/models/operations/v1deleteafunction.go
+  - internal/sdk/models/operations/v1deleteaproject.go
+  - internal/sdk/models/operations/v1deleteassoprovider.go
+  - internal/sdk/models/operations/v1deletehostnameconfig.go
+  - internal/sdk/models/operations/v1deletenetworkbans.go
+  - internal/sdk/models/operations/v1disablepreviewbranching.go
+  - internal/sdk/models/operations/v1disablereadonlymodetemporarily.go
+  - internal/sdk/models/operations/v1enabledatabasewebhook.go
+  - internal/sdk/models/operations/v1exchangeoauthtoken.go
+  - internal/sdk/models/operations/v1generatetypescripttypes.go
+  - internal/sdk/models/operations/v1getabranchconfig.go
+  - internal/sdk/models/operations/v1getafunction.go
+  - internal/sdk/models/operations/v1getafunctionbody.go
+  - internal/sdk/models/operations/v1getanorganization.go
+  - internal/sdk/models/operations/v1getasnippet.go
+  - internal/sdk/models/operations/v1getassoprovider.go
+  - internal/sdk/models/operations/v1getauthserviceconfig.go
+  - internal/sdk/models/operations/v1gethostnameconfig.go
+  - internal/sdk/models/operations/v1getnetworkrestrictions.go
+  - internal/sdk/models/operations/v1getpgsodiumconfig.go
+  - internal/sdk/models/operations/v1getpostgresconfig.go
+  - internal/sdk/models/operations/v1getpostgrestserviceconfig.go
+  - internal/sdk/models/operations/v1getpostgresupgradeeligibility.go
+  - internal/sdk/models/operations/v1getpostgresupgradestatus.go
+  - internal/sdk/models/operations/v1getproject.go
+  - internal/sdk/models/operations/v1getprojectapikeys.go
+  - internal/sdk/models/operations/v1getprojectpgbouncerconfig.go
+  - internal/sdk/models/operations/v1getreadonlymodestatus.go
+  - internal/sdk/models/operations/v1getserviceshealth.go
+  - internal/sdk/models/operations/v1getsslenforcementconfig.go
+  - internal/sdk/models/operations/v1getstorageconfig.go
+  - internal/sdk/models/operations/v1getsupavisorconfig.go
+  - internal/sdk/models/operations/v1getvanitysubdomainconfig.go
+  - internal/sdk/models/operations/v1listallbackups.go
+  - internal/sdk/models/operations/v1listallbranches.go
+  - internal/sdk/models/operations/v1listallbuckets.go
+  - internal/sdk/models/operations/v1listallfunctions.go
+  - internal/sdk/models/operations/v1listallnetworkbans.go
+  - internal/sdk/models/operations/v1listallorganizations.go
+  - internal/sdk/models/operations/v1listallprojects.go
+  - internal/sdk/models/operations/v1listallsecrets.go
+  - internal/sdk/models/operations/v1listallsnippets.go
+  - internal/sdk/models/operations/v1listallssoprovider.go
+  - internal/sdk/models/operations/v1listorganizationmembers.go
+  - internal/sdk/models/operations/v1removeareadreplica.go
+  - internal/sdk/models/operations/v1resetabranch.go
+  - internal/sdk/models/operations/v1restorepitrbackup.go
+  - internal/sdk/models/operations/v1runaquery.go
+  - internal/sdk/models/operations/v1setupareadreplica.go
+  - internal/sdk/models/operations/v1updateabranchconfig.go
+  - internal/sdk/models/operations/v1updateafunctionjson.go
+  - internal/sdk/models/operations/v1updateafunctionraw.go
+  - internal/sdk/models/operations/v1updateassoprovider.go
+  - internal/sdk/models/operations/v1updateauthserviceconfig.go
+  - internal/sdk/models/operations/v1updatehostnameconfig.go
+  - internal/sdk/models/operations/v1updatenetworkrestrictions.go
+  - internal/sdk/models/operations/v1updatepgsodiumconfig.go
+  - internal/sdk/models/operations/v1updatepostgresconfig.go
+  - internal/sdk/models/operations/v1updatepostgrestserviceconfig.go
+  - internal/sdk/models/operations/v1updatesslenforcementconfig.go
+  - internal/sdk/models/operations/v1updatestorageconfig.go
+  - internal/sdk/models/operations/v1updatesupavisorconfig.go
+  - internal/sdk/models/operations/v1upgradepostgresversion.go
+  - internal/sdk/models/operations/v1verifydnsconfig.go
+  - internal/sdk/models/shared/activatevanitysubdomainresponse.go
+  - internal/sdk/models/shared/apikeyresponse.go
+  - internal/sdk/models/shared/attributemapping.go
+  - internal/sdk/models/shared/attributevalue.go
+  - internal/sdk/models/shared/authconfigresponse.go
+  - internal/sdk/models/shared/authhealthresponse.go
+  - internal/sdk/models/shared/billingplanid.go
+  - internal/sdk/models/shared/branchdeleteresponse.go
+  - internal/sdk/models/shared/branchdetailresponse.go
+  - internal/sdk/models/shared/branchresetresponse.go
+  - internal/sdk/models/shared/branchresponse.go
+  - internal/sdk/models/shared/cfresponse.go
+  - internal/sdk/models/shared/createapikeybody.go
+  - internal/sdk/models/shared/createbranchbody.go
+  - internal/sdk/models/shared/createorganizationv1dto.go
+  - internal/sdk/models/shared/createproviderbody.go
+  - internal/sdk/models/shared/createproviderresponse.go
+  - internal/sdk/models/shared/createsecretbody.go
+  - internal/sdk/models/shared/createthirdpartyauthbody.go
+  - internal/sdk/models/shared/customhostnamedetails.go
+  - internal/sdk/models/shared/databaseupgradestatusresponse.go
+  - internal/sdk/models/shared/deleteproviderresponse.go
+  - internal/sdk/models/shared/desiredinstancesize.go
+  - internal/sdk/models/shared/domain.go
+  - internal/sdk/models/shared/functionresponse.go
+  - internal/sdk/models/shared/functionslugresponse.go
+  - internal/sdk/models/shared/getproviderresponse.go
+  - internal/sdk/models/shared/listprovidersresponse.go
+  - internal/sdk/models/shared/networkbanresponse.go
+  - internal/sdk/models/shared/networkrestrictionsrequest.go
+  - internal/sdk/models/shared/networkrestrictionsresponse.go
+  - internal/sdk/models/shared/oauthtokenbody.go
+  - internal/sdk/models/shared/oauthtokenresponse.go
+  - internal/sdk/models/shared/organizationresponsev1.go
+  - internal/sdk/models/shared/ownershipverification.go
+  - internal/sdk/models/shared/pgsodiumconfigresponse.go
+  - internal/sdk/models/shared/postgresconfigresponse.go
+  - internal/sdk/models/shared/postgresengine.go
+  - internal/sdk/models/shared/postgrestconfigwithjwtsecretresponse.go
+  - internal/sdk/models/shared/projectupgradeeligibilityresponse.go
+  - internal/sdk/models/shared/projectupgradeinitiateresponse.go
+  - internal/sdk/models/shared/projectversion.go
+  - internal/sdk/models/shared/provider.go
+  - internal/sdk/models/shared/readonlystatusresponse.go
+  - internal/sdk/models/shared/realtimehealthresponse.go
+  - internal/sdk/models/shared/releasechannel.go
+  - internal/sdk/models/shared/removenetworkbanrequest.go
+  - internal/sdk/models/shared/removereadreplicabody.go
+  - internal/sdk/models/shared/samldescriptor.go
+  - internal/sdk/models/shared/secretresponse.go
+  - internal/sdk/models/shared/security.go
+  - internal/sdk/models/shared/setupreadreplicabody.go
+  - internal/sdk/models/shared/snippetcontent.go
+  - internal/sdk/models/shared/snippetlist.go
+  - internal/sdk/models/shared/snippetmeta.go
+  - internal/sdk/models/shared/snippetproject.go
+  - internal/sdk/models/shared/snippetresponse.go
+  - internal/sdk/models/shared/snippetuser.go
+  - internal/sdk/models/shared/sslenforcementrequest.go
+  - internal/sdk/models/shared/sslenforcementresponse.go
+  - internal/sdk/models/shared/sslenforcements.go
+  - internal/sdk/models/shared/sslvalidation.go
+  - internal/sdk/models/shared/storageconfigresponse.go
+  - internal/sdk/models/shared/storagefeatureimagetransformation.go
+  - internal/sdk/models/shared/storagefeatures.go
+  - internal/sdk/models/shared/subdomainavailabilityresponse.go
+  - internal/sdk/models/shared/supavisorconfigresponse.go
+  - internal/sdk/models/shared/thirdpartyauth.go
+  - internal/sdk/models/shared/typescriptresponse.go
+  - internal/sdk/models/shared/updateapikeybody.go
+  - internal/sdk/models/shared/updateauthconfigbody.go
+  - internal/sdk/models/shared/updatebranchbody.go
+  - internal/sdk/models/shared/updatecustomhostnamebody.go
+  - internal/sdk/models/shared/updatecustomhostnameresponse.go
+  - internal/sdk/models/shared/updatepgsodiumconfigbody.go
+  - internal/sdk/models/shared/updatepostgresconfigbody.go
+  - internal/sdk/models/shared/updatepostgrestconfigbody.go
+  - internal/sdk/models/shared/updateproviderbody.go
+  - internal/sdk/models/shared/updateproviderresponse.go
+  - internal/sdk/models/shared/updatestorageconfigbody.go
+  - internal/sdk/models/shared/updatesupavisorconfigbody.go
+  - internal/sdk/models/shared/updatesupavisorconfigresponse.go
+  - internal/sdk/models/shared/upgradedatabasebody.go
+  - internal/sdk/models/shared/v1backup.go
+  - internal/sdk/models/shared/v1backupsresponse.go
+  - internal/sdk/models/shared/v1createfunctionbody.go
+  - internal/sdk/models/shared/v1createprojectbodydto.go
+  - internal/sdk/models/shared/v1databaseresponse.go
+  - internal/sdk/models/shared/v1organizationmemberresponse.go
+  - internal/sdk/models/shared/v1organizationslugresponse.go
+  - internal/sdk/models/shared/v1pgbouncerconfigresponse.go
+  - internal/sdk/models/shared/v1physicalbackup.go
+  - internal/sdk/models/shared/v1postgrestconfigresponse.go
+  - internal/sdk/models/shared/v1projectrefresponse.go
+  - internal/sdk/models/shared/v1projectresponse.go
+  - internal/sdk/models/shared/v1projectwithdatabaseresponse.go
+  - internal/sdk/models/shared/v1restorepitrbody.go
+  - internal/sdk/models/shared/v1runquerybody.go
+  - internal/sdk/models/shared/v1servicehealthresponse.go
+  - internal/sdk/models/shared/v1storagebucketresponse.go
+  - internal/sdk/models/shared/v1updatefunctionbody.go
+  - internal/sdk/models/shared/validationerror.go
+  - internal/sdk/models/shared/validationrecord.go
+  - internal/sdk/models/shared/vanitysubdomainbody.go
+  - internal/sdk/models/shared/vanitysubdomainconfigresponse.go
+  - internal/sdk/oauth.go
+  - internal/sdk/organizations.go
+  - internal/sdk/projects.go
+  - internal/sdk/rest.go
+  - internal/sdk/retry/config.go
+  - internal/sdk/secrets.go
+  - internal/sdk/storage.go
+  - internal/sdk/supabase.go
+  - internal/sdk/types/bigint.go
+  - internal/sdk/types/date.go
+  - internal/sdk/types/datetime.go
+  - internal/sdk/types/decimal.go
+  - internal/sdk/types/pointers.go
+  - internal/validators/DateValidator.go
+  - internal/validators/ExactlyOneChild.go
+  - internal/validators/JSONParseValidator.go
+  - internal/validators/RFC3339Validator.go
+  - internal/validators/boolvalidators/not_null.go
+  - internal/validators/float64validators/not_null.go
+  - internal/validators/int64validators/not_null.go
+  - internal/validators/listvalidators/not_null.go
+  - internal/validators/mapvalidators/not_null.go
+  - internal/validators/numbervalidators/not_null.go
+  - internal/validators/objectvalidators/not_null.go
+  - internal/validators/setvalidators/not_null.go
+  - internal/validators/stringvalidators/not_null.go
+  - main.go
+  - terraform-registry-manifest.json
+  - tools/tools.go
+examples:
+  v1-get-a-branch-config:
+    speakeasy-default-v1-get-a-branch-config:
+      parameters:
+        path:
+          branch_id: "<id>"
+      responses:
+        "200":
+          application/json: {"db_port": 670646, "ref": "<value>", "postgres_version": "<value>", "postgres_engine": "<value>", "release_channel": "<value>", "status": "RESTORE_FAILED", "db_host": "<value>"}
+  v1-update-a-branch-config:
+    speakeasy-default-v1-update-a-branch-config:
+      parameters:
+        path:
+          branch_id: "<id>"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_PASSED", "created_at": "1720227579547", "updated_at": "1737012177987"}
+  v1-delete-a-branch:
+    speakeasy-default-v1-delete-a-branch:
+      parameters:
+        path:
+          branch_id: "<id>"
+      responses:
+        "200":
+          application/json: {"message": "<value>"}
+  v1-reset-a-branch:
+    speakeasy-default-v1-reset-a-branch:
+      parameters:
+        path:
+          branch_id: "<id>"
+      responses:
+        "201":
+          application/json: {"workflow_run_id": "<id>", "message": "<value>"}
+  v1-list-all-branches:
+    speakeasy-default-v1-list-all-branches:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: [{"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_FAILED", "created_at": "1724526430432", "updated_at": "1736993093151"}, {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "FUNCTIONS_FAILED", "created_at": "1719174863591", "updated_at": "1737046153006"}]
+  v1-create-a-branch:
+    speakeasy-default-v1-create-a-branch:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"branch_name": "<value>"}
+      responses:
+        "201":
+          application/json: {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": true, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_PASSED", "created_at": "1725856552869", "updated_at": "1736996499081"}
+  v1-disable-preview-branching:
+    speakeasy-default-v1-disable-preview-branching:
+      parameters:
+        path:
+          ref: "<value>"
+  v1-list-all-projects:
+    speakeasy-default-v1-list-all-projects:
+      responses:
+        "200":
+          application/json: []
+  v1-create-a-project:
+    speakeasy-default-v1-create-a-project:
+      requestBody:
+        application/json: {"db_pass": "<value>", "name": "<value>", "organization_id": "<id>", "region": "eu-central-1", "template_url": "https://github.com/supabase/supabase/tree/master/examples/slack-clone/nextjs-slack-clone"}
+      responses:
+        "201":
+          application/json: {"id": "<id>", "organization_id": "<id>", "name": "<value>", "region": "us-east-1", "created_at": "2023-03-29T16:32:59Z", "status": "COMING_UP"}
+  v1-list-all-network-bans:
+    speakeasy-default-v1-list-all-network-bans:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "201":
+          application/json: {"banned_ipv4_addresses": ["<value>", "<value>", "<value>"]}
+  v1-delete-network-bans:
+    speakeasy-default-v1-delete-network-bans:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"ipv4_addresses": []}
+  v1-get-network-restrictions:
+    speakeasy-default-v1-get-network-restrictions:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"entitlement": "disallowed", "config": {}, "status": "applied"}
+  v1-update-network-restrictions:
+    speakeasy-default-v1-update-network-restrictions:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {}
+      responses:
+        "201":
+          application/json: {"entitlement": "allowed", "config": {}, "status": "stored"}
+  v1-get-project:
+    speakeasy-default-v1-get-project:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "organization_id": "<id>", "name": "<value>", "region": "us-east-1", "created_at": "2023-03-29T16:32:59Z", "database": {"host": "weekly-devastation.name", "version": "<value>", "postgres_engine": "<value>", "release_channel": "<value>"}, "status": "INACTIVE"}
+  v1-delete-a-project:
+    speakeasy-default-v1-delete-a-project:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"id": 697429, "ref": "<value>", "name": "<value>"}
+  v1-upgrade-postgres-version:
+    speakeasy-default-v1-upgrade-postgres-version:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"release_channel": "withdrawn", "target_version": "<value>"}
+      responses:
+        "201":
+          application/json: {"tracking_id": "<id>"}
+  v1-get-postgres-upgrade-eligibility:
+    speakeasy-default-v1-get-postgres-upgrade-eligibility:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"current_app_version_release_channel": "beta", "duration_estimate_hours": 154574, "eligible": true, "current_app_version": "<value>", "latest_app_version": "<value>", "target_upgrade_versions": [{"postgres_version": "15", "release_channel": "internal", "app_version": "<value>"}], "potential_breaking_changes": ["<value>", "<value>"], "legacy_auth_custom_roles": [], "extension_dependent_objects": ["<value>", "<value>"]}
+  v1-get-postgres-upgrade-status:
+    speakeasy-default-v1-get-postgres-upgrade-status:
+      parameters:
+        path:
+          ref: "<value>"
+        query: {}
+      responses:
+        "200":
+          application/json: {"databaseUpgradeStatus": {"target_version": 351825, "status": 0, "initiated_at": "<value>", "latest_status_at": "<value>"}}
+  v1-get-services-health:
+    speakeasy-default-v1-get-services-health:
+      parameters:
+        path:
+          ref: "<value>"
+        query:
+          services: []
+      responses:
+        "200":
+          application/json: [{"name": "pooler", "healthy": false, "status": "COMING_UP"}, {"name": "realtime", "healthy": true, "status": "UNHEALTHY"}]
+  v1-list-all-organizations:
+    speakeasy-default-v1-list-all-organizations:
+      responses:
+        "200":
+          application/json: [{"id": "<id>", "name": "<value>"}, {"id": "<id>", "name": "<value>"}]
+  v1-create-an-organization:
+    speakeasy-default-v1-create-an-organization:
+      requestBody:
+        application/json: {"name": "<value>"}
+      responses:
+        "201":
+          application/json: {"id": "<id>", "name": "<value>"}
+  v1-list-organization-members:
+    speakeasy-default-v1-list-organization-members:
+      parameters:
+        path:
+          slug: "<value>"
+      responses:
+        "200":
+          application/json: [{"user_id": "<id>", "user_name": "Thaddeus_Lockman", "role_name": "<value>", "mfa_enabled": true}]
+  v1-get-an-organization:
+    speakeasy-default-v1-get-an-organization:
+      parameters:
+        path:
+          slug: "<value>"
+      responses:
+        "200":
+          application/json: {"opt_in_tags": ["AI_SQL_GENERATOR_OPT_IN", "AI_SQL_GENERATOR_OPT_IN", "AI_SQL_GENERATOR_OPT_IN"], "allowed_release_channels": ["beta", "ga", "ga"], "id": "<id>", "name": "<value>"}
+  v1-authorize-user:
+    speakeasy-default-v1-authorize-user:
+      parameters:
+        query:
+          client_id: "<id>"
+          response_type: "token"
+          redirect_uri: "https://insidious-wriggler.name/"
+  v1-exchange-oauth-token:
+    speakeasy-default-v1-exchange-oauth-token:
+      requestBody:
+        application/x-www-form-urlencoded: {"grant_type": "refresh_token", "client_id": "<id>", "client_secret": "<value>"}
+      responses:
+        "201":
+          application/json: {"expires_in": 66898, "token_type": "Bearer", "access_token": "<value>", "refresh_token": "<value>"}
+  v1-list-all-snippets:
+    speakeasy-default-v1-list-all-snippets:
+      responses:
+        "200":
+          application/json: {"data": [{"id": "<id>", "inserted_at": "<value>", "updated_at": "1737026634245", "type": "sql", "visibility": "user", "name": "<value>", "project": {"id": 604531, "name": "<value>"}, "owner": {"id": 74975, "username": "Scarlett19"}, "updated_by": {"id": 402832, "username": "Christ38"}}]}
+  v1-get-a-snippet:
+    speakeasy-default-v1-get-a-snippet:
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "inserted_at": "<value>", "updated_at": "1737039333031", "type": "sql", "visibility": "user", "name": "<value>", "project": {"id": 781357, "name": "<value>"}, "owner": {"id": 749483, "username": "Geraldine_Lind"}, "updated_by": {"id": 537423, "username": "Aletha72"}, "content": {"favorite": true, "schema_version": "<value>", "sql": "<value>"}}
+  v1-get-ssl-enforcement-config:
+    speakeasy-default-v1-get-ssl-enforcement-config:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"currentConfig": {"database": false}, "appliedSuccessfully": true}
+  v1-update-ssl-enforcement-config:
+    speakeasy-default-v1-update-ssl-enforcement-config:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"requestedConfig": {"database": false}}
+      responses:
+        "200":
+          application/json: {"currentConfig": {"database": true}, "appliedSuccessfully": false}
+  v1-generate-typescript-types:
+    speakeasy-default-v1-generate-typescript-types:
+      parameters:
+        path:
+          ref: "<value>"
+        query: {}
+      responses:
+        "200":
+          application/json: {"types": "<value>"}
+  v1-get-readonly-mode-status:
+    speakeasy-default-v1-get-readonly-mode-status:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"enabled": true, "override_enabled": false, "override_active_until": "<value>"}
+  v1-disable-readonly-mode-temporarily:
+    speakeasy-default-v1-disable-readonly-mode-temporarily:
+      parameters:
+        path:
+          ref: "<value>"
+  v1-setup-a-read-replica:
+    speakeasy-default-v1-setup-a-read-replica:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"read_replica_region": "us-east-1"}
+  v1-remove-a-read-replica:
+    speakeasy-default-v1-remove-a-read-replica:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"database_identifier": "<value>"}
+  v1-get-postgres-config:
+    speakeasy-default-v1-get-postgres-config:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {}
+  v1-update-postgres-config:
+    speakeasy-default-v1-update-postgres-config:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {}
+  v1-get-project-pgbouncer-config:
+    speakeasy-default-v1-get-project-pgbouncer-config:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {}
+  v1-get-supavisor-config:
+    speakeasy-default-v1-get-supavisor-config:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: []
+  v1-update-supavisor-config:
+    speakeasy-default-v1-update-supavisor-config:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"default_pool_size": 898292, "pool_mode": "transaction"}
+  v1-run-a-query:
+    speakeasy-default-v1-run-a-query:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"query": "<value>"}
+      responses:
+        "201":
+          application/json: {}
+  v1-enable-database-webhook:
+    speakeasy-default-v1-enable-database-webhook:
+      parameters:
+        path:
+          ref: "<value>"
+  v1-list-all-backups:
+    speakeasy-default-v1-list-all-backups:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"region": "<value>", "walg_enabled": true, "pitr_enabled": true, "backups": [{"status": "PENDING", "is_physical_backup": false, "inserted_at": "<value>"}], "physical_backup_data": {}}
+  v1-restore-pitr-backup:
+    speakeasy-default-v1-restore-pitr-backup:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"recovery_time_target_unix": 573588}
+  v1-get-project-api-keys:
+    speakeasy-default-v1-get-project-api-keys:
+      parameters:
+        path:
+          ref: "<value>"
+        query:
+          reveal: false
+      responses:
+        "200":
+          application/json: []
+  createApiKey:
+    speakeasy-default-create-api-key:
+      parameters:
+        path:
+          ref: "<value>"
+        query:
+          reveal: true
+      requestBody:
+        application/json: {"type": "secret"}
+      responses:
+        "201":
+          application/json: {"name": "<value>", "api_key": "<value>"}
+  updateApiKey:
+    speakeasy-default-update-api-key:
+      parameters:
+        path:
+          ref: "<value>"
+          id: "<id>"
+        query:
+          reveal: false
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"name": "<value>", "api_key": "<value>"}
+  getApiKey:
+    speakeasy-default-get-api-key:
+      parameters:
+        path:
+          ref: "<value>"
+          id: "<id>"
+        query:
+          reveal: true
+      responses:
+        "200":
+          application/json: {"name": "<value>", "api_key": "<value>"}
+  deleteApiKey:
+    speakeasy-default-delete-api-key:
+      parameters:
+        path:
+          ref: "<value>"
+          id: "<id>"
+        query:
+          reveal: true
+      responses:
+        "200":
+          application/json: {"name": "<value>", "api_key": "<value>"}
+  v1-get-pgsodium-config:
+    speakeasy-default-v1-get-pgsodium-config:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"root_key": "<value>"}
+  v1-update-pgsodium-config:
+    speakeasy-default-v1-update-pgsodium-config:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"root_key": "<value>"}
+      responses:
+        "200":
+          application/json: {"root_key": "<value>"}
+  v1-list-all-secrets:
+    speakeasy-default-v1-list-all-secrets:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: [{"name": "<value>", "value": "<value>"}, {"name": "<value>", "value": "<value>"}, {"name": "<value>", "value": "<value>"}]
+  v1-bulk-create-secrets:
+    speakeasy-default-v1-bulk-create-secrets:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: [{"name": "string", "value": "<value>"}, {"name": "string", "value": "<value>"}, {"name": "string", "value": "<value>"}]
+  v1-bulk-delete-secrets:
+    speakeasy-default-v1-bulk-delete-secrets:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: ["<value>"]
+      responses:
+        "200":
+          application/json: {}
+  v1-get-hostname-config:
+    speakeasy-default-v1-get-hostname-config:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"status": "2_initiated", "custom_hostname": "<value>", "data": {"success": true, "errors": [{}], "messages": [{}, {}, {}], "result": {"id": "<id>", "hostname": "dutiful-cauliflower.name", "ssl": {"status": "<value>", "validation_records": [{"txt_name": "<value>", "txt_value": "<value>"}]}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
+  v1-Delete hostname config:
+    speakeasy-default-v1-delete-hostname-config:
+      parameters:
+        path:
+          ref: "<value>"
+  v1-update-hostname-config:
+    speakeasy-default-v1-update-hostname-config:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"custom_hostname": "<value>"}
+      responses:
+        "201":
+          application/json: {"status": "2_initiated", "custom_hostname": "<value>", "data": {"success": false, "errors": [], "messages": [{}, {}], "result": {"id": "<id>", "hostname": "gummy-rubric.name", "ssl": {"status": "<value>", "validation_records": [{"txt_name": "<value>", "txt_value": "<value>"}, {"txt_name": "<value>", "txt_value": "<value>"}]}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
+  v1-verify-dns-config:
+    speakeasy-default-v1-verify-dns-config:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "201":
+          application/json: {"status": "1_not_started", "custom_hostname": "<value>", "data": {"success": true, "errors": [{}, {}, {}], "messages": [{}], "result": {"id": "<id>", "hostname": "delicious-wear.net", "ssl": {"status": "<value>", "validation_records": []}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
+  v1-activate-custom-hostname:
+    speakeasy-default-v1-activate-custom-hostname:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "201":
+          application/json: {"status": "5_services_reconfigured", "custom_hostname": "<value>", "data": {"success": true, "errors": [{}, {}], "messages": [{}, {}, {}], "result": {"id": "<id>", "hostname": "left-orchid.org", "ssl": {"status": "<value>", "validation_records": [{"txt_name": "<value>", "txt_value": "<value>"}, {"txt_name": "<value>", "txt_value": "<value>"}]}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
+  v1-get-vanity-subdomain-config:
+    speakeasy-default-v1-get-vanity-subdomain-config:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"status": "active"}
+  v1-deactivate-vanity-subdomain-config:
+    speakeasy-default-v1-deactivate-vanity-subdomain-config:
+      parameters:
+        path:
+          ref: "<value>"
+  v1-check-vanity-subdomain-availability:
+    speakeasy-default-v1-check-vanity-subdomain-availability:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"vanity_subdomain": "<value>"}
+      responses:
+        "201":
+          application/json: {"available": true}
+  v1-activate-vanity-subdomain-config:
+    speakeasy-default-v1-activate-vanity-subdomain-config:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"vanity_subdomain": "<value>"}
+      responses:
+        "201":
+          application/json: {"custom_domain": "<value>"}
+  v1-get-postgrest-service-config:
+    speakeasy-default-v1-get-postgrest-service-config:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"max_rows": 156257, "db_pool": 535241, "db_schema": "<value>", "db_extra_search_path": "<value>"}
+  v1-update-postgrest-service-config:
+    speakeasy-default-v1-update-postgrest-service-config:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"max_rows": 114309, "db_pool": 119222, "db_schema": "<value>", "db_extra_search_path": "<value>"}
+  v1-get-storage-config:
+    speakeasy-default-v1-get-storage-config:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"fileSizeLimit": 976035, "features": {"imageTransformation": {"enabled": true}}}
+  v1-update-storage-config:
+    speakeasy-default-v1-update-storage-config:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {}
+  v1-list-all-buckets:
+    speakeasy-default-v1-list-all-buckets:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: [{"id": "<id>", "name": "<value>", "owner": "<value>", "created_at": "1724242247488", "updated_at": "1737017137979", "public": false}, {"id": "<id>", "name": "<value>", "owner": "<value>", "created_at": "1714250246388", "updated_at": "1737019955601", "public": false}]
+  v1-get-auth-service-config:
+    speakeasy-default-v1-get-auth-service-config:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"api_max_request_duration": 151356, "db_max_pool_size": 551308, "jwt_exp": 415347, "mailer_otp_exp": 858566, "mailer_otp_length": 110099, "mfa_max_enrolled_factors": 661716, "mfa_phone_otp_length": 556745, "mfa_phone_max_frequency": 507966, "password_min_length": 849737, "rate_limit_anonymous_users": 970531, "rate_limit_email_sent": 154400, "rate_limit_sms_sent": 392736, "rate_limit_token_refresh": 209775, "rate_limit_verify": 265936, "rate_limit_otp": 711889, "security_refresh_token_reuse_interval": 786045, "sessions_inactivity_timeout": 996993, "sessions_timebox": 277073, "sms_max_frequency": 893244, "sms_otp_exp": 412271, "sms_otp_length": 581342, "smtp_max_frequency": 645180, "disable_signup": false, "external_anonymous_users_enabled": true, "external_apple_additional_client_ids": "<value>", "external_apple_client_id": "<id>", "external_apple_enabled": false, "external_apple_secret": "<value>", "external_azure_client_id": "<id>", "external_azure_enabled": true, "external_azure_secret": "<value>", "external_azure_url": "https://trusting-secret.org/", "external_bitbucket_client_id": "<id>", "external_bitbucket_enabled": false, "external_bitbucket_secret": "<value>", "external_discord_client_id": "<id>", "external_discord_enabled": false, "external_discord_secret": "<value>", "external_email_enabled": true, "external_facebook_client_id": "<id>", "external_facebook_enabled": false, "external_facebook_secret": "<value>", "external_figma_client_id": "<id>", "external_figma_enabled": true, "external_figma_secret": "<value>", "external_github_client_id": "<id>", "external_github_enabled": true, "external_github_secret": "<value>", "external_gitlab_client_id": "<id>", "external_gitlab_enabled": false, "external_gitlab_secret": "<value>", "external_gitlab_url": "https://reckless-conservation.info/", "external_google_additional_client_ids": "<value>", "external_google_client_id": "<id>", "external_google_enabled": false, "external_google_secret": "<value>", "external_google_skip_nonce_check": true, "external_kakao_client_id": "<id>", "external_kakao_enabled": false, "external_kakao_secret": "<value>", "external_keycloak_client_id": "<id>", "external_keycloak_enabled": true, "external_keycloak_secret": "<value>", "external_keycloak_url": "https://white-vein.biz", "external_linkedin_oidc_client_id": "<id>", "external_linkedin_oidc_enabled": true, "external_linkedin_oidc_secret": "<value>", "external_slack_oidc_client_id": "<id>", "external_slack_oidc_enabled": true, "external_slack_oidc_secret": "<value>", "external_notion_client_id": "<id>", "external_notion_enabled": true, "external_notion_secret": "<value>", "external_phone_enabled": true, "external_slack_client_id": "<id>", "external_slack_enabled": true, "external_slack_secret": "<value>", "external_spotify_client_id": "<id>", "external_spotify_enabled": true, "external_spotify_secret": "<value>", "external_twitch_client_id": "<id>", "external_twitch_enabled": true, "external_twitch_secret": "<value>", "external_twitter_client_id": "<id>", "external_twitter_enabled": true, "external_twitter_secret": "<value>", "external_workos_client_id": "<id>", "external_workos_enabled": false, "external_workos_secret": "<value>", "external_workos_url": "https://lanky-analogy.net", "external_zoom_client_id": "<id>", "external_zoom_enabled": true, "external_zoom_secret": "<value>", "hook_custom_access_token_enabled": true, "hook_custom_access_token_uri": "https://kaleidoscopic-husband.org/", "hook_custom_access_token_secrets": "<value>", "hook_mfa_verification_attempt_enabled": true, "hook_mfa_verification_attempt_uri": "https://colorless-king.net/", "hook_mfa_verification_attempt_secrets": "<value>", "hook_password_verification_attempt_enabled": true, "hook_password_verification_attempt_uri": "https://untried-charlatan.com/", "hook_password_verification_attempt_secrets": "<value>", "hook_send_sms_enabled": false, "hook_send_sms_uri": "https://indolent-embarrassment.com", "hook_send_sms_secrets": "<value>", "hook_send_email_enabled": false, "hook_send_email_uri": "https://parallel-punctuation.biz", "hook_send_email_secrets": "<value>", "mailer_allow_unverified_email_sign_ins": false, "mailer_autoconfirm": true, "mailer_secure_email_change_enabled": true, "mailer_subjects_confirmation": "<value>", "mailer_subjects_email_change": "<value>", "mailer_subjects_invite": "<value>", "mailer_subjects_magic_link": "<value>", "mailer_subjects_reauthentication": "<value>", "mailer_subjects_recovery": "<value>", "mailer_templates_confirmation_content": "<value>", "mailer_templates_email_change_content": "<value>", "mailer_templates_invite_content": "<value>", "mailer_templates_magic_link_content": "<value>", "mailer_templates_reauthentication_content": "<value>", "mailer_templates_recovery_content": "<value>", "mfa_totp_enroll_enabled": true, "mfa_totp_verify_enabled": false, "mfa_phone_enroll_enabled": true, "mfa_phone_verify_enabled": false, "mfa_web_authn_enroll_enabled": true, "mfa_web_authn_verify_enabled": false, "mfa_phone_template": "<value>", "password_hibp_enabled": true, "password_required_characters": "<value>", "refresh_token_rotation_enabled": false, "saml_enabled": false, "saml_external_url": "https://elementary-sushi.name/", "saml_allow_encrypted_assertions": false, "security_captcha_enabled": true, "security_captcha_provider": "<value>", "security_captcha_secret": "<value>", "security_manual_linking_enabled": true, "security_update_password_require_reauthentication": false, "sessions_single_per_user": true, "sessions_tags": "<value>", "site_url": "https://bruised-request.biz/", "sms_autoconfirm": false, "sms_messagebird_access_key": "<value>", "sms_messagebird_originator": "<value>", "sms_provider": "<value>", "sms_template": "<value>", "sms_test_otp": "<value>", "sms_test_otp_valid_until": "<value>", "sms_textlocal_api_key": "<value>", "sms_textlocal_sender": "<value>", "sms_twilio_account_sid": "<id>", "sms_twilio_auth_token": "<value>", "sms_twilio_content_sid": "<id>", "sms_twilio_message_service_sid": "<id>", "sms_twilio_verify_account_sid": "<id>", "sms_twilio_verify_auth_token": "<value>", "sms_twilio_verify_message_service_sid": "<id>", "sms_vonage_api_key": "<value>", "sms_vonage_api_secret": "<value>", "sms_vonage_from": "<value>", "smtp_admin_email": "<value>", "smtp_host": "<value>", "smtp_pass": "<value>", "smtp_port": "<value>", "smtp_sender_name": "<value>", "smtp_user": "<value>", "uri_allow_list": "<value>"}
+  v1-update-auth-service-config:
+    speakeasy-default-v1-update-auth-service-config:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"api_max_request_duration": 511274, "db_max_pool_size": 971694, "jwt_exp": 746999, "mailer_otp_exp": 699490, "mailer_otp_length": 549347, "mfa_max_enrolled_factors": 860414, "mfa_phone_otp_length": 367509, "mfa_phone_max_frequency": 577668, "password_min_length": 614028, "rate_limit_anonymous_users": 974133, "rate_limit_email_sent": 598896, "rate_limit_sms_sent": 651509, "rate_limit_token_refresh": 404099, "rate_limit_verify": 477587, "rate_limit_otp": 944056, "security_refresh_token_reuse_interval": 789983, "sessions_inactivity_timeout": 612200, "sessions_timebox": 522269, "sms_max_frequency": 947561, "sms_otp_exp": 646177, "sms_otp_length": 148649, "smtp_max_frequency": 651201, "disable_signup": false, "external_anonymous_users_enabled": false, "external_apple_additional_client_ids": "<value>", "external_apple_client_id": "<id>", "external_apple_enabled": false, "external_apple_secret": "<value>", "external_azure_client_id": "<id>", "external_azure_enabled": true, "external_azure_secret": "<value>", "external_azure_url": "https://rapid-density.info", "external_bitbucket_client_id": "<id>", "external_bitbucket_enabled": false, "external_bitbucket_secret": "<value>", "external_discord_client_id": "<id>", "external_discord_enabled": true, "external_discord_secret": "<value>", "external_email_enabled": false, "external_facebook_client_id": "<id>", "external_facebook_enabled": true, "external_facebook_secret": "<value>", "external_figma_client_id": "<id>", "external_figma_enabled": false, "external_figma_secret": "<value>", "external_github_client_id": "<id>", "external_github_enabled": false, "external_github_secret": "<value>", "external_gitlab_client_id": "<id>", "external_gitlab_enabled": true, "external_gitlab_secret": "<value>", "external_gitlab_url": "https://quarterly-behest.name", "external_google_additional_client_ids": "<value>", "external_google_client_id": "<id>", "external_google_enabled": false, "external_google_secret": "<value>", "external_google_skip_nonce_check": false, "external_kakao_client_id": "<id>", "external_kakao_enabled": true, "external_kakao_secret": "<value>", "external_keycloak_client_id": "<id>", "external_keycloak_enabled": true, "external_keycloak_secret": "<value>", "external_keycloak_url": "https://fortunate-statue.info/", "external_linkedin_oidc_client_id": "<id>", "external_linkedin_oidc_enabled": false, "external_linkedin_oidc_secret": "<value>", "external_slack_oidc_client_id": "<id>", "external_slack_oidc_enabled": true, "external_slack_oidc_secret": "<value>", "external_notion_client_id": "<id>", "external_notion_enabled": true, "external_notion_secret": "<value>", "external_phone_enabled": true, "external_slack_client_id": "<id>", "external_slack_enabled": true, "external_slack_secret": "<value>", "external_spotify_client_id": "<id>", "external_spotify_enabled": true, "external_spotify_secret": "<value>", "external_twitch_client_id": "<id>", "external_twitch_enabled": true, "external_twitch_secret": "<value>", "external_twitter_client_id": "<id>", "external_twitter_enabled": false, "external_twitter_secret": "<value>", "external_workos_client_id": "<id>", "external_workos_enabled": false, "external_workos_secret": "<value>", "external_workos_url": "https://knowledgeable-fireplace.net", "external_zoom_client_id": "<id>", "external_zoom_enabled": false, "external_zoom_secret": "<value>", "hook_custom_access_token_enabled": true, "hook_custom_access_token_uri": "https://noxious-amnesty.org", "hook_custom_access_token_secrets": "<value>", "hook_mfa_verification_attempt_enabled": true, "hook_mfa_verification_attempt_uri": "https://yellow-scholarship.biz/", "hook_mfa_verification_attempt_secrets": "<value>", "hook_password_verification_attempt_enabled": false, "hook_password_verification_attempt_uri": "https://strong-doubter.org/", "hook_password_verification_attempt_secrets": "<value>", "hook_send_sms_enabled": false, "hook_send_sms_uri": "https://second-hand-marketplace.info", "hook_send_sms_secrets": "<value>", "hook_send_email_enabled": false, "hook_send_email_uri": "https://diligent-traditionalism.biz", "hook_send_email_secrets": "<value>", "mailer_allow_unverified_email_sign_ins": false, "mailer_autoconfirm": false, "mailer_secure_email_change_enabled": true, "mailer_subjects_confirmation": "<value>", "mailer_subjects_email_change": "<value>", "mailer_subjects_invite": "<value>", "mailer_subjects_magic_link": "<value>", "mailer_subjects_reauthentication": "<value>", "mailer_subjects_recovery": "<value>", "mailer_templates_confirmation_content": "<value>", "mailer_templates_email_change_content": "<value>", "mailer_templates_invite_content": "<value>", "mailer_templates_magic_link_content": "<value>", "mailer_templates_reauthentication_content": "<value>", "mailer_templates_recovery_content": "<value>", "mfa_totp_enroll_enabled": true, "mfa_totp_verify_enabled": false, "mfa_phone_enroll_enabled": false, "mfa_phone_verify_enabled": true, "mfa_web_authn_enroll_enabled": false, "mfa_web_authn_verify_enabled": false, "mfa_phone_template": "<value>", "password_hibp_enabled": true, "password_required_characters": "<value>", "refresh_token_rotation_enabled": false, "saml_enabled": false, "saml_external_url": "https://essential-bandwidth.info", "saml_allow_encrypted_assertions": false, "security_captcha_enabled": true, "security_captcha_provider": "<value>", "security_captcha_secret": "<value>", "security_manual_linking_enabled": true, "security_update_password_require_reauthentication": false, "sessions_single_per_user": true, "sessions_tags": "<value>", "site_url": "https://exotic-fowl.name/", "sms_autoconfirm": false, "sms_messagebird_access_key": "<value>", "sms_messagebird_originator": "<value>", "sms_provider": "<value>", "sms_template": "<value>", "sms_test_otp": "<value>", "sms_test_otp_valid_until": "<value>", "sms_textlocal_api_key": "<value>", "sms_textlocal_sender": "<value>", "sms_twilio_account_sid": "<id>", "sms_twilio_auth_token": "<value>", "sms_twilio_content_sid": "<id>", "sms_twilio_message_service_sid": "<id>", "sms_twilio_verify_account_sid": "<id>", "sms_twilio_verify_auth_token": "<value>", "sms_twilio_verify_message_service_sid": "<id>", "sms_vonage_api_key": "<value>", "sms_vonage_api_secret": "<value>", "sms_vonage_from": "<value>", "smtp_admin_email": "<value>", "smtp_host": "<value>", "smtp_pass": "<value>", "smtp_port": "<value>", "smtp_sender_name": "<value>", "smtp_user": "<value>", "uri_allow_list": "<value>"}
+  createTPAForProject:
+    speakeasy-default-create-TPA-for-project:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {}
+      responses:
+        "201":
+          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1736995842281"}
+  listTPAForProject:
+    speakeasy-default-list-TPA-for-project:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: []
+  deleteTPAForProject:
+    speakeasy-default-delete-TPA-for-project:
+      parameters:
+        path:
+          ref: "<value>"
+          tpa_id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737040984481"}
+  getTPAForProject:
+    speakeasy-default-get-TPA-for-project:
+      parameters:
+        path:
+          ref: "<value>"
+          tpa_id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737035931685"}
+  v1-create-a-sso-provider:
+    speakeasy-default-v1-create-a-sso-provider:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {"type": "saml"}
+      responses:
+        "201":
+          application/json: {"id": "<id>"}
+  v1-list-all-sso-provider:
+    speakeasy-default-v1-list-all-sso-provider:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: {"items": [{"id": "<id>"}, {"id": "<id>"}, {"id": "<id>"}]}
+  v1-get-a-sso-provider:
+    speakeasy-default-v1-get-a-sso-provider:
+      parameters:
+        path:
+          ref: "<value>"
+          provider_id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "<id>"}
+  v1-update-a-sso-provider:
+    speakeasy-default-v1-update-a-sso-provider:
+      parameters:
+        path:
+          ref: "<value>"
+          provider_id: "<id>"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"id": "<id>"}
+  v1-delete-a-sso-provider:
+    speakeasy-default-v1-delete-a-sso-provider:
+      parameters:
+        path:
+          ref: "<value>"
+          provider_id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "<id>"}
+  v1-create-a-function:
+    speakeasy-default-v1-create-a-function-json:
+      parameters:
+        path:
+          ref: "<value>"
+        query: {}
+      requestBody:
+        application/json: {"slug": "<value>", "name": "<value>", "body": "<value>"}
+      responses:
+        "201":
+          application/json: {"version": 86288, "created_at": 930855, "updated_at": 901489, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
+    speakeasy-default-v1-create-a-function-raw:
+      parameters:
+        path:
+          ref: "<value>"
+        query: {}
+      requestBody:
+        application/vnd.denoland.eszip: "0xaA7bA55bea"
+      responses:
+        "201":
+          application/json: {"version": 882538, "created_at": 277118, "updated_at": 181599, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
+  v1-list-all-functions:
+    speakeasy-default-v1-list-all-functions:
+      parameters:
+        path:
+          ref: "<value>"
+      responses:
+        "200":
+          application/json: [{"version": 60083, "created_at": 36260, "updated_at": 474144, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "REMOVED"}, {"version": 414376, "created_at": 421451, "updated_at": 905148, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "THROTTLED"}]
+  v1-get-a-function:
+    speakeasy-default-v1-get-a-function:
+      parameters:
+        path:
+          ref: "<value>"
+          function_slug: "<value>"
+      responses:
+        "200":
+          application/json: {"version": 399037, "created_at": 137964, "updated_at": 984435, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
+  v1-update-a-function:
+    speakeasy-default-v1-update-a-function-json:
+      parameters:
+        path:
+          ref: "<value>"
+          function_slug: "<value>"
+        query: {}
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"version": 730983, "created_at": 301731, "updated_at": 802025, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "REMOVED"}
+    speakeasy-default-v1-update-a-function-raw:
+      parameters:
+        path:
+          ref: "<value>"
+          function_slug: "<value>"
+        query: {}
+      requestBody:
+        application/vnd.denoland.eszip: "0xAeD0B23dcD"
+      responses:
+        "200":
+          application/json: {"version": 954708, "created_at": 461149, "updated_at": 835142, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "REMOVED"}
+  v1-delete-a-function:
+    speakeasy-default-v1-delete-a-function:
+      parameters:
+        path:
+          ref: "<value>"
+          function_slug: "<value>"
+  v1-get-a-function-body:
+    speakeasy-default-v1-get-a-function-body:
+      parameters:
+        path:
+          ref: "<value>"
+          function_slug: "<value>"
+generatedTests: {}

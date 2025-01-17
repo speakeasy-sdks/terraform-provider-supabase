@@ -27,20 +27,13 @@ Supabase API (v1): Supabase API generated from the OpenAPI specification.<br>Vis
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-- [supabase](#supabase)
-  - [🏗 **Welcome to your new Terraform Provider!** 🏗](#-welcome-to-your-new-terraform-provider-)
-  - [Summary](#summary)
-  - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
-  - [Available Resources and Data Sources](#available-resources-and-data-sources)
-    - [Resources](#resources)
-    - [Data Sources](#data-sources)
-  - [Testing the provider locally](#testing-the-provider-locally)
-      - [Local Provider](#local-provider)
-      - [Compiled Provider](#compiled-provider)
-- [Development](#development)
-  - [Contributions](#contributions)
-    - [SDK Created by Speakeasy](#sdk-created-by-speakeasy)
+* [supabase](#supabase)
+  * [🏗 **Welcome to your new Terraform Provider!** 🏗](#welcome-to-your-new-terraform-provider)
+  * [Installation](#installation)
+  * [Available Resources and Data Sources](#available-resources-and-data-sources)
+  * [Testing the provider locally](#testing-the-provider-locally)
+* [Development](#development)
+  * [Contributions](#contributions)
 
 <!-- End Table of Contents [toc] -->
 
@@ -54,7 +47,7 @@ terraform {
   required_providers {
     supabase = {
       source  = "speakeasy/supabase"
-      version = "0.0.4"
+      version = "0.0.10"
     }
   }
 }
@@ -71,9 +64,17 @@ provider "supabase" {
 ### Resources
 
 * [supabase_branch](docs/resources/branch.md)
+* [supabase_function](docs/resources/function.md)
+* [supabase_organization](docs/resources/organization.md)
+* [supabase_project](docs/resources/project.md)
 ### Data Sources
 
+* [supabase_auth](docs/data-sources/auth.md)
 * [supabase_branch](docs/data-sources/branch.md)
+* [supabase_function](docs/data-sources/function.md)
+* [supabase_pgbouncer](docs/data-sources/pgbouncer.md)
+* [supabase_pooler](docs/data-sources/pooler.md)
+* [supabase_postgres](docs/data-sources/postgres.md)
 <!-- End Available Resources and Data Sources [operations] -->
 
 <!-- Start Testing the provider locally [usage] -->

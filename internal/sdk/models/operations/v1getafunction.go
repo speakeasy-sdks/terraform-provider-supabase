@@ -11,7 +11,7 @@ type V1GetAFunctionRequest struct {
 	// Project ref
 	Ref string `pathParam:"style=simple,explode=false,name=ref"`
 	// Function slug
-	FunctionSlug string `pathParam:"style=simple,explode=false,name=function_slug"`
+	Slug string `pathParam:"style=simple,explode=false,name=slug"`
 }
 
 func (o *V1GetAFunctionRequest) GetRef() string {
@@ -21,11 +21,11 @@ func (o *V1GetAFunctionRequest) GetRef() string {
 	return o.Ref
 }
 
-func (o *V1GetAFunctionRequest) GetFunctionSlug() string {
+func (o *V1GetAFunctionRequest) GetSlug() string {
 	if o == nil {
 		return ""
 	}
-	return o.FunctionSlug
+	return o.Slug
 }
 
 type V1GetAFunctionResponse struct {

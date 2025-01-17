@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: b4b7b7b2-a0a8-440d-aa19-4e992089d1f6
 management:
-  docChecksum: d95076c65307ea41f7af2bbb467906c5
+  docChecksum: 21c47538a96c4cd1a2fdc84478d7b089
   docVersion: 1.0.0
-  speakeasyVersion: 1.468.9
+  speakeasyVersion: 1.469.1
   generationVersion: 2.493.21
-  releaseVersion: 0.0.4
-  configChecksum: 820a1c5e58082b404c3a8184626989b4
+  releaseVersion: 0.0.10
+  configChecksum: c67c6aabd38ba590060c2c02a7cf8166
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -22,10 +22,19 @@ generatedFiles:
   - .gitattributes
   - USAGE.md
   - examples/README.md
+  - examples/data-sources/supabase_auth/data-source.tf
   - examples/data-sources/supabase_branch/data-source.tf
+  - examples/data-sources/supabase_function/data-source.tf
+  - examples/data-sources/supabase_pgbouncer/data-source.tf
+  - examples/data-sources/supabase_pooler/data-source.tf
+  - examples/data-sources/supabase_postgres/data-source.tf
   - examples/provider/provider.tf
   - examples/resources/supabase_branch/import.sh
   - examples/resources/supabase_branch/resource.tf
+  - examples/resources/supabase_function/import.sh
+  - examples/resources/supabase_function/resource.tf
+  - examples/resources/supabase_organization/resource.tf
+  - examples/resources/supabase_project/resource.tf
   - go.mod
   - go.sum
   - internal/planmodifiers/boolplanmodifier/suppress_diff.go
@@ -38,10 +47,26 @@ generatedFiles:
   - internal/planmodifiers/setplanmodifier/suppress_diff.go
   - internal/planmodifiers/stringplanmodifier/suppress_diff.go
   - internal/planmodifiers/utils/state_check.go
+  - internal/provider/auth_data_source.go
+  - internal/provider/auth_data_source_sdk.go
   - internal/provider/branch_data_source.go
   - internal/provider/branch_data_source_sdk.go
   - internal/provider/branch_resource.go
   - internal/provider/branch_resource_sdk.go
+  - internal/provider/function_data_source.go
+  - internal/provider/function_data_source_sdk.go
+  - internal/provider/function_resource.go
+  - internal/provider/function_resource_sdk.go
+  - internal/provider/organization_resource.go
+  - internal/provider/organization_resource_sdk.go
+  - internal/provider/pgbouncer_data_source.go
+  - internal/provider/pgbouncer_data_source_sdk.go
+  - internal/provider/pooler_data_source.go
+  - internal/provider/pooler_data_source_sdk.go
+  - internal/provider/postgres_data_source.go
+  - internal/provider/postgres_data_source_sdk.go
+  - internal/provider/project_resource.go
+  - internal/provider/project_resource_sdk.go
   - internal/provider/provider.go
   - internal/provider/reflect/diags.go
   - internal/provider/reflect/doc.go
@@ -57,6 +82,7 @@ generatedFiles:
   - internal/provider/reflect/primitive.go
   - internal/provider/reflect/slice.go
   - internal/provider/reflect/struct.go
+  - internal/provider/types/supavisor_config_response.go
   - internal/provider/utils.go
   - internal/sdk/.gitattributes
   - internal/sdk/auth.go
@@ -93,8 +119,7 @@ generatedFiles:
   - internal/sdk/models/operations/v1bulkdeletesecrets.go
   - internal/sdk/models/operations/v1checkvanitysubdomainavailability.go
   - internal/sdk/models/operations/v1createabranch.go
-  - internal/sdk/models/operations/v1createafunctionjson.go
-  - internal/sdk/models/operations/v1createafunctionraw.go
+  - internal/sdk/models/operations/v1createafunction.go
   - internal/sdk/models/operations/v1createanorganization.go
   - internal/sdk/models/operations/v1createaproject.go
   - internal/sdk/models/operations/v1createassoprovider.go
@@ -150,8 +175,7 @@ generatedFiles:
   - internal/sdk/models/operations/v1runaquery.go
   - internal/sdk/models/operations/v1setupareadreplica.go
   - internal/sdk/models/operations/v1updateabranchconfig.go
-  - internal/sdk/models/operations/v1updateafunctionjson.go
-  - internal/sdk/models/operations/v1updateafunctionraw.go
+  - internal/sdk/models/operations/v1updateafunction.go
   - internal/sdk/models/operations/v1updateassoprovider.go
   - internal/sdk/models/operations/v1updateauthserviceconfig.go
   - internal/sdk/models/operations/v1updatehostnameconfig.go
@@ -972,6 +996,16 @@ examples:
       responses:
         "201":
           application/json: {"version": 882538, "created_at": 277118, "updated_at": 181599, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
+    speakeasy-default-v1-create-a-function:
+      parameters:
+        path:
+          ref: "<value>"
+        query: {}
+      requestBody:
+        application/json: {"slug": "<value>", "name": "<value>", "body": "<value>"}
+      responses:
+        "201":
+          application/json: {"version": 128461, "created_at": 693257, "updated_at": 691556, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
   v1-list-all-functions:
     speakeasy-default-v1-list-all-functions:
       parameters:
@@ -986,6 +1020,7 @@ examples:
         path:
           ref: "<value>"
           function_slug: "<value>"
+          slug: "<value>"
       responses:
         "200":
           application/json: {"version": 399037, "created_at": 137964, "updated_at": 984435, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
@@ -1012,16 +1047,30 @@ examples:
       responses:
         "200":
           application/json: {"version": 954708, "created_at": 461149, "updated_at": 835142, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "REMOVED"}
+    speakeasy-default-v1-update-a-function:
+      parameters:
+        path:
+          ref: "<value>"
+          function_slug: "<value>"
+          slug: "<value>"
+        query: {}
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"version": 694192, "created_at": 809155, "updated_at": 280742, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "THROTTLED"}
   v1-delete-a-function:
     speakeasy-default-v1-delete-a-function:
       parameters:
         path:
           ref: "<value>"
           function_slug: "<value>"
+          slug: "<value>"
   v1-get-a-function-body:
     speakeasy-default-v1-get-a-function-body:
       parameters:
         path:
           ref: "<value>"
           function_slug: "<value>"
+          slug: "<value>"
 generatedTests: {}

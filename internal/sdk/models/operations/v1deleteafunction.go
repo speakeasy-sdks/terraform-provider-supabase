@@ -10,7 +10,7 @@ type V1DeleteAFunctionRequest struct {
 	// Project ref
 	Ref string `pathParam:"style=simple,explode=false,name=ref"`
 	// Function slug
-	FunctionSlug string `pathParam:"style=simple,explode=false,name=function_slug"`
+	Slug string `pathParam:"style=simple,explode=false,name=slug"`
 }
 
 func (o *V1DeleteAFunctionRequest) GetRef() string {
@@ -20,11 +20,11 @@ func (o *V1DeleteAFunctionRequest) GetRef() string {
 	return o.Ref
 }
 
-func (o *V1DeleteAFunctionRequest) GetFunctionSlug() string {
+func (o *V1DeleteAFunctionRequest) GetSlug() string {
 	if o == nil {
 		return ""
 	}
-	return o.FunctionSlug
+	return o.Slug
 }
 
 type V1DeleteAFunctionResponse struct {

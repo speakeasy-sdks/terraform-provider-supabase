@@ -168,9 +168,9 @@ func New(opts ...SDKOption) *Supabase {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "0.0.10",
+			SDKVersion:        "0.0.11",
 			GenVersion:        "2.493.21",
-			UserAgent:         "speakeasy-sdk/terraform 0.0.10 2.493.21 1.0.0 github.com/speakeasy/terraform-provider-supabase/internal/sdk",
+			UserAgent:         "speakeasy-sdk/terraform 0.0.11 2.493.21 1.0.0 github.com/speakeasy/terraform-provider-supabase/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}

@@ -1,4 +1,4 @@
-speakeasyVersion: 1.469.1
+speakeasyVersion: 1.468.9
 sources: {}
 targets:
     supabase:

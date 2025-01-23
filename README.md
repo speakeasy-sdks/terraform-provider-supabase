@@ -1,24 +1,14 @@
-# supabase
 
-Terraform Provider for the *supabase* API.
 
-<div align="left">
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/02bd5126-6c8a-4c69-bc6d-8c70b5f5cecb"/>
+    <p>Supabase Terraform Provider</p>
     <a href="https://www.speakeasy.com/?utm_source=supabase&utm_campaign=terraform"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454" /></a>
     <a href="https://opensource.org/licenses/MIT">
         <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
     </a>
 </div>
 
-
-## 🏗 **Welcome to your new Terraform Provider!** 🏗
-
-It has been generated successfully based on your OpenAPI spec. However, it is not yet ready for production use. Here are some next steps:
-- [ ] 🛠 Add resources and datasources to your SDK by [annotating your OAS](https://www.speakeasy.com/docs/customize-terraform/terraform-extensions#map-api-entities-to-terraform-resources)
-- [ ] ♻️ Refine your terraform provider quickly by iterating locally with the [Speakeasy CLI](https://github.com/speakeasy-api/speakeasy)
-- [ ] 🎁 Publish your terraform provider to hashicorp registry by [configuring automatic publishing](https://www.speakeasy.com/docs/terraform-publishing)
-- [ ] ✨ When ready to productionize, delete this section from the README
-
-<!-- Start Summary [summary] -->
 ## Summary
 
 Supabase API: Supabase API
@@ -28,7 +18,6 @@ Supabase API: Supabase API
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
 * [supabase](#supabase)
-  * [🏗 **Welcome to your new Terraform Provider!** 🏗](#welcome-to-your-new-terraform-provider)
   * [Installation](#installation)
   * [Available Resources and Data Sources](#available-resources-and-data-sources)
   * [Testing the provider locally](#testing-the-provider-locally)

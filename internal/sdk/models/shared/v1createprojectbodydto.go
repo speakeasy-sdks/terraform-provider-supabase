@@ -7,35 +7,6 @@ import (
 	"fmt"
 )
 
-// Subscription Plan is now set on organization level and is ignored in this request
-//
-// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-type Plan string
-
-const (
-	PlanFree Plan = "free"
-	PlanPro  Plan = "pro"
-)
-
-func (e Plan) ToPointer() *Plan {
-	return &e
-}
-func (e *Plan) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "free":
-		fallthrough
-	case "pro":
-		*e = Plan(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Plan: %v", v)
-	}
-}
-
 // Region you want your server to reside in
 type Region string
 
@@ -111,25 +82,25 @@ func (e *Region) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type V1CreateProjectBodyDtoDesiredInstanceSize string
+type DesiredInstanceSize string
 
 const (
-	V1CreateProjectBodyDtoDesiredInstanceSizeMicro         V1CreateProjectBodyDtoDesiredInstanceSize = "micro"
-	V1CreateProjectBodyDtoDesiredInstanceSizeSmall         V1CreateProjectBodyDtoDesiredInstanceSize = "small"
-	V1CreateProjectBodyDtoDesiredInstanceSizeMedium        V1CreateProjectBodyDtoDesiredInstanceSize = "medium"
-	V1CreateProjectBodyDtoDesiredInstanceSizeLarge         V1CreateProjectBodyDtoDesiredInstanceSize = "large"
-	V1CreateProjectBodyDtoDesiredInstanceSizeXlarge        V1CreateProjectBodyDtoDesiredInstanceSize = "xlarge"
-	V1CreateProjectBodyDtoDesiredInstanceSizeTwoxlarge     V1CreateProjectBodyDtoDesiredInstanceSize = "2xlarge"
-	V1CreateProjectBodyDtoDesiredInstanceSizeFourxlarge    V1CreateProjectBodyDtoDesiredInstanceSize = "4xlarge"
-	V1CreateProjectBodyDtoDesiredInstanceSizeEightxlarge   V1CreateProjectBodyDtoDesiredInstanceSize = "8xlarge"
-	V1CreateProjectBodyDtoDesiredInstanceSizeTwelvexlarge  V1CreateProjectBodyDtoDesiredInstanceSize = "12xlarge"
-	V1CreateProjectBodyDtoDesiredInstanceSizeSixteenxlarge V1CreateProjectBodyDtoDesiredInstanceSize = "16xlarge"
+	DesiredInstanceSizeMicro         DesiredInstanceSize = "micro"
+	DesiredInstanceSizeSmall         DesiredInstanceSize = "small"
+	DesiredInstanceSizeMedium        DesiredInstanceSize = "medium"
+	DesiredInstanceSizeLarge         DesiredInstanceSize = "large"
+	DesiredInstanceSizeXlarge        DesiredInstanceSize = "xlarge"
+	DesiredInstanceSizeTwoxlarge     DesiredInstanceSize = "2xlarge"
+	DesiredInstanceSizeFourxlarge    DesiredInstanceSize = "4xlarge"
+	DesiredInstanceSizeEightxlarge   DesiredInstanceSize = "8xlarge"
+	DesiredInstanceSizeTwelvexlarge  DesiredInstanceSize = "12xlarge"
+	DesiredInstanceSizeSixteenxlarge DesiredInstanceSize = "16xlarge"
 )
 
-func (e V1CreateProjectBodyDtoDesiredInstanceSize) ToPointer() *V1CreateProjectBodyDtoDesiredInstanceSize {
+func (e DesiredInstanceSize) ToPointer() *DesiredInstanceSize {
 	return &e
 }
-func (e *V1CreateProjectBodyDtoDesiredInstanceSize) UnmarshalJSON(data []byte) error {
+func (e *DesiredInstanceSize) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -154,10 +125,10 @@ func (e *V1CreateProjectBodyDtoDesiredInstanceSize) UnmarshalJSON(data []byte) e
 	case "12xlarge":
 		fallthrough
 	case "16xlarge":
-		*e = V1CreateProjectBodyDtoDesiredInstanceSize(v)
+		*e = DesiredInstanceSize(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for V1CreateProjectBodyDtoDesiredInstanceSize: %v", v)
+		return fmt.Errorf("invalid value for DesiredInstanceSize: %v", v)
 	}
 }
 
@@ -228,17 +199,9 @@ type V1CreateProjectBodyDto struct {
 	Name string `json:"name"`
 	// Slug of your organization
 	OrganizationID string `json:"organization_id"`
-	// Subscription Plan is now set on organization level and is ignored in this request
-	//
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	Plan *Plan `json:"plan,omitempty"`
 	// Region you want your server to reside in
-	Region Region `json:"region"`
-	// This field is deprecated and is ignored in this request
-	//
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	KpsEnabled          *bool                                      `json:"kps_enabled,omitempty"`
-	DesiredInstanceSize *V1CreateProjectBodyDtoDesiredInstanceSize `json:"desired_instance_size,omitempty"`
+	Region              Region               `json:"region"`
+	DesiredInstanceSize *DesiredInstanceSize `json:"desired_instance_size,omitempty"`
 	// Template URL used to create the project from the CLI.
 	TemplateURL *string `json:"template_url,omitempty"`
 	// Release channel. If not provided, GA will be used.
@@ -268,13 +231,6 @@ func (o *V1CreateProjectBodyDto) GetOrganizationID() string {
 	return o.OrganizationID
 }
 
-func (o *V1CreateProjectBodyDto) GetPlan() *Plan {
-	if o == nil {
-		return nil
-	}
-	return o.Plan
-}
-
 func (o *V1CreateProjectBodyDto) GetRegion() Region {
 	if o == nil {
 		return Region("")
@@ -282,14 +238,7 @@ func (o *V1CreateProjectBodyDto) GetRegion() Region {
 	return o.Region
 }
 
-func (o *V1CreateProjectBodyDto) GetKpsEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.KpsEnabled
-}
-
-func (o *V1CreateProjectBodyDto) GetDesiredInstanceSize() *V1CreateProjectBodyDtoDesiredInstanceSize {
+func (o *V1CreateProjectBodyDto) GetDesiredInstanceSize() *DesiredInstanceSize {
 	if o == nil {
 		return nil
 	}

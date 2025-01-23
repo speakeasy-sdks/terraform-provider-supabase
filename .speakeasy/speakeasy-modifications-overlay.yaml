@@ -1,0 +1,50 @@
+overlay: 1.0.0
+info:
+  title: Speakeasy Modifications
+  version: 0.0.4
+  x-speakeasy-metadata:
+    after: ""
+    before: ""
+    type: speakeasy-modifications
+actions:
+  - target: $..[?(@.deprecated == true)]
+    remove: true
+  - target: $["components"]["schemas"]["BranchDetailResponse"]["properties"]["db_pass"]
+    update:
+      x-speakeasy-param-sensitive: true
+  - target: $["paths"]["/v1/branches/{branch_id}"]
+    remove: true
+    x-speakeasy-metadata:
+      created_at: 1737675451499
+      type: user-edit
+  - target: $["paths"]["/v1/branches/{branch_id}/reset"]
+    remove: true
+    x-speakeasy-metadata:
+      created_at: 1737675451499
+      type: user-edit
+  - target: $["paths"]["/v1/projects/{ref}/branches"]
+    remove: true
+    x-speakeasy-metadata:
+      created_at: 1737675451499
+      type: user-edit
+  - target: $["paths"]["/v1/branches/{branch_id}"]
+    remove: true
+    x-speakeasy-metadata:
+      created_at: 1737675451499
+      type: user-edit
+  - target: $["paths"]["/v1/branches/{branch_id}/reset"]
+    remove: true
+    x-speakeasy-metadata:
+      created_at: 1737675451499
+      type: user-edit
+  - target: $["paths"]["/v1/projects/{ref}/branches"]
+    remove: true
+    x-speakeasy-metadata:
+      created_at: 1737675451499
+      type: user-edit
+  - target: $["components"]["schemas"]["V1CreateProjectBodyDto"]["properties"]["db_pass"]
+    update:
+      x-speakeasy-param-sensitive: true
+    x-speakeasy-metadata:
+      created_at: 1737675594321
+      type: user-edit

@@ -69,8 +69,6 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // Supabase API (v1): Supabase API generated from the OpenAPI specification.<br>Visit [https://supabase.com/docs](https://supabase.com/docs) for a complete documentation.
 type Supabase struct {
-	// Environments related endpoints
-	Environments *Environments
 	// Projects related endpoints
 	Projects *Projects
 	// Organizations related endpoints
@@ -168,9 +166,9 @@ func New(opts ...SDKOption) *Supabase {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "0.0.11",
-			GenVersion:        "2.493.21",
-			UserAgent:         "speakeasy-sdk/terraform 0.0.11 2.493.21 1.0.0 github.com/speakeasy/terraform-provider-supabase/internal/sdk",
+			SDKVersion:        "0.4.4",
+			GenVersion:        "2.493.34",
+			UserAgent:         "speakeasy-sdk/terraform 0.4.4 2.493.34 1.0.0 github.com/speakeasy/terraform-provider-supabase/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}
@@ -189,8 +187,6 @@ func New(opts ...SDKOption) *Supabase {
 	if serverURL != currentServerURL {
 		sdk.sdkConfiguration.ServerURL = serverURL
 	}
-
-	sdk.Environments = newEnvironments(sdk.sdkConfiguration)
 
 	sdk.Projects = newProjects(sdk.sdkConfiguration)
 

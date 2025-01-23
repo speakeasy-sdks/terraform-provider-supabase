@@ -4,6 +4,8 @@ sources:
     Supabase API (v1):
         inputs:
             - location: beta.yaml
+        overlays:
+            - location: .speakeasy/speakeasy-modifications-overlay.yaml
         registry:
             location: registry.speakeasyapi.dev/supabase/terraform-provider/supabase-api-(v-1)
 targets:

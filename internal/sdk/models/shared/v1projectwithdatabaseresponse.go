@@ -7,30 +7,30 @@ import (
 	"fmt"
 )
 
-type V1ProjectWithDatabaseResponseStatus string
+type Status string
 
 const (
-	V1ProjectWithDatabaseResponseStatusActiveHealthy   V1ProjectWithDatabaseResponseStatus = "ACTIVE_HEALTHY"
-	V1ProjectWithDatabaseResponseStatusActiveUnhealthy V1ProjectWithDatabaseResponseStatus = "ACTIVE_UNHEALTHY"
-	V1ProjectWithDatabaseResponseStatusComingUp        V1ProjectWithDatabaseResponseStatus = "COMING_UP"
-	V1ProjectWithDatabaseResponseStatusGoingDown       V1ProjectWithDatabaseResponseStatus = "GOING_DOWN"
-	V1ProjectWithDatabaseResponseStatusInactive        V1ProjectWithDatabaseResponseStatus = "INACTIVE"
-	V1ProjectWithDatabaseResponseStatusInitFailed      V1ProjectWithDatabaseResponseStatus = "INIT_FAILED"
-	V1ProjectWithDatabaseResponseStatusRemoved         V1ProjectWithDatabaseResponseStatus = "REMOVED"
-	V1ProjectWithDatabaseResponseStatusRestarting      V1ProjectWithDatabaseResponseStatus = "RESTARTING"
-	V1ProjectWithDatabaseResponseStatusUnknown         V1ProjectWithDatabaseResponseStatus = "UNKNOWN"
-	V1ProjectWithDatabaseResponseStatusUpgrading       V1ProjectWithDatabaseResponseStatus = "UPGRADING"
-	V1ProjectWithDatabaseResponseStatusPausing         V1ProjectWithDatabaseResponseStatus = "PAUSING"
-	V1ProjectWithDatabaseResponseStatusRestoring       V1ProjectWithDatabaseResponseStatus = "RESTORING"
-	V1ProjectWithDatabaseResponseStatusRestoreFailed   V1ProjectWithDatabaseResponseStatus = "RESTORE_FAILED"
-	V1ProjectWithDatabaseResponseStatusPauseFailed     V1ProjectWithDatabaseResponseStatus = "PAUSE_FAILED"
-	V1ProjectWithDatabaseResponseStatusResizing        V1ProjectWithDatabaseResponseStatus = "RESIZING"
+	StatusActiveHealthy   Status = "ACTIVE_HEALTHY"
+	StatusActiveUnhealthy Status = "ACTIVE_UNHEALTHY"
+	StatusComingUp        Status = "COMING_UP"
+	StatusGoingDown       Status = "GOING_DOWN"
+	StatusInactive        Status = "INACTIVE"
+	StatusInitFailed      Status = "INIT_FAILED"
+	StatusRemoved         Status = "REMOVED"
+	StatusRestarting      Status = "RESTARTING"
+	StatusUnknown         Status = "UNKNOWN"
+	StatusUpgrading       Status = "UPGRADING"
+	StatusPausing         Status = "PAUSING"
+	StatusRestoring       Status = "RESTORING"
+	StatusRestoreFailed   Status = "RESTORE_FAILED"
+	StatusPauseFailed     Status = "PAUSE_FAILED"
+	StatusResizing        Status = "RESIZING"
 )
 
-func (e V1ProjectWithDatabaseResponseStatus) ToPointer() *V1ProjectWithDatabaseResponseStatus {
+func (e Status) ToPointer() *Status {
 	return &e
 }
-func (e *V1ProjectWithDatabaseResponseStatus) UnmarshalJSON(data []byte) error {
+func (e *Status) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -65,10 +65,10 @@ func (e *V1ProjectWithDatabaseResponseStatus) UnmarshalJSON(data []byte) error {
 	case "PAUSE_FAILED":
 		fallthrough
 	case "RESIZING":
-		*e = V1ProjectWithDatabaseResponseStatus(v)
+		*e = Status(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for V1ProjectWithDatabaseResponseStatus: %v", v)
+		return fmt.Errorf("invalid value for Status: %v", v)
 	}
 }
 
@@ -82,9 +82,9 @@ type V1ProjectWithDatabaseResponse struct {
 	// Region of your project
 	Region string `json:"region"`
 	// Creation timestamp
-	CreatedAt string                              `json:"created_at"`
-	Database  V1DatabaseResponse                  `json:"database"`
-	Status    V1ProjectWithDatabaseResponseStatus `json:"status"`
+	CreatedAt string             `json:"created_at"`
+	Database  V1DatabaseResponse `json:"database"`
+	Status    Status             `json:"status"`
 }
 
 func (o *V1ProjectWithDatabaseResponse) GetID() string {
@@ -129,9 +129,9 @@ func (o *V1ProjectWithDatabaseResponse) GetDatabase() V1DatabaseResponse {
 	return o.Database
 }
 
-func (o *V1ProjectWithDatabaseResponse) GetStatus() V1ProjectWithDatabaseResponseStatus {
+func (o *V1ProjectWithDatabaseResponse) GetStatus() Status {
 	if o == nil {
-		return V1ProjectWithDatabaseResponseStatus("")
+		return Status("")
 	}
 	return o.Status
 }

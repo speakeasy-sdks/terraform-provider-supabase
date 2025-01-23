@@ -9,10 +9,15 @@
     </a>
 </div>
 
+<!-- Start Summary [summary] -->
+## Summary
+
+Supabase API (v1): Supabase API generated from the OpenAPI specification.<br>Visit [https://supabase.com/docs](https://supabase.com/docs) for a complete documentation.
+<!-- End Summary [summary] -->
+
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-* [supabase](#supabase)
   * [Installation](#installation)
   * [Available Resources and Data Sources](#available-resources-and-data-sources)
   * [Testing the provider locally](#testing-the-provider-locally)
@@ -31,7 +36,7 @@ terraform {
   required_providers {
     supabase = {
       source  = "speakeasy/supabase"
-      version = "0.0.11"
+      version = "0.4.4"
     }
   }
 }
@@ -47,14 +52,12 @@ provider "supabase" {
 
 ### Resources
 
-* [supabase_branch](docs/resources/branch.md)
 * [supabase_function](docs/resources/function.md)
 * [supabase_organization](docs/resources/organization.md)
 * [supabase_project](docs/resources/project.md)
 ### Data Sources
 
 * [supabase_auth](docs/data-sources/auth.md)
-* [supabase_branch](docs/data-sources/branch.md)
 * [supabase_function](docs/data-sources/function.md)
 * [supabase_pgbouncer](docs/data-sources/pgbouncer.md)
 * [supabase_pooler](docs/data-sources/pooler.md)

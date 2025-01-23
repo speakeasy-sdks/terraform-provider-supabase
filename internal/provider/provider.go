@@ -92,7 +92,6 @@ func (p *SupabaseProvider) Configure(ctx context.Context, req provider.Configure
 
 func (p *SupabaseProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		NewBranchResource,
 		NewFunctionResource,
 		NewOrganizationResource,
 		NewProjectResource,
@@ -102,7 +101,6 @@ func (p *SupabaseProvider) Resources(ctx context.Context) []func() resource.Reso
 func (p *SupabaseProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		NewAuthDataSource,
-		NewBranchDataSource,
 		NewFunctionDataSource,
 		NewPgbouncerDataSource,
 		NewPoolerDataSource,

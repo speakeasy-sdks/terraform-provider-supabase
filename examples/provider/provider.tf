@@ -2,7 +2,7 @@ terraform {
   required_providers {
     supabase = {
       source  = "speakeasy/supabase"
-      version = "0.0.11"
+      version = "0.4.4"
     }
   }
 }

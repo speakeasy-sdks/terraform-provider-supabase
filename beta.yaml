@@ -4,7 +4,6 @@ servers:
 paths:
   /v1/branches/{branch_id}:
     get:
-      x-speakeasy-entity-operation: Branch#read
       operationId: v1-get-a-branch-config
       summary: Get database branch config
       description: Fetches configurations of the specified database branch
@@ -29,7 +28,6 @@ paths:
       security:
         - bearer: []
     patch:
-      x-speakeasy-entity-operation: Branch#update
       operationId: v1-update-a-branch-config
       summary: Update database branch config
       description: Updates the configuration of the specified database branch
@@ -60,7 +58,6 @@ paths:
       security:
         - bearer: []
     delete:
-      x-speakeasy-entity-operation: Branch#delete
       operationId: v1-delete-a-branch
       summary: Delete a database branch
       description: Deletes the specified database branch
@@ -86,7 +83,6 @@ paths:
         - bearer: []
   /v1/branches/{branch_id}/reset:
     post:
-      x-speakeasy-entity-operation: Branch#create
       operationId: v1-reset-a-branch
       summary: Resets a database branch
       description: Resets the specified database branch
@@ -131,7 +127,7 @@ paths:
       security:
         - bearer: []
     post:
-      x-speakeasy-entity-operation: Project#create
+      x-speakeasy-entity-operation: Project#create,update
       operationId: v1-create-a-project
       summary: Create a project
       parameters: []
@@ -503,7 +499,6 @@ paths:
         - bearer: []
   /v1/projects/{ref}/branches:
     get:
-      x-speakeasy-entity-operation: Branch#list
       operationId: v1-list-all-branches
       summary: List all database branches
       description: Returns all database branches of the specified project.
@@ -1620,7 +1615,6 @@ paths:
       security:
         - bearer: []
     patch:
-      x-speakeasy-entity-operation: Storage#update
       operationId: v1-update-storage-config
       summary: Updates project's storage config
       parameters:
@@ -1736,7 +1730,6 @@ paths:
       tags:
         - Database
   /v1/projects/{ref}/config/database/pooler:
-    x-speakeasy-entity-operation: Pooler#read
     get:
       x-speakeasy-entity-operation: Pooler#read
       operationId: v1-get-supavisor-config
@@ -2150,7 +2143,7 @@ paths:
         - bearer: []
   /v1/projects/{ref}/functions/{slug}:
     get:
-      x-speakeasy-entity-operation: Function#get
+      x-speakeasy-entity-operation: Function#read
       operationId: v1-get-a-function
       summary: Retrieve a function
       description: Retrieves a function with the specified slug and project.
@@ -2677,7 +2670,6 @@ components:
           refreshUrl: https://test.com/oauth/refresh
   schemas:
     BranchDetailResponse:
-      x-speakeasy-entity: Branch
       type: object
       properties:
         db_port:
@@ -2725,7 +2717,6 @@ components:
         - status
         - db_host
     UpdateBranchBody:
-      x-speakeasy-entity: Branch
       type: object
       properties:
         branch_name:
@@ -2746,7 +2737,6 @@ components:
             - FUNCTIONS_FAILED
           type: string
     BranchResponse:
-      x-speakeasy-entity: Branch
       type: object
       properties:
         pr_number:
@@ -2796,7 +2786,6 @@ components:
         - created_at
         - updated_at
     BranchDeleteResponse:
-      x-speakeasy-entity: Branch
       type: object
       properties:
         message:
@@ -2804,7 +2793,6 @@ components:
       required:
         - message
     BranchResetResponse:
-      x-speakeasy-entity: Branch
       type: object
       properties:
         workflow_run_id:

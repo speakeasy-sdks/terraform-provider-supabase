@@ -1,18 +1,17 @@
 lockVersion: 2.0.0
 id: b4b7b7b2-a0a8-440d-aa19-4e992089d1f6
 management:
-  docChecksum: 21c47538a96c4cd1a2fdc84478d7b089
+  docChecksum: bc239074e436c506fa92966aca910c78
   docVersion: 1.0.0
-  speakeasyVersion: 1.468.9
-  generationVersion: 2.493.21
-  releaseVersion: 0.0.11
-  configChecksum: 18bfe1e926de99d2b3823ffbcd9396ad
+  speakeasyVersion: 1.474.0
+  generationVersion: 2.495.0
+  releaseVersion: 0.4.3
+  configChecksum: 8aaf4053b6057b45cd6a77bb87686233
 features:
   terraform:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.2.0
-    core: 3.27.7
-    deprecations: 2.81.1
+    core: 3.28.0
     envVarSecurityUsage: 0.1.0
     globalSecurity: 2.81.9
     globalServerURLs: 2.82.1
@@ -23,14 +22,11 @@ generatedFiles:
   - USAGE.md
   - examples/README.md
   - examples/data-sources/supabase_auth/data-source.tf
-  - examples/data-sources/supabase_branch/data-source.tf
   - examples/data-sources/supabase_function/data-source.tf
   - examples/data-sources/supabase_pgbouncer/data-source.tf
   - examples/data-sources/supabase_pooler/data-source.tf
   - examples/data-sources/supabase_postgres/data-source.tf
   - examples/provider/provider.tf
-  - examples/resources/supabase_branch/import.sh
-  - examples/resources/supabase_branch/resource.tf
   - examples/resources/supabase_function/import.sh
   - examples/resources/supabase_function/resource.tf
   - examples/resources/supabase_organization/resource.tf
@@ -49,10 +45,6 @@ generatedFiles:
   - internal/planmodifiers/utils/state_check.go
   - internal/provider/auth_data_source.go
   - internal/provider/auth_data_source_sdk.go
-  - internal/provider/branch_data_source.go
-  - internal/provider/branch_data_source_sdk.go
-  - internal/provider/branch_resource.go
-  - internal/provider/branch_resource_sdk.go
   - internal/provider/function_data_source.go
   - internal/provider/function_data_source_sdk.go
   - internal/provider/function_resource.go
@@ -89,7 +81,6 @@ generatedFiles:
   - internal/sdk/database.go
   - internal/sdk/domains.go
   - internal/sdk/edgefunctions.go
-  - internal/sdk/environments.go
   - internal/sdk/internal/hooks/hooks.go
   - internal/sdk/internal/utils/contenttype.go
   - internal/sdk/internal/utils/env.go
@@ -118,24 +109,20 @@ generatedFiles:
   - internal/sdk/models/operations/v1bulkcreatesecrets.go
   - internal/sdk/models/operations/v1bulkdeletesecrets.go
   - internal/sdk/models/operations/v1checkvanitysubdomainavailability.go
-  - internal/sdk/models/operations/v1createabranch.go
   - internal/sdk/models/operations/v1createafunction.go
   - internal/sdk/models/operations/v1createanorganization.go
   - internal/sdk/models/operations/v1createaproject.go
   - internal/sdk/models/operations/v1createassoprovider.go
   - internal/sdk/models/operations/v1deactivatevanitysubdomainconfig.go
-  - internal/sdk/models/operations/v1deleteabranch.go
   - internal/sdk/models/operations/v1deleteafunction.go
   - internal/sdk/models/operations/v1deleteaproject.go
   - internal/sdk/models/operations/v1deleteassoprovider.go
   - internal/sdk/models/operations/v1deletehostnameconfig.go
   - internal/sdk/models/operations/v1deletenetworkbans.go
-  - internal/sdk/models/operations/v1disablepreviewbranching.go
   - internal/sdk/models/operations/v1disablereadonlymodetemporarily.go
   - internal/sdk/models/operations/v1enabledatabasewebhook.go
   - internal/sdk/models/operations/v1exchangeoauthtoken.go
   - internal/sdk/models/operations/v1generatetypescripttypes.go
-  - internal/sdk/models/operations/v1getabranchconfig.go
   - internal/sdk/models/operations/v1getafunction.go
   - internal/sdk/models/operations/v1getafunctionbody.go
   - internal/sdk/models/operations/v1getanorganization.go
@@ -159,7 +146,6 @@ generatedFiles:
   - internal/sdk/models/operations/v1getsupavisorconfig.go
   - internal/sdk/models/operations/v1getvanitysubdomainconfig.go
   - internal/sdk/models/operations/v1listallbackups.go
-  - internal/sdk/models/operations/v1listallbranches.go
   - internal/sdk/models/operations/v1listallbuckets.go
   - internal/sdk/models/operations/v1listallfunctions.go
   - internal/sdk/models/operations/v1listallnetworkbans.go
@@ -170,11 +156,9 @@ generatedFiles:
   - internal/sdk/models/operations/v1listallssoprovider.go
   - internal/sdk/models/operations/v1listorganizationmembers.go
   - internal/sdk/models/operations/v1removeareadreplica.go
-  - internal/sdk/models/operations/v1resetabranch.go
   - internal/sdk/models/operations/v1restorepitrbackup.go
   - internal/sdk/models/operations/v1runaquery.go
   - internal/sdk/models/operations/v1setupareadreplica.go
-  - internal/sdk/models/operations/v1updateabranchconfig.go
   - internal/sdk/models/operations/v1updateafunction.go
   - internal/sdk/models/operations/v1updateassoprovider.go
   - internal/sdk/models/operations/v1updateauthserviceconfig.go
@@ -195,13 +179,8 @@ generatedFiles:
   - internal/sdk/models/shared/authconfigresponse.go
   - internal/sdk/models/shared/authhealthresponse.go
   - internal/sdk/models/shared/billingplanid.go
-  - internal/sdk/models/shared/branchdeleteresponse.go
-  - internal/sdk/models/shared/branchdetailresponse.go
-  - internal/sdk/models/shared/branchresetresponse.go
-  - internal/sdk/models/shared/branchresponse.go
   - internal/sdk/models/shared/cfresponse.go
   - internal/sdk/models/shared/createapikeybody.go
-  - internal/sdk/models/shared/createbranchbody.go
   - internal/sdk/models/shared/createorganizationv1dto.go
   - internal/sdk/models/shared/createproviderbody.go
   - internal/sdk/models/shared/createproviderresponse.go
@@ -210,7 +189,6 @@ generatedFiles:
   - internal/sdk/models/shared/customhostnamedetails.go
   - internal/sdk/models/shared/databaseupgradestatusresponse.go
   - internal/sdk/models/shared/deleteproviderresponse.go
-  - internal/sdk/models/shared/desiredinstancesize.go
   - internal/sdk/models/shared/domain.go
   - internal/sdk/models/shared/functionresponse.go
   - internal/sdk/models/shared/functionslugresponse.go
@@ -259,7 +237,6 @@ generatedFiles:
   - internal/sdk/models/shared/typescriptresponse.go
   - internal/sdk/models/shared/updateapikeybody.go
   - internal/sdk/models/shared/updateauthconfigbody.go
-  - internal/sdk/models/shared/updatebranchbody.go
   - internal/sdk/models/shared/updatecustomhostnamebody.go
   - internal/sdk/models/shared/updatecustomhostnameresponse.go
   - internal/sdk/models/shared/updatepgsodiumconfigbody.go
@@ -340,7 +317,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_PASSED", "created_at": "1720227579547", "updated_at": "1737012177987"}
+          application/json: {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_PASSED", "created_at": "1720830772658", "updated_at": "1737615371098"}
   v1-delete-a-branch:
     speakeasy-default-v1-delete-a-branch:
       parameters:
@@ -364,7 +341,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: [{"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_FAILED", "created_at": "1724526430432", "updated_at": "1736993093151"}, {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "FUNCTIONS_FAILED", "created_at": "1719174863591", "updated_at": "1737046153006"}]
+          application/json: [{"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_FAILED", "created_at": "1725129623529", "updated_at": "1737596286247"}, {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "FUNCTIONS_FAILED", "created_at": "1719778056687", "updated_at": "1737649346102"}]
   v1-create-a-branch:
     speakeasy-default-v1-create-a-branch:
       parameters:
@@ -374,7 +351,7 @@ examples:
         application/json: {"branch_name": "<value>"}
       responses:
         "201":
-          application/json: {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": true, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_PASSED", "created_at": "1725856552869", "updated_at": "1736996499081"}
+          application/json: {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": true, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_PASSED", "created_at": "1726459745965", "updated_at": "1737599692178"}
   v1-disable-preview-branching:
     speakeasy-default-v1-disable-preview-branching:
       parameters:
@@ -384,7 +361,7 @@ examples:
     speakeasy-default-v1-list-all-projects:
       responses:
         "200":
-          application/json: []
+          application/json: [{"id": "<id>", "organization_id": "<id>", "name": "<value>", "region": "us-east-1", "created_at": "2023-03-29T16:32:59Z", "database": {"host": "both-curl.net", "version": "<value>", "postgres_engine": "<value>", "release_channel": "<value>"}, "status": "UPGRADING"}]
   v1-create-a-project:
     speakeasy-default-v1-create-a-project:
       requestBody:
@@ -477,7 +454,7 @@ examples:
           services: []
       responses:
         "200":
-          application/json: [{"name": "pooler", "healthy": false, "status": "COMING_UP"}, {"name": "realtime", "healthy": true, "status": "UNHEALTHY"}]
+          application/json: [{"name": "pooler", "healthy": false, "status": "COMING_UP"}, {"name": "realtime", "healthy": true, "status": "UNHEALTHY"}, {"name": "db", "healthy": true, "status": "ACTIVE_HEALTHY"}]
   v1-list-all-organizations:
     speakeasy-default-v1-list-all-organizations:
       responses:
@@ -524,7 +501,7 @@ examples:
     speakeasy-default-v1-list-all-snippets:
       responses:
         "200":
-          application/json: {"data": [{"id": "<id>", "inserted_at": "<value>", "updated_at": "1737026634245", "type": "sql", "visibility": "user", "name": "<value>", "project": {"id": 604531, "name": "<value>"}, "owner": {"id": 74975, "username": "Scarlett19"}, "updated_by": {"id": 402832, "username": "Christ38"}}]}
+          application/json: {"data": [{"id": "<id>", "inserted_at": "<value>", "updated_at": "1737629827231", "type": "sql", "visibility": "user", "name": "<value>", "project": {"id": 604531, "name": "<value>"}, "owner": {"id": 74975, "username": "Scarlett19"}, "updated_by": {"id": 402832, "username": "Christ38"}}]}
   v1-get-a-snippet:
     speakeasy-default-v1-get-a-snippet:
       parameters:
@@ -532,7 +509,7 @@ examples:
           id: "<id>"
       responses:
         "200":
-          application/json: {"id": "<id>", "inserted_at": "<value>", "updated_at": "1737039333031", "type": "sql", "visibility": "user", "name": "<value>", "project": {"id": 781357, "name": "<value>"}, "owner": {"id": 749483, "username": "Geraldine_Lind"}, "updated_by": {"id": 537423, "username": "Aletha72"}, "content": {"favorite": true, "schema_version": "<value>", "sql": "<value>"}}
+          application/json: {"id": "<id>", "inserted_at": "<value>", "updated_at": "1737642526012", "type": "sql", "visibility": "user", "name": "<value>", "project": {"id": 781357, "name": "<value>"}, "owner": {"id": 749483, "username": "Geraldine_Lind"}, "updated_by": {"id": 537423, "username": "Aletha72"}, "content": {"favorite": true, "schema_version": "<value>", "sql": "<value>"}}
   v1-get-ssl-enforcement-config:
     speakeasy-default-v1-get-ssl-enforcement-config:
       parameters:
@@ -556,7 +533,8 @@ examples:
       parameters:
         path:
           ref: "<value>"
-        query: {}
+        query:
+          included_schemas: "public"
       responses:
         "200":
           application/json: {"types": "<value>"}
@@ -620,7 +598,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: []
+          application/json: [{"db_port": 120745, "default_pool_size": 311176, "max_client_conn": 117213, "identifier": "<value>", "database_type": "PRIMARY", "is_using_scram_auth": false, "db_user": "<value>", "db_host": "<value>", "db_name": "<value>", "connectionString": "<value>", "pool_mode": "session"}]
   v1-update-supavisor-config:
     speakeasy-default-v1-update-supavisor-config:
       parameters:
@@ -670,7 +648,7 @@ examples:
           reveal: false
       responses:
         "200":
-          application/json: []
+          application/json: [{"name": "<value>", "api_key": "<value>"}]
   createApiKey:
     speakeasy-default-create-api-key:
       parameters:
@@ -873,7 +851,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: [{"id": "<id>", "name": "<value>", "owner": "<value>", "created_at": "1724242247488", "updated_at": "1737017137979", "public": false}, {"id": "<id>", "name": "<value>", "owner": "<value>", "created_at": "1714250246388", "updated_at": "1737019955601", "public": false}]
+          application/json: [{"id": "<id>", "name": "<value>", "owner": "<value>", "created_at": "1724845440241", "updated_at": "1737620330732", "public": false}, {"id": "<id>", "name": "<value>", "owner": "<value>", "created_at": "1714853439140", "updated_at": "1737623148353", "public": false}]
   v1-get-auth-service-config:
     speakeasy-default-v1-get-auth-service-config:
       parameters:
@@ -901,7 +879,7 @@ examples:
         application/json: {}
       responses:
         "201":
-          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1736995842281"}
+          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737599034989"}
   listTPAForProject:
     speakeasy-default-list-TPA-for-project:
       parameters:
@@ -909,7 +887,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: []
+          application/json: [{"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737596671127"}]
   deleteTPAForProject:
     speakeasy-default-delete-TPA-for-project:
       parameters:
@@ -918,7 +896,7 @@ examples:
           tpa_id: "<id>"
       responses:
         "200":
-          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737040984481"}
+          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737644177179"}
   getTPAForProject:
     speakeasy-default-get-TPA-for-project:
       parameters:
@@ -927,7 +905,7 @@ examples:
           tpa_id: "<id>"
       responses:
         "200":
-          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737035931685"}
+          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737639124377"}
   v1-create-a-sso-provider:
     speakeasy-default-v1-create-a-sso-provider:
       parameters:
@@ -976,26 +954,6 @@ examples:
         "200":
           application/json: {"id": "<id>"}
   v1-create-a-function:
-    speakeasy-default-v1-create-a-function-json:
-      parameters:
-        path:
-          ref: "<value>"
-        query: {}
-      requestBody:
-        application/json: {"slug": "<value>", "name": "<value>", "body": "<value>"}
-      responses:
-        "201":
-          application/json: {"version": 86288, "created_at": 930855, "updated_at": 901489, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
-    speakeasy-default-v1-create-a-function-raw:
-      parameters:
-        path:
-          ref: "<value>"
-        query: {}
-      requestBody:
-        application/vnd.denoland.eszip: "0xaA7bA55bea"
-      responses:
-        "201":
-          application/json: {"version": 882538, "created_at": 277118, "updated_at": 181599, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
     speakeasy-default-v1-create-a-function:
       parameters:
         path:
@@ -1019,39 +977,15 @@ examples:
       parameters:
         path:
           ref: "<value>"
-          function_slug: "<value>"
           slug: "<value>"
       responses:
         "200":
           application/json: {"version": 399037, "created_at": 137964, "updated_at": 984435, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
   v1-update-a-function:
-    speakeasy-default-v1-update-a-function-json:
-      parameters:
-        path:
-          ref: "<value>"
-          function_slug: "<value>"
-        query: {}
-      requestBody:
-        application/json: {}
-      responses:
-        "200":
-          application/json: {"version": 730983, "created_at": 301731, "updated_at": 802025, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "REMOVED"}
-    speakeasy-default-v1-update-a-function-raw:
-      parameters:
-        path:
-          ref: "<value>"
-          function_slug: "<value>"
-        query: {}
-      requestBody:
-        application/vnd.denoland.eszip: "0xAeD0B23dcD"
-      responses:
-        "200":
-          application/json: {"version": 954708, "created_at": 461149, "updated_at": 835142, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "REMOVED"}
     speakeasy-default-v1-update-a-function:
       parameters:
         path:
           ref: "<value>"
-          function_slug: "<value>"
           slug: "<value>"
         query: {}
       requestBody:
@@ -1064,13 +998,12 @@ examples:
       parameters:
         path:
           ref: "<value>"
-          function_slug: "<value>"
           slug: "<value>"
   v1-get-a-function-body:
     speakeasy-default-v1-get-a-function-body:
       parameters:
         path:
           ref: "<value>"
-          function_slug: "<value>"
           slug: "<value>"
+examplesVersion: 1.0.0
 generatedTests: {}

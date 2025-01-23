@@ -1,4 +1,4 @@
-speakeasyVersion: 1.471.0
+speakeasyVersion: 1.472.1
 sources:
     supabase-provider:
         sourceNamespace: supabase-provider
@@ -8,6 +8,11 @@ sources:
             - latest
             - 1.0.0
 targets:
+    supabase:
+        source: supabase-provider
+        sourceNamespace: supabase-provider
+        sourceRevisionDigest: sha256:3a17887902e0a84435125861fb30f7873d7339a2813e79ef050c169028d47ea8
+        sourceBlobDigest: sha256:e1e400dd409472c899e3caba0287fadba8cd88b385eca30cd2f456dc93a2525b
     supabase-ts:
         source: supabase-provider
         sourceNamespace: supabase-provider

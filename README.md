@@ -14,10 +14,15 @@
 Supabase API: Supabase API
 <!-- End Summary [summary] -->
 
+<!-- Start Summary [summary] -->
+## Summary
+
+Supabase API: Supabase API
+<!-- End Summary [summary] -->
+
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-* [supabase](#supabase)
   * [Installation](#installation)
   * [Available Resources and Data Sources](#available-resources-and-data-sources)
   * [Testing the provider locally](#testing-the-provider-locally)
@@ -36,7 +41,7 @@ terraform {
   required_providers {
     supabase = {
       source  = "speakeasy/supabase"
-      version = "0.0.5"
+      version = "0.0.6"
     }
   }
 }

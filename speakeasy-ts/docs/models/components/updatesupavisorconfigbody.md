@@ -1,0 +1,16 @@
+# UpdateSupavisorConfigBody
+
+## Example Usage
+
+```typescript
+import { UpdateSupavisorConfigBody } from "supabase/models/components";
+
+let value: UpdateSupavisorConfigBody = {};
+```
+
+## Fields
+
+| Field                                                                                                                                                                            | Type                                                                                                                                                                             | Required                                                                                                                                                                         | Description                                                                                                                                                                      |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultPoolSize`                                                                                                                                                                | *number*                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                               | N/A                                                                                                                                                                              |
+| ~~`poolMode`~~                                                                                                                                                                   | [components.UpdateSupavisorConfigBodyPoolMode](../../models/components/updatesupavisorconfigbodypoolmode.md)                                                                     | :heavy_minus_sign:                                                                                                                                                               | : warning: ** DEPRECATED **: This will be removed in a future release, please migrate away from it as soon as possible.<br/><br/>This field is deprecated and is ignored in this request |

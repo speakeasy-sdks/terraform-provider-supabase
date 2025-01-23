@@ -162,7 +162,7 @@ func (r *BranchResource) Create(ctx context.Context, req resource.CreateRequest,
 	request := operations.V1ResetABranchRequest{
 		BranchID: branchID,
 	}
-	res, err := r.client.Environments.V1ResetABranch(ctx, request)
+	res, err := r.client.Environments.ResetBranch(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -190,7 +190,7 @@ func (r *BranchResource) Create(ctx context.Context, req resource.CreateRequest,
 	request1 := operations.V1GetABranchConfigRequest{
 		BranchID: branchId1,
 	}
-	res1, err := r.client.Environments.V1GetABranchConfig(ctx, request1)
+	res1, err := r.client.Environments.GetBranchConfig(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -241,7 +241,7 @@ func (r *BranchResource) Read(ctx context.Context, req resource.ReadRequest, res
 	request := operations.V1GetABranchConfigRequest{
 		BranchID: branchID,
 	}
-	res, err := r.client.Environments.V1GetABranchConfig(ctx, request)
+	res, err := r.client.Environments.GetBranchConfig(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -293,7 +293,7 @@ func (r *BranchResource) Update(ctx context.Context, req resource.UpdateRequest,
 		BranchID:         branchID,
 		UpdateBranchBody: updateBranchBody,
 	}
-	res, err := r.client.Environments.V1UpdateABranchConfig(ctx, request)
+	res, err := r.client.Environments.UpdateBranchConfig(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -321,7 +321,7 @@ func (r *BranchResource) Update(ctx context.Context, req resource.UpdateRequest,
 	request1 := operations.V1GetABranchConfigRequest{
 		BranchID: branchId1,
 	}
-	res1, err := r.client.Environments.V1GetABranchConfig(ctx, request1)
+	res1, err := r.client.Environments.GetBranchConfig(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -372,7 +372,7 @@ func (r *BranchResource) Delete(ctx context.Context, req resource.DeleteRequest,
 	request := operations.V1DeleteABranchRequest{
 		BranchID: branchID,
 	}
-	res, err := r.client.Environments.V1DeleteABranch(ctx, request)
+	res, err := r.client.Environments.DeleteBranch(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

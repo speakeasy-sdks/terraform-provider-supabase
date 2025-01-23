@@ -136,7 +136,7 @@ func (r *PoolerDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	request := operations.V1GetSupavisorConfigRequest{
 		Ref: ref,
 	}
-	res, err := r.client.Database.V1GetSupavisorConfig(ctx, request)
+	res, err := r.client.Database.GetSupavisorConfig(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

@@ -134,7 +134,7 @@ func (r *BranchDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	request := operations.V1GetABranchConfigRequest{
 		BranchID: branchID,
 	}
-	res, err := r.client.Environments.V1GetABranchConfig(ctx, request)
+	res, err := r.client.Environments.GetBranchConfig(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

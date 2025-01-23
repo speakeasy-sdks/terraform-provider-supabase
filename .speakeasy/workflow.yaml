@@ -1,12 +1,26 @@
 workflowVersion: 1.0.0
 speakeasyVersion: latest
 sources:
-    Supabase API (v1):
+    supabase-provider:
         inputs:
-            - location: beta.yaml
+            - location: ./beta.yaml
+        overlays:
+            - location: ./transformations.yaml
+            - location: ./beta_errors.yaml
+        output: output.yaml
         registry:
-            location: registry.speakeasyapi.dev/supabase/terraform-provider/supabase-api-(v-1)
+            location: registry.speakeasyapi.dev/speakeasy-onboarding/onboarding/supabase-provider
 targets:
     supabase:
         target: terraform
-        source: Supabase API (v1)
+        source: supabase-provider
+    supabase-ts:
+        target: typescript
+        source: supabase-provider
+        output: ./speakeasy-ts
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/speakeasy-onboarding/onboarding/supabase-provider-typescript-code-samples
+            labelOverride:
+                fixedValue: Typescript (SDK)
+            blocking: false

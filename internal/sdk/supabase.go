@@ -67,7 +67,7 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 	return ServerList[c.ServerIndex], nil
 }
 
-// Supabase API (v1): Supabase API generated from the OpenAPI specification.<br>Visit [https://supabase.com/docs](https://supabase.com/docs) for a complete documentation.
+// Supabase API: Supabase API
 type Supabase struct {
 	// Environments related endpoints
 	Environments *Environments
@@ -75,8 +75,8 @@ type Supabase struct {
 	Projects *Projects
 	// Organizations related endpoints
 	Organizations *Organizations
-	// OAuth related endpoints
-	OAuth *OAuth
+	Oauth         *Oauth
+	Snippets      *Snippets
 	// Database related endpoints
 	Database *Database
 	// Secrets related endpoints
@@ -84,12 +84,12 @@ type Supabase struct {
 	// Domains related endpoints
 	Domains *Domains
 	// Rest related endpoints
-	Rest *Rest
+	Rest      *Rest
+	Databases *Databases
 	// Storage related endpoints
 	Storage *Storage
 	// Auth related endpoints
-	Auth *Auth
-	// Edge related endpoints
+	Auth          *Auth
 	EdgeFunctions *EdgeFunctions
 
 	sdkConfiguration sdkConfiguration
@@ -168,9 +168,9 @@ func New(opts ...SDKOption) *Supabase {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "0.0.11",
-			GenVersion:        "2.493.21",
-			UserAgent:         "speakeasy-sdk/terraform 0.0.11 2.493.21 1.0.0 github.com/speakeasy/terraform-provider-supabase/internal/sdk",
+			SDKVersion:        "0.0.5",
+			GenVersion:        "2.493.34",
+			UserAgent:         "speakeasy-sdk/terraform 0.0.5 2.493.34 1.0.0 github.com/speakeasy/terraform-provider-supabase/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}
@@ -196,7 +196,9 @@ func New(opts ...SDKOption) *Supabase {
 
 	sdk.Organizations = newOrganizations(sdk.sdkConfiguration)
 
-	sdk.OAuth = newOAuth(sdk.sdkConfiguration)
+	sdk.Oauth = newOauth(sdk.sdkConfiguration)
+
+	sdk.Snippets = newSnippets(sdk.sdkConfiguration)
 
 	sdk.Database = newDatabase(sdk.sdkConfiguration)
 
@@ -205,6 +207,8 @@ func New(opts ...SDKOption) *Supabase {
 	sdk.Domains = newDomains(sdk.sdkConfiguration)
 
 	sdk.Rest = newRest(sdk.sdkConfiguration)
+
+	sdk.Databases = newDatabases(sdk.sdkConfiguration)
 
 	sdk.Storage = newStorage(sdk.sdkConfiguration)
 

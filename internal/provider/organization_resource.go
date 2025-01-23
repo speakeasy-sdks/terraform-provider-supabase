@@ -96,7 +96,7 @@ func (r *OrganizationResource) Create(ctx context.Context, req resource.CreateRe
 	}
 
 	request := *data.ToSharedCreateOrganizationV1Dto()
-	res, err := r.client.Organizations.V1CreateAnOrganization(ctx, request)
+	res, err := r.client.Organizations.Create(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

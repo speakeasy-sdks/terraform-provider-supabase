@@ -12,7 +12,6 @@ import (
 	"github.com/speakeasy/terraform-provider-supabase/internal/sdk/models/operations"
 	"github.com/speakeasy/terraform-provider-supabase/internal/sdk/models/shared"
 	"net/http"
-	"net/url"
 )
 
 // Database related endpoints
@@ -26,139 +25,8 @@ func newDatabase(sdkConfig sdkConfiguration) *Database {
 	}
 }
 
-// V1ListAllSnippets - Lists SQL snippets for the logged in user
-func (s *Database) V1ListAllSnippets(ctx context.Context, request operations.V1ListAllSnippetsRequest, opts ...operations.Option) (*operations.V1ListAllSnippetsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "v1-list-all-snippets",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
-	o := operations.Options{}
-	supportedOptions := []string{
-		operations.SupportedOptionTimeout,
-	}
-
-	for _, opt := range opts {
-		if err := opt(&o, supportedOptions...); err != nil {
-			return nil, fmt.Errorf("error applying option: %w", err)
-		}
-	}
-
-	var baseURL string
-	if o.ServerURL == nil {
-		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	} else {
-		baseURL = *o.ServerURL
-	}
-	opURL, err := url.JoinPath(baseURL, "/v1/snippets")
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	timeout := o.Timeout
-	if timeout == nil {
-		timeout = s.sdkConfiguration.Timeout
-	}
-
-	if timeout != nil {
-		var cancel context.CancelFunc
-		ctx, cancel = context.WithTimeout(ctx, *timeout)
-		defer cancel()
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
-		return nil, fmt.Errorf("error populating query params: %w", err)
-	}
-
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
-		return nil, err
-	}
-
-	for k, v := range o.SetHeaders {
-		req.Header.Set(k, v)
-	}
-
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
-	}
-
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
-		}
-
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
-		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
-		}
-	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	res := &operations.V1ListAllSnippetsResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: httpRes.Header.Get("Content-Type"),
-		RawResponse: httpRes,
-	}
-
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out shared.SnippetList
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.SnippetList = &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, errors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 500:
-	default:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
-	}
-
-	return res, nil
-
-}
-
-// V1GetASnippet - Gets a specific SQL snippet
-func (s *Database) V1GetASnippet(ctx context.Context, request operations.V1GetASnippetRequest, opts ...operations.Option) (*operations.V1GetASnippetResponse, error) {
+// GetSnippet - Gets a specific SQL snippet
+func (s *Database) GetSnippet(ctx context.Context, request operations.V1GetASnippetRequest, opts ...operations.Option) (*operations.V1GetASnippetResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-a-snippet",
@@ -284,8 +152,8 @@ func (s *Database) V1GetASnippet(ctx context.Context, request operations.V1GetAS
 
 }
 
-// V1GetSslEnforcementConfig - [Beta] Get project's SSL enforcement configuration.
-func (s *Database) V1GetSslEnforcementConfig(ctx context.Context, request operations.V1GetSslEnforcementConfigRequest, opts ...operations.Option) (*operations.V1GetSslEnforcementConfigResponse, error) {
+// GetSSLEnforcement - [Beta] Get project's SSL enforcement configuration.
+func (s *Database) GetSSLEnforcement(ctx context.Context, request operations.V1GetSslEnforcementConfigRequest, opts ...operations.Option) (*operations.V1GetSslEnforcementConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-ssl-enforcement-config",
@@ -412,8 +280,8 @@ func (s *Database) V1GetSslEnforcementConfig(ctx context.Context, request operat
 
 }
 
-// V1UpdateSslEnforcementConfig - [Beta] Update project's SSL enforcement configuration.
-func (s *Database) V1UpdateSslEnforcementConfig(ctx context.Context, request operations.V1UpdateSslEnforcementConfigRequest, opts ...operations.Option) (*operations.V1UpdateSslEnforcementConfigResponse, error) {
+// UpdateSSLEnforcement - [Beta] Update project's SSL enforcement configuration.
+func (s *Database) UpdateSSLEnforcement(ctx context.Context, request operations.V1UpdateSslEnforcementConfigRequest, opts ...operations.Option) (*operations.V1UpdateSslEnforcementConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-update-ssl-enforcement-config",
@@ -548,141 +416,8 @@ func (s *Database) V1UpdateSslEnforcementConfig(ctx context.Context, request ope
 
 }
 
-// V1GenerateTypescriptTypes - Generate TypeScript types
-// Returns the TypeScript types of your schema for use with supabase-js.
-func (s *Database) V1GenerateTypescriptTypes(ctx context.Context, request operations.V1GenerateTypescriptTypesRequest, opts ...operations.Option) (*operations.V1GenerateTypescriptTypesResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "v1-generate-typescript-types",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
-	o := operations.Options{}
-	supportedOptions := []string{
-		operations.SupportedOptionTimeout,
-	}
-
-	for _, opt := range opts {
-		if err := opt(&o, supportedOptions...); err != nil {
-			return nil, fmt.Errorf("error applying option: %w", err)
-		}
-	}
-
-	var baseURL string
-	if o.ServerURL == nil {
-		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	} else {
-		baseURL = *o.ServerURL
-	}
-	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/types/typescript", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	timeout := o.Timeout
-	if timeout == nil {
-		timeout = s.sdkConfiguration.Timeout
-	}
-
-	if timeout != nil {
-		var cancel context.CancelFunc
-		ctx, cancel = context.WithTimeout(ctx, *timeout)
-		defer cancel()
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
-		return nil, fmt.Errorf("error populating query params: %w", err)
-	}
-
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
-		return nil, err
-	}
-
-	for k, v := range o.SetHeaders {
-		req.Header.Set(k, v)
-	}
-
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
-	}
-
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
-		}
-
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
-		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
-		}
-	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	res := &operations.V1GenerateTypescriptTypesResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: httpRes.Header.Get("Content-Type"),
-		RawResponse: httpRes,
-	}
-
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out shared.TypescriptResponse
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.TypescriptResponse = &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, errors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-	case httpRes.StatusCode == 500:
-	default:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
-	}
-
-	return res, nil
-
-}
-
-// V1GetReadonlyModeStatus - Returns project's readonly mode status
-func (s *Database) V1GetReadonlyModeStatus(ctx context.Context, request operations.V1GetReadonlyModeStatusRequest, opts ...operations.Option) (*operations.V1GetReadonlyModeStatusResponse, error) {
+// GetReadonlyModeStatus - Returns project's readonly mode status
+func (s *Database) GetReadonlyModeStatus(ctx context.Context, request operations.V1GetReadonlyModeStatusRequest, opts ...operations.Option) (*operations.V1GetReadonlyModeStatusResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-readonly-mode-status",
@@ -808,8 +543,8 @@ func (s *Database) V1GetReadonlyModeStatus(ctx context.Context, request operatio
 
 }
 
-// V1DisableReadonlyModeTemporarily - Disables project's readonly mode for the next 15 minutes
-func (s *Database) V1DisableReadonlyModeTemporarily(ctx context.Context, request operations.V1DisableReadonlyModeTemporarilyRequest, opts ...operations.Option) (*operations.V1DisableReadonlyModeTemporarilyResponse, error) {
+// DisableReadonlyModeTemporarily - Disables project's readonly mode for the next 15 minutes
+func (s *Database) DisableReadonlyModeTemporarily(ctx context.Context, request operations.V1DisableReadonlyModeTemporarilyRequest, opts ...operations.Option) (*operations.V1DisableReadonlyModeTemporarilyResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-disable-readonly-mode-temporarily",
@@ -915,8 +650,8 @@ func (s *Database) V1DisableReadonlyModeTemporarily(ctx context.Context, request
 
 }
 
-// V1SetupAReadReplica - [Beta] Set up a read replica
-func (s *Database) V1SetupAReadReplica(ctx context.Context, request operations.V1SetupAReadReplicaRequest, opts ...operations.Option) (*operations.V1SetupAReadReplicaResponse, error) {
+// SetupReadReplica - [Beta] Set up a read replica
+func (s *Database) SetupReadReplica(ctx context.Context, request operations.V1SetupAReadReplicaRequest, opts ...operations.Option) (*operations.V1SetupAReadReplicaResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-setup-a-read-replica",
@@ -1031,8 +766,8 @@ func (s *Database) V1SetupAReadReplica(ctx context.Context, request operations.V
 
 }
 
-// V1RemoveAReadReplica - [Beta] Remove a read replica
-func (s *Database) V1RemoveAReadReplica(ctx context.Context, request operations.V1RemoveAReadReplicaRequest, opts ...operations.Option) (*operations.V1RemoveAReadReplicaResponse, error) {
+// RemoveReadReplica - [Beta] Remove a read replica
+func (s *Database) RemoveReadReplica(ctx context.Context, request operations.V1RemoveAReadReplicaRequest, opts ...operations.Option) (*operations.V1RemoveAReadReplicaResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-remove-a-read-replica",
@@ -1147,8 +882,8 @@ func (s *Database) V1RemoveAReadReplica(ctx context.Context, request operations.
 
 }
 
-// V1GetPostgresConfig - Gets project's Postgres config
-func (s *Database) V1GetPostgresConfig(ctx context.Context, request operations.V1GetPostgresConfigRequest, opts ...operations.Option) (*operations.V1GetPostgresConfigResponse, error) {
+// GetPostgresConfig - Gets project's Postgres config
+func (s *Database) GetPostgresConfig(ctx context.Context, request operations.V1GetPostgresConfigRequest, opts ...operations.Option) (*operations.V1GetPostgresConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-postgres-config",
@@ -1274,144 +1009,8 @@ func (s *Database) V1GetPostgresConfig(ctx context.Context, request operations.V
 
 }
 
-// V1UpdatePostgresConfig - Updates project's Postgres config
-func (s *Database) V1UpdatePostgresConfig(ctx context.Context, request operations.V1UpdatePostgresConfigRequest, opts ...operations.Option) (*operations.V1UpdatePostgresConfigResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "v1-update-postgres-config",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
-	o := operations.Options{}
-	supportedOptions := []string{
-		operations.SupportedOptionTimeout,
-	}
-
-	for _, opt := range opts {
-		if err := opt(&o, supportedOptions...); err != nil {
-			return nil, fmt.Errorf("error applying option: %w", err)
-		}
-	}
-
-	var baseURL string
-	if o.ServerURL == nil {
-		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	} else {
-		baseURL = *o.ServerURL
-	}
-	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/config/database/postgres", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "UpdatePostgresConfigBody", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, err
-	}
-
-	timeout := o.Timeout
-	if timeout == nil {
-		timeout = s.sdkConfiguration.Timeout
-	}
-
-	if timeout != nil {
-		var cancel context.CancelFunc
-		ctx, cancel = context.WithTimeout(ctx, *timeout)
-		defer cancel()
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "PUT", opURL, bodyReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-	if reqContentType != "" {
-		req.Header.Set("Content-Type", reqContentType)
-	}
-
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
-		return nil, err
-	}
-
-	for k, v := range o.SetHeaders {
-		req.Header.Set(k, v)
-	}
-
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
-	}
-
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
-		}
-
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
-		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
-		}
-	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	res := &operations.V1UpdatePostgresConfigResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: httpRes.Header.Get("Content-Type"),
-		RawResponse: httpRes,
-	}
-
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out shared.PostgresConfigResponse
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.PostgresConfigResponse = &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, errors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-	case httpRes.StatusCode == 500:
-	default:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
-	}
-
-	return res, nil
-
-}
-
-// V1GetProjectPgbouncerConfig - Get project's pgbouncer config
-func (s *Database) V1GetProjectPgbouncerConfig(ctx context.Context, request operations.V1GetProjectPgbouncerConfigRequest, opts ...operations.Option) (*operations.V1GetProjectPgbouncerConfigResponse, error) {
+// GetPgbouncerConfig - Get project's pgbouncer config
+func (s *Database) GetPgbouncerConfig(ctx context.Context, request operations.V1GetProjectPgbouncerConfigRequest, opts ...operations.Option) (*operations.V1GetProjectPgbouncerConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-project-pgbouncer-config",
@@ -1537,8 +1136,8 @@ func (s *Database) V1GetProjectPgbouncerConfig(ctx context.Context, request oper
 
 }
 
-// V1GetSupavisorConfig - Gets project's supavisor config
-func (s *Database) V1GetSupavisorConfig(ctx context.Context, request operations.V1GetSupavisorConfigRequest, opts ...operations.Option) (*operations.V1GetSupavisorConfigResponse, error) {
+// GetSupavisorConfig - Gets project's supavisor config
+func (s *Database) GetSupavisorConfig(ctx context.Context, request operations.V1GetSupavisorConfigRequest, opts ...operations.Option) (*operations.V1GetSupavisorConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-supavisor-config",
@@ -1664,144 +1263,8 @@ func (s *Database) V1GetSupavisorConfig(ctx context.Context, request operations.
 
 }
 
-// V1UpdateSupavisorConfig - Updates project's supavisor config
-func (s *Database) V1UpdateSupavisorConfig(ctx context.Context, request operations.V1UpdateSupavisorConfigRequest, opts ...operations.Option) (*operations.V1UpdateSupavisorConfigResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "v1-update-supavisor-config",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
-	o := operations.Options{}
-	supportedOptions := []string{
-		operations.SupportedOptionTimeout,
-	}
-
-	for _, opt := range opts {
-		if err := opt(&o, supportedOptions...); err != nil {
-			return nil, fmt.Errorf("error applying option: %w", err)
-		}
-	}
-
-	var baseURL string
-	if o.ServerURL == nil {
-		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	} else {
-		baseURL = *o.ServerURL
-	}
-	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{ref}/config/database/pooler", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "UpdateSupavisorConfigBody", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, err
-	}
-
-	timeout := o.Timeout
-	if timeout == nil {
-		timeout = s.sdkConfiguration.Timeout
-	}
-
-	if timeout != nil {
-		var cancel context.CancelFunc
-		ctx, cancel = context.WithTimeout(ctx, *timeout)
-		defer cancel()
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "PATCH", opURL, bodyReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-	if reqContentType != "" {
-		req.Header.Set("Content-Type", reqContentType)
-	}
-
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
-		return nil, err
-	}
-
-	for k, v := range o.SetHeaders {
-		req.Header.Set(k, v)
-	}
-
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
-	}
-
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
-		}
-
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
-		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
-		}
-	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	res := &operations.V1UpdateSupavisorConfigResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: httpRes.Header.Get("Content-Type"),
-		RawResponse: httpRes,
-	}
-
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out shared.UpdateSupavisorConfigResponse
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.UpdateSupavisorConfigResponse = &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, errors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-	case httpRes.StatusCode == 500:
-	default:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
-	}
-
-	return res, nil
-
-}
-
-// V1RunAQuery - [Beta] Run sql query
-func (s *Database) V1RunAQuery(ctx context.Context, request operations.V1RunAQueryRequest, opts ...operations.Option) (*operations.V1RunAQueryResponse, error) {
+// RunQuery - [Beta] Run sql query
+func (s *Database) RunQuery(ctx context.Context, request operations.V1RunAQueryRequest, opts ...operations.Option) (*operations.V1RunAQueryResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-run-a-query",
@@ -1936,8 +1399,8 @@ func (s *Database) V1RunAQuery(ctx context.Context, request operations.V1RunAQue
 
 }
 
-// V1EnableDatabaseWebhook - [Beta] Enables Database Webhooks on the project
-func (s *Database) V1EnableDatabaseWebhook(ctx context.Context, request operations.V1EnableDatabaseWebhookRequest, opts ...operations.Option) (*operations.V1EnableDatabaseWebhookResponse, error) {
+// EnableWebhook - [Beta] Enables Database Webhooks on the project
+func (s *Database) EnableWebhook(ctx context.Context, request operations.V1EnableDatabaseWebhookRequest, opts ...operations.Option) (*operations.V1EnableDatabaseWebhookResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-enable-database-webhook",
@@ -2044,8 +1507,8 @@ func (s *Database) V1EnableDatabaseWebhook(ctx context.Context, request operatio
 
 }
 
-// V1ListAllBackups - Lists all backups
-func (s *Database) V1ListAllBackups(ctx context.Context, request operations.V1ListAllBackupsRequest, opts ...operations.Option) (*operations.V1ListAllBackupsResponse, error) {
+// ListBackups - Lists all backups
+func (s *Database) ListBackups(ctx context.Context, request operations.V1ListAllBackupsRequest, opts ...operations.Option) (*operations.V1ListAllBackupsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-list-all-backups",
@@ -2171,8 +1634,8 @@ func (s *Database) V1ListAllBackups(ctx context.Context, request operations.V1Li
 
 }
 
-// V1RestorePitrBackup - Restores a PITR backup for a database
-func (s *Database) V1RestorePitrBackup(ctx context.Context, request operations.V1RestorePitrBackupRequest, opts ...operations.Option) (*operations.V1RestorePitrBackupResponse, error) {
+// RestorePitrBackup - Restores a PITR backup for a database
+func (s *Database) RestorePitrBackup(ctx context.Context, request operations.V1RestorePitrBackupRequest, opts ...operations.Option) (*operations.V1RestorePitrBackupResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-restore-pitr-backup",

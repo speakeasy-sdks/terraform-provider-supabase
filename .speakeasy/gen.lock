@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
-id: b4b7b7b2-a0a8-440d-aa19-4e992089d1f6
+id: 64b912f5-7252-4481-b921-943b97d4f304
 management:
-  docChecksum: 21c47538a96c4cd1a2fdc84478d7b089
+  docChecksum: a32c3fb7121d6466696495b9f29675f7
   docVersion: 1.0.0
-  speakeasyVersion: 1.468.9
-  generationVersion: 2.493.21
-  releaseVersion: 0.0.11
-  configChecksum: 18bfe1e926de99d2b3823ffbcd9396ad
+  speakeasyVersion: 1.472.0
+  generationVersion: 2.493.34
+  releaseVersion: 0.0.5
+  configChecksum: bb9a73ab1d8db354a4bb59aae43072b1
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -16,6 +16,8 @@ features:
     envVarSecurityUsage: 0.1.0
     globalSecurity: 2.81.9
     globalServerURLs: 2.82.1
+    groups: 2.81.2
+    nameOverrides: 2.81.2
     nullables: 0.0.0
     unions: 2.81.17
 generatedFiles:
@@ -87,6 +89,7 @@ generatedFiles:
   - internal/sdk/.gitattributes
   - internal/sdk/auth.go
   - internal/sdk/database.go
+  - internal/sdk/databases.go
   - internal/sdk/domains.go
   - internal/sdk/edgefunctions.go
   - internal/sdk/environments.go
@@ -299,6 +302,7 @@ generatedFiles:
   - internal/sdk/rest.go
   - internal/sdk/retry/config.go
   - internal/sdk/secrets.go
+  - internal/sdk/snippets.go
   - internal/sdk/storage.go
   - internal/sdk/supabase.go
   - internal/sdk/types/bigint.go
@@ -330,7 +334,7 @@ examples:
           branch_id: "<id>"
       responses:
         "200":
-          application/json: {"db_port": 670646, "ref": "<value>", "postgres_version": "<value>", "postgres_engine": "<value>", "release_channel": "<value>", "status": "RESTORE_FAILED", "db_host": "<value>"}
+          application/json: {"db_port": 857170, "ref": "<value>", "postgres_version": "<value>", "postgres_engine": "<value>", "release_channel": "<value>", "status": "RESIZING", "db_host": "<value>"}
   v1-update-a-branch-config:
     speakeasy-default-v1-update-a-branch-config:
       parameters:
@@ -340,7 +344,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_PASSED", "created_at": "1720227579547", "updated_at": "1737012177987"}
+          application/json: {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": true, "reset_on_push": false, "persistent": false, "status": "FUNCTIONS_FAILED", "created_at": "1713519656763", "updated_at": "1737582641583"}
   v1-delete-a-branch:
     speakeasy-default-v1-delete-a-branch:
       parameters:
@@ -364,7 +368,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: [{"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_FAILED", "created_at": "1724526430432", "updated_at": "1736993093151"}, {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": false, "reset_on_push": true, "persistent": true, "status": "FUNCTIONS_FAILED", "created_at": "1719174863591", "updated_at": "1737046153006"}]
+          application/json: [{"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": true, "reset_on_push": true, "persistent": true, "status": "FUNCTIONS_DEPLOYED", "created_at": "1707897052824", "updated_at": "1737576915836"}, {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": true, "reset_on_push": true, "persistent": false, "status": "FUNCTIONS_DEPLOYED", "created_at": "1706089305572", "updated_at": "1737547532114"}]
   v1-create-a-branch:
     speakeasy-default-v1-create-a-branch:
       parameters:
@@ -374,7 +378,7 @@ examples:
         application/json: {"branch_name": "<value>"}
       responses:
         "201":
-          application/json: {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": true, "reset_on_push": true, "persistent": true, "status": "MIGRATIONS_PASSED", "created_at": "1725856552869", "updated_at": "1736996499081"}
+          application/json: {"id": "<id>", "name": "<value>", "project_ref": "<value>", "parent_project_ref": "<value>", "is_default": true, "reset_on_push": false, "persistent": false, "status": "FUNCTIONS_DEPLOYED", "created_at": "1710751933268", "updated_at": "1737522362828"}
   v1-disable-preview-branching:
     speakeasy-default-v1-disable-preview-branching:
       parameters:
@@ -384,14 +388,14 @@ examples:
     speakeasy-default-v1-list-all-projects:
       responses:
         "200":
-          application/json: []
+          application/json: [{"id": "<id>", "organization_id": "<id>", "name": "<value>", "region": "us-east-1", "created_at": "2023-03-29T16:32:59Z", "database": {"host": "neglected-plastic.biz", "version": "<value>", "postgres_engine": "<value>", "release_channel": "<value>"}, "status": "GOING_DOWN"}, {"id": "<id>", "organization_id": "<id>", "name": "<value>", "region": "us-east-1", "created_at": "2023-03-29T16:32:59Z", "database": {"host": "crooked-overload.name", "version": "<value>", "postgres_engine": "<value>", "release_channel": "<value>"}, "status": "ACTIVE_HEALTHY"}, {"id": "<id>", "organization_id": "<id>", "name": "<value>", "region": "us-east-1", "created_at": "2023-03-29T16:32:59Z", "database": {"host": "secret-bob.com", "version": "<value>", "postgres_engine": "<value>", "release_channel": "<value>"}, "status": "PAUSING"}]
   v1-create-a-project:
     speakeasy-default-v1-create-a-project:
       requestBody:
-        application/json: {"db_pass": "<value>", "name": "<value>", "organization_id": "<id>", "region": "eu-central-1", "template_url": "https://github.com/supabase/supabase/tree/master/examples/slack-clone/nextjs-slack-clone"}
+        application/json: {"db_pass": "<value>", "name": "<value>", "organization_id": "<id>", "region": "ap-southeast-2", "template_url": "https://github.com/supabase/supabase/tree/master/examples/slack-clone/nextjs-slack-clone"}
       responses:
         "201":
-          application/json: {"id": "<id>", "organization_id": "<id>", "name": "<value>", "region": "us-east-1", "created_at": "2023-03-29T16:32:59Z", "status": "COMING_UP"}
+          application/json: {"id": "<id>", "organization_id": "<id>", "name": "<value>", "region": "us-east-1", "created_at": "2023-03-29T16:32:59Z", "status": "UPGRADING"}
   v1-list-all-network-bans:
     speakeasy-default-v1-list-all-network-bans:
       parameters:
@@ -399,7 +403,7 @@ examples:
           ref: "<value>"
       responses:
         "201":
-          application/json: {"banned_ipv4_addresses": ["<value>", "<value>", "<value>"]}
+          application/json: {"banned_ipv4_addresses": ["<value>", "<value>"]}
   v1-delete-network-bans:
     speakeasy-default-v1-delete-network-bans:
       parameters:
@@ -414,7 +418,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"entitlement": "disallowed", "config": {}, "status": "applied"}
+          application/json: {"entitlement": "allowed", "config": {}, "status": "stored"}
   v1-update-network-restrictions:
     speakeasy-default-v1-update-network-restrictions:
       parameters:
@@ -432,7 +436,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"id": "<id>", "organization_id": "<id>", "name": "<value>", "region": "us-east-1", "created_at": "2023-03-29T16:32:59Z", "database": {"host": "weekly-devastation.name", "version": "<value>", "postgres_engine": "<value>", "release_channel": "<value>"}, "status": "INACTIVE"}
+          application/json: {"id": "<id>", "organization_id": "<id>", "name": "<value>", "region": "us-east-1", "created_at": "2023-03-29T16:32:59Z", "database": {"host": "rural-mathematics.name", "version": "<value>", "postgres_engine": "<value>", "release_channel": "<value>"}, "status": "RESTARTING"}
   v1-delete-a-project:
     speakeasy-default-v1-delete-a-project:
       parameters:
@@ -440,14 +444,14 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"id": 697429, "ref": "<value>", "name": "<value>"}
+          application/json: {"id": 545907, "ref": "<value>", "name": "<value>"}
   v1-upgrade-postgres-version:
     speakeasy-default-v1-upgrade-postgres-version:
       parameters:
         path:
           ref: "<value>"
       requestBody:
-        application/json: {"release_channel": "withdrawn", "target_version": "<value>"}
+        application/json: {"release_channel": "alpha", "target_version": "<value>"}
       responses:
         "201":
           application/json: {"tracking_id": "<id>"}
@@ -458,7 +462,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"current_app_version_release_channel": "beta", "duration_estimate_hours": 154574, "eligible": true, "current_app_version": "<value>", "latest_app_version": "<value>", "target_upgrade_versions": [{"postgres_version": "15", "release_channel": "internal", "app_version": "<value>"}], "potential_breaking_changes": ["<value>", "<value>"], "legacy_auth_custom_roles": [], "extension_dependent_objects": ["<value>", "<value>"]}
+          application/json: {"current_app_version_release_channel": "withdrawn", "duration_estimate_hours": 711658, "eligible": false, "current_app_version": "<value>", "latest_app_version": "<value>", "target_upgrade_versions": [{"postgres_version": "15", "release_channel": "ga", "app_version": "<value>"}, {"postgres_version": "15", "release_channel": "beta", "app_version": "<value>"}], "potential_breaking_changes": [], "legacy_auth_custom_roles": ["<value>", "<value>", "<value>"], "extension_dependent_objects": ["<value>", "<value>"]}
   v1-get-postgres-upgrade-status:
     speakeasy-default-v1-get-postgres-upgrade-status:
       parameters:
@@ -467,22 +471,22 @@ examples:
         query: {}
       responses:
         "200":
-          application/json: {"databaseUpgradeStatus": {"target_version": 351825, "status": 0, "initiated_at": "<value>", "latest_status_at": "<value>"}}
+          application/json: {"databaseUpgradeStatus": {"target_version": 52250, "status": 1, "initiated_at": "<value>", "latest_status_at": "<value>"}}
   v1-get-services-health:
     speakeasy-default-v1-get-services-health:
       parameters:
         path:
           ref: "<value>"
         query:
-          services: []
+          services: ["auth", "db"]
       responses:
         "200":
-          application/json: [{"name": "pooler", "healthy": false, "status": "COMING_UP"}, {"name": "realtime", "healthy": true, "status": "UNHEALTHY"}]
+          application/json: [{"name": "pooler", "healthy": true, "status": "COMING_UP"}]
   v1-list-all-organizations:
     speakeasy-default-v1-list-all-organizations:
       responses:
         "200":
-          application/json: [{"id": "<id>", "name": "<value>"}, {"id": "<id>", "name": "<value>"}]
+          application/json: [{"id": "<id>", "name": "<value>"}, {"id": "<id>", "name": "<value>"}, {"id": "<id>", "name": "<value>"}]
   v1-create-an-organization:
     speakeasy-default-v1-create-an-organization:
       requestBody:
@@ -497,7 +501,7 @@ examples:
           slug: "<value>"
       responses:
         "200":
-          application/json: [{"user_id": "<id>", "user_name": "Thaddeus_Lockman", "role_name": "<value>", "mfa_enabled": true}]
+          application/json: [{"user_id": "<id>", "user_name": "Mabel.Flatley38", "role_name": "<value>", "mfa_enabled": false}]
   v1-get-an-organization:
     speakeasy-default-v1-get-an-organization:
       parameters:
@@ -505,26 +509,26 @@ examples:
           slug: "<value>"
       responses:
         "200":
-          application/json: {"opt_in_tags": ["AI_SQL_GENERATOR_OPT_IN", "AI_SQL_GENERATOR_OPT_IN", "AI_SQL_GENERATOR_OPT_IN"], "allowed_release_channels": ["beta", "ga", "ga"], "id": "<id>", "name": "<value>"}
+          application/json: {"opt_in_tags": ["AI_SQL_GENERATOR_OPT_IN", "AI_SQL_GENERATOR_OPT_IN"], "allowed_release_channels": ["beta", "beta"], "id": "<id>", "name": "<value>"}
   v1-authorize-user:
     speakeasy-default-v1-authorize-user:
       parameters:
         query:
           client_id: "<id>"
-          response_type: "token"
-          redirect_uri: "https://insidious-wriggler.name/"
+          response_type: "id_token token"
+          redirect_uri: "https://well-worn-jacket.info"
   v1-exchange-oauth-token:
     speakeasy-default-v1-exchange-oauth-token:
       requestBody:
-        application/x-www-form-urlencoded: {"grant_type": "refresh_token", "client_id": "<id>", "client_secret": "<value>"}
+        application/x-www-form-urlencoded: {"grant_type": "authorization_code", "client_id": "<id>", "client_secret": "<value>"}
       responses:
         "201":
-          application/json: {"expires_in": 66898, "token_type": "Bearer", "access_token": "<value>", "refresh_token": "<value>"}
+          application/json: {"expires_in": 688082, "token_type": "Bearer", "access_token": "<value>", "refresh_token": "<value>"}
   v1-list-all-snippets:
     speakeasy-default-v1-list-all-snippets:
       responses:
         "200":
-          application/json: {"data": [{"id": "<id>", "inserted_at": "<value>", "updated_at": "1737026634245", "type": "sql", "visibility": "user", "name": "<value>", "project": {"id": 604531, "name": "<value>"}, "owner": {"id": 74975, "username": "Scarlett19"}, "updated_by": {"id": 402832, "username": "Christ38"}}]}
+          application/json: {"data": []}
   v1-get-a-snippet:
     speakeasy-default-v1-get-a-snippet:
       parameters:
@@ -532,7 +536,7 @@ examples:
           id: "<id>"
       responses:
         "200":
-          application/json: {"id": "<id>", "inserted_at": "<value>", "updated_at": "1737039333031", "type": "sql", "visibility": "user", "name": "<value>", "project": {"id": 781357, "name": "<value>"}, "owner": {"id": 749483, "username": "Geraldine_Lind"}, "updated_by": {"id": 537423, "username": "Aletha72"}, "content": {"favorite": true, "schema_version": "<value>", "sql": "<value>"}}
+          application/json: {"id": "<id>", "inserted_at": "<value>", "updated_at": "1737542111081", "type": "sql", "visibility": "user", "name": "<value>", "project": {"id": 978722, "name": "<value>"}, "owner": {"id": 561525, "username": "Annie_Hyatt"}, "updated_by": {"id": 445136, "username": "William_Frami75"}, "content": {"favorite": false, "schema_version": "<value>", "sql": "<value>"}}
   v1-get-ssl-enforcement-config:
     speakeasy-default-v1-get-ssl-enforcement-config:
       parameters:
@@ -540,7 +544,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"currentConfig": {"database": false}, "appliedSuccessfully": true}
+          application/json: {"currentConfig": {"database": false}, "appliedSuccessfully": false}
   v1-update-ssl-enforcement-config:
     speakeasy-default-v1-update-ssl-enforcement-config:
       parameters:
@@ -550,16 +554,7 @@ examples:
         application/json: {"requestedConfig": {"database": false}}
       responses:
         "200":
-          application/json: {"currentConfig": {"database": true}, "appliedSuccessfully": false}
-  v1-generate-typescript-types:
-    speakeasy-default-v1-generate-typescript-types:
-      parameters:
-        path:
-          ref: "<value>"
-        query: {}
-      responses:
-        "200":
-          application/json: {"types": "<value>"}
+          application/json: {"currentConfig": {"database": true}, "appliedSuccessfully": true}
   v1-get-readonly-mode-status:
     speakeasy-default-v1-get-readonly-mode-status:
       parameters:
@@ -595,16 +590,6 @@ examples:
       responses:
         "200":
           application/json: {}
-  v1-update-postgres-config:
-    speakeasy-default-v1-update-postgres-config:
-      parameters:
-        path:
-          ref: "<value>"
-      requestBody:
-        application/json: {}
-      responses:
-        "200":
-          application/json: {}
   v1-get-project-pgbouncer-config:
     speakeasy-default-v1-get-project-pgbouncer-config:
       parameters:
@@ -620,17 +605,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: []
-  v1-update-supavisor-config:
-    speakeasy-default-v1-update-supavisor-config:
-      parameters:
-        path:
-          ref: "<value>"
-      requestBody:
-        application/json: {}
-      responses:
-        "200":
-          application/json: {"default_pool_size": 898292, "pool_mode": "transaction"}
+          application/json: [{"db_port": 775389, "default_pool_size": 795149, "max_client_conn": 212221, "identifier": "<value>", "database_type": "READ_REPLICA", "is_using_scram_auth": false, "db_user": "<value>", "db_host": "<value>", "db_name": "<value>", "connectionString": "<value>", "pool_mode": "transaction"}]
   v1-run-a-query:
     speakeasy-default-v1-run-a-query:
       parameters:
@@ -653,24 +628,24 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"region": "<value>", "walg_enabled": true, "pitr_enabled": true, "backups": [{"status": "PENDING", "is_physical_backup": false, "inserted_at": "<value>"}], "physical_backup_data": {}}
+          application/json: {"region": "<value>", "walg_enabled": false, "pitr_enabled": false, "backups": [{"status": "PENDING", "is_physical_backup": true, "inserted_at": "<value>"}], "physical_backup_data": {}}
   v1-restore-pitr-backup:
     speakeasy-default-v1-restore-pitr-backup:
       parameters:
         path:
           ref: "<value>"
       requestBody:
-        application/json: {"recovery_time_target_unix": 573588}
+        application/json: {"recovery_time_target_unix": 870238}
   v1-get-project-api-keys:
     speakeasy-default-v1-get-project-api-keys:
       parameters:
         path:
           ref: "<value>"
         query:
-          reveal: false
+          reveal: true
       responses:
         "200":
-          application/json: []
+          application/json: [{"name": "<value>", "api_key": "<value>"}, {"name": "<value>", "api_key": "<value>"}]
   createApiKey:
     speakeasy-default-create-api-key:
       parameters:
@@ -750,14 +725,14 @@ examples:
         path:
           ref: "<value>"
       requestBody:
-        application/json: [{"name": "string", "value": "<value>"}, {"name": "string", "value": "<value>"}, {"name": "string", "value": "<value>"}]
+        application/json: []
   v1-bulk-delete-secrets:
     speakeasy-default-v1-bulk-delete-secrets:
       parameters:
         path:
           ref: "<value>"
       requestBody:
-        application/json: ["<value>"]
+        application/json: ["<value>", "<value>"]
       responses:
         "200":
           application/json: {}
@@ -768,7 +743,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"status": "2_initiated", "custom_hostname": "<value>", "data": {"success": true, "errors": [{}], "messages": [{}, {}, {}], "result": {"id": "<id>", "hostname": "dutiful-cauliflower.name", "ssl": {"status": "<value>", "validation_records": [{"txt_name": "<value>", "txt_value": "<value>"}]}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
+          application/json: {"status": "2_initiated", "custom_hostname": "<value>", "data": {"success": true, "errors": [{}, {}, {}], "messages": [{}, {}, {}], "result": {"id": "<id>", "hostname": "prime-outlaw.net", "ssl": {"status": "<value>", "validation_records": []}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
   v1-Delete hostname config:
     speakeasy-default-v1-delete-hostname-config:
       parameters:
@@ -783,7 +758,7 @@ examples:
         application/json: {"custom_hostname": "<value>"}
       responses:
         "201":
-          application/json: {"status": "2_initiated", "custom_hostname": "<value>", "data": {"success": false, "errors": [], "messages": [{}, {}], "result": {"id": "<id>", "hostname": "gummy-rubric.name", "ssl": {"status": "<value>", "validation_records": [{"txt_name": "<value>", "txt_value": "<value>"}, {"txt_name": "<value>", "txt_value": "<value>"}]}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
+          application/json: {"status": "2_initiated", "custom_hostname": "<value>", "data": {"success": true, "errors": [], "messages": [], "result": {"id": "<id>", "hostname": "heavenly-elevation.com", "ssl": {"status": "<value>", "validation_records": [{"txt_name": "<value>", "txt_value": "<value>"}, {"txt_name": "<value>", "txt_value": "<value>"}]}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
   v1-verify-dns-config:
     speakeasy-default-v1-verify-dns-config:
       parameters:
@@ -791,7 +766,7 @@ examples:
           ref: "<value>"
       responses:
         "201":
-          application/json: {"status": "1_not_started", "custom_hostname": "<value>", "data": {"success": true, "errors": [{}, {}, {}], "messages": [{}], "result": {"id": "<id>", "hostname": "delicious-wear.net", "ssl": {"status": "<value>", "validation_records": []}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
+          application/json: {"status": "2_initiated", "custom_hostname": "<value>", "data": {"success": false, "errors": [], "messages": [{}], "result": {"id": "<id>", "hostname": "valuable-reboot.net", "ssl": {"status": "<value>", "validation_records": [{"txt_name": "<value>", "txt_value": "<value>"}, {"txt_name": "<value>", "txt_value": "<value>"}, {"txt_name": "<value>", "txt_value": "<value>"}]}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
   v1-activate-custom-hostname:
     speakeasy-default-v1-activate-custom-hostname:
       parameters:
@@ -799,7 +774,7 @@ examples:
           ref: "<value>"
       responses:
         "201":
-          application/json: {"status": "5_services_reconfigured", "custom_hostname": "<value>", "data": {"success": true, "errors": [{}, {}], "messages": [{}, {}, {}], "result": {"id": "<id>", "hostname": "left-orchid.org", "ssl": {"status": "<value>", "validation_records": [{"txt_name": "<value>", "txt_value": "<value>"}, {"txt_name": "<value>", "txt_value": "<value>"}]}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
+          application/json: {"status": "3_challenge_verified", "custom_hostname": "<value>", "data": {"success": false, "errors": [{}, {}, {}], "messages": [], "result": {"id": "<id>", "hostname": "sinful-grandson.biz", "ssl": {"status": "<value>", "validation_records": []}, "ownership_verification": {"type": "<value>", "name": "<value>", "value": "<value>"}, "custom_origin_server": "<value>", "status": "<value>"}}}
   v1-get-vanity-subdomain-config:
     speakeasy-default-v1-get-vanity-subdomain-config:
       parameters:
@@ -807,7 +782,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"status": "active"}
+          application/json: {"status": "not-used"}
   v1-deactivate-vanity-subdomain-config:
     speakeasy-default-v1-deactivate-vanity-subdomain-config:
       parameters:
@@ -822,7 +797,7 @@ examples:
         application/json: {"vanity_subdomain": "<value>"}
       responses:
         "201":
-          application/json: {"available": true}
+          application/json: {"available": false}
   v1-activate-vanity-subdomain-config:
     speakeasy-default-v1-activate-vanity-subdomain-config:
       parameters:
@@ -840,7 +815,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"max_rows": 156257, "db_pool": 535241, "db_schema": "<value>", "db_extra_search_path": "<value>"}
+          application/json: {"max_rows": 84244, "db_pool": 125787, "db_schema": "<value>", "db_extra_search_path": "<value>"}
   v1-update-postgrest-service-config:
     speakeasy-default-v1-update-postgrest-service-config:
       parameters:
@@ -850,7 +825,37 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"max_rows": 114309, "db_pool": 119222, "db_schema": "<value>", "db_extra_search_path": "<value>"}
+          application/json: {"max_rows": 333385, "db_pool": 779692, "db_schema": "<value>", "db_extra_search_path": "<value>"}
+  v1-generate-typescript-types:
+    speakeasy-default-v1-generate-typescript-types:
+      parameters:
+        path:
+          ref: "<value>"
+        query:
+          included_schemas: "public"
+      responses:
+        "200":
+          application/json: {"types": "<value>"}
+  v1-update-postgres-config:
+    speakeasy-default-v1-update-postgres-config:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {}
+  v1-update-supavisor-config:
+    speakeasy-default-v1-update-supavisor-config:
+      parameters:
+        path:
+          ref: "<value>"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"default_pool_size": 477985, "pool_mode": "session"}
   v1-get-storage-config:
     speakeasy-default-v1-get-storage-config:
       parameters:
@@ -858,7 +863,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"fileSizeLimit": 976035, "features": {"imageTransformation": {"enabled": true}}}
+          application/json: {"fileSizeLimit": 84244, "features": {"imageTransformation": {"enabled": true}}}
   v1-update-storage-config:
     speakeasy-default-v1-update-storage-config:
       parameters:
@@ -873,7 +878,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: [{"id": "<id>", "name": "<value>", "owner": "<value>", "created_at": "1724242247488", "updated_at": "1737017137979", "public": false}, {"id": "<id>", "name": "<value>", "owner": "<value>", "created_at": "1714250246388", "updated_at": "1737019955601", "public": false}]
+          application/json: [{"id": "<id>", "name": "<value>", "owner": "<value>", "created_at": "1731289050159", "updated_at": "1737512353175", "public": false}]
   v1-get-auth-service-config:
     speakeasy-default-v1-get-auth-service-config:
       parameters:
@@ -881,7 +886,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"api_max_request_duration": 151356, "db_max_pool_size": 551308, "jwt_exp": 415347, "mailer_otp_exp": 858566, "mailer_otp_length": 110099, "mfa_max_enrolled_factors": 661716, "mfa_phone_otp_length": 556745, "mfa_phone_max_frequency": 507966, "password_min_length": 849737, "rate_limit_anonymous_users": 970531, "rate_limit_email_sent": 154400, "rate_limit_sms_sent": 392736, "rate_limit_token_refresh": 209775, "rate_limit_verify": 265936, "rate_limit_otp": 711889, "security_refresh_token_reuse_interval": 786045, "sessions_inactivity_timeout": 996993, "sessions_timebox": 277073, "sms_max_frequency": 893244, "sms_otp_exp": 412271, "sms_otp_length": 581342, "smtp_max_frequency": 645180, "disable_signup": false, "external_anonymous_users_enabled": true, "external_apple_additional_client_ids": "<value>", "external_apple_client_id": "<id>", "external_apple_enabled": false, "external_apple_secret": "<value>", "external_azure_client_id": "<id>", "external_azure_enabled": true, "external_azure_secret": "<value>", "external_azure_url": "https://trusting-secret.org/", "external_bitbucket_client_id": "<id>", "external_bitbucket_enabled": false, "external_bitbucket_secret": "<value>", "external_discord_client_id": "<id>", "external_discord_enabled": false, "external_discord_secret": "<value>", "external_email_enabled": true, "external_facebook_client_id": "<id>", "external_facebook_enabled": false, "external_facebook_secret": "<value>", "external_figma_client_id": "<id>", "external_figma_enabled": true, "external_figma_secret": "<value>", "external_github_client_id": "<id>", "external_github_enabled": true, "external_github_secret": "<value>", "external_gitlab_client_id": "<id>", "external_gitlab_enabled": false, "external_gitlab_secret": "<value>", "external_gitlab_url": "https://reckless-conservation.info/", "external_google_additional_client_ids": "<value>", "external_google_client_id": "<id>", "external_google_enabled": false, "external_google_secret": "<value>", "external_google_skip_nonce_check": true, "external_kakao_client_id": "<id>", "external_kakao_enabled": false, "external_kakao_secret": "<value>", "external_keycloak_client_id": "<id>", "external_keycloak_enabled": true, "external_keycloak_secret": "<value>", "external_keycloak_url": "https://white-vein.biz", "external_linkedin_oidc_client_id": "<id>", "external_linkedin_oidc_enabled": true, "external_linkedin_oidc_secret": "<value>", "external_slack_oidc_client_id": "<id>", "external_slack_oidc_enabled": true, "external_slack_oidc_secret": "<value>", "external_notion_client_id": "<id>", "external_notion_enabled": true, "external_notion_secret": "<value>", "external_phone_enabled": true, "external_slack_client_id": "<id>", "external_slack_enabled": true, "external_slack_secret": "<value>", "external_spotify_client_id": "<id>", "external_spotify_enabled": true, "external_spotify_secret": "<value>", "external_twitch_client_id": "<id>", "external_twitch_enabled": true, "external_twitch_secret": "<value>", "external_twitter_client_id": "<id>", "external_twitter_enabled": true, "external_twitter_secret": "<value>", "external_workos_client_id": "<id>", "external_workos_enabled": false, "external_workos_secret": "<value>", "external_workos_url": "https://lanky-analogy.net", "external_zoom_client_id": "<id>", "external_zoom_enabled": true, "external_zoom_secret": "<value>", "hook_custom_access_token_enabled": true, "hook_custom_access_token_uri": "https://kaleidoscopic-husband.org/", "hook_custom_access_token_secrets": "<value>", "hook_mfa_verification_attempt_enabled": true, "hook_mfa_verification_attempt_uri": "https://colorless-king.net/", "hook_mfa_verification_attempt_secrets": "<value>", "hook_password_verification_attempt_enabled": true, "hook_password_verification_attempt_uri": "https://untried-charlatan.com/", "hook_password_verification_attempt_secrets": "<value>", "hook_send_sms_enabled": false, "hook_send_sms_uri": "https://indolent-embarrassment.com", "hook_send_sms_secrets": "<value>", "hook_send_email_enabled": false, "hook_send_email_uri": "https://parallel-punctuation.biz", "hook_send_email_secrets": "<value>", "mailer_allow_unverified_email_sign_ins": false, "mailer_autoconfirm": true, "mailer_secure_email_change_enabled": true, "mailer_subjects_confirmation": "<value>", "mailer_subjects_email_change": "<value>", "mailer_subjects_invite": "<value>", "mailer_subjects_magic_link": "<value>", "mailer_subjects_reauthentication": "<value>", "mailer_subjects_recovery": "<value>", "mailer_templates_confirmation_content": "<value>", "mailer_templates_email_change_content": "<value>", "mailer_templates_invite_content": "<value>", "mailer_templates_magic_link_content": "<value>", "mailer_templates_reauthentication_content": "<value>", "mailer_templates_recovery_content": "<value>", "mfa_totp_enroll_enabled": true, "mfa_totp_verify_enabled": false, "mfa_phone_enroll_enabled": true, "mfa_phone_verify_enabled": false, "mfa_web_authn_enroll_enabled": true, "mfa_web_authn_verify_enabled": false, "mfa_phone_template": "<value>", "password_hibp_enabled": true, "password_required_characters": "<value>", "refresh_token_rotation_enabled": false, "saml_enabled": false, "saml_external_url": "https://elementary-sushi.name/", "saml_allow_encrypted_assertions": false, "security_captcha_enabled": true, "security_captcha_provider": "<value>", "security_captcha_secret": "<value>", "security_manual_linking_enabled": true, "security_update_password_require_reauthentication": false, "sessions_single_per_user": true, "sessions_tags": "<value>", "site_url": "https://bruised-request.biz/", "sms_autoconfirm": false, "sms_messagebird_access_key": "<value>", "sms_messagebird_originator": "<value>", "sms_provider": "<value>", "sms_template": "<value>", "sms_test_otp": "<value>", "sms_test_otp_valid_until": "<value>", "sms_textlocal_api_key": "<value>", "sms_textlocal_sender": "<value>", "sms_twilio_account_sid": "<id>", "sms_twilio_auth_token": "<value>", "sms_twilio_content_sid": "<id>", "sms_twilio_message_service_sid": "<id>", "sms_twilio_verify_account_sid": "<id>", "sms_twilio_verify_auth_token": "<value>", "sms_twilio_verify_message_service_sid": "<id>", "sms_vonage_api_key": "<value>", "sms_vonage_api_secret": "<value>", "sms_vonage_from": "<value>", "smtp_admin_email": "<value>", "smtp_host": "<value>", "smtp_pass": "<value>", "smtp_port": "<value>", "smtp_sender_name": "<value>", "smtp_user": "<value>", "uri_allow_list": "<value>"}
+          application/json: {"api_max_request_duration": 84244, "db_max_pool_size": 125787, "jwt_exp": 978075, "mailer_otp_exp": 409948, "mailer_otp_length": 539731, "mfa_max_enrolled_factors": 755975, "mfa_phone_otp_length": 296624, "mfa_phone_max_frequency": 896533, "password_min_length": 89940, "rate_limit_anonymous_users": 936971, "rate_limit_email_sent": 560035, "rate_limit_sms_sent": 856099, "rate_limit_token_refresh": 527706, "rate_limit_verify": 216938, "rate_limit_otp": 744505, "security_refresh_token_reuse_interval": 998194, "sessions_inactivity_timeout": 402035, "sessions_timebox": 142949, "sms_max_frequency": 742093, "sms_otp_exp": 338463, "sms_otp_length": 825013, "smtp_max_frequency": 417658, "disable_signup": true, "external_anonymous_users_enabled": true, "external_apple_additional_client_ids": "<value>", "external_apple_client_id": "<id>", "external_apple_enabled": false, "external_apple_secret": "<value>", "external_azure_client_id": "<id>", "external_azure_enabled": false, "external_azure_secret": "<value>", "external_azure_url": "https://devoted-mainstream.net/", "external_bitbucket_client_id": "<id>", "external_bitbucket_enabled": true, "external_bitbucket_secret": "<value>", "external_discord_client_id": "<id>", "external_discord_enabled": false, "external_discord_secret": "<value>", "external_email_enabled": false, "external_facebook_client_id": "<id>", "external_facebook_enabled": false, "external_facebook_secret": "<value>", "external_figma_client_id": "<id>", "external_figma_enabled": true, "external_figma_secret": "<value>", "external_github_client_id": "<id>", "external_github_enabled": true, "external_github_secret": "<value>", "external_gitlab_client_id": "<id>", "external_gitlab_enabled": true, "external_gitlab_secret": "<value>", "external_gitlab_url": "https://sunny-summary.net/", "external_google_additional_client_ids": "<value>", "external_google_client_id": "<id>", "external_google_enabled": false, "external_google_secret": "<value>", "external_google_skip_nonce_check": true, "external_kakao_client_id": "<id>", "external_kakao_enabled": false, "external_kakao_secret": "<value>", "external_keycloak_client_id": "<id>", "external_keycloak_enabled": true, "external_keycloak_secret": "<value>", "external_keycloak_url": "https://muted-nudge.info/", "external_linkedin_oidc_client_id": "<id>", "external_linkedin_oidc_enabled": true, "external_linkedin_oidc_secret": "<value>", "external_slack_oidc_client_id": "<id>", "external_slack_oidc_enabled": false, "external_slack_oidc_secret": "<value>", "external_notion_client_id": "<id>", "external_notion_enabled": false, "external_notion_secret": "<value>", "external_phone_enabled": false, "external_slack_client_id": "<id>", "external_slack_enabled": false, "external_slack_secret": "<value>", "external_spotify_client_id": "<id>", "external_spotify_enabled": true, "external_spotify_secret": "<value>", "external_twitch_client_id": "<id>", "external_twitch_enabled": true, "external_twitch_secret": "<value>", "external_twitter_client_id": "<id>", "external_twitter_enabled": true, "external_twitter_secret": "<value>", "external_workos_client_id": "<id>", "external_workos_enabled": true, "external_workos_secret": "<value>", "external_workos_url": "https://cute-celsius.biz/", "external_zoom_client_id": "<id>", "external_zoom_enabled": false, "external_zoom_secret": "<value>", "hook_custom_access_token_enabled": true, "hook_custom_access_token_uri": "https://long-term-newsstand.com", "hook_custom_access_token_secrets": "<value>", "hook_mfa_verification_attempt_enabled": true, "hook_mfa_verification_attempt_uri": "https://aged-boyfriend.org", "hook_mfa_verification_attempt_secrets": "<value>", "hook_password_verification_attempt_enabled": true, "hook_password_verification_attempt_uri": "https://fair-responsibility.org", "hook_password_verification_attempt_secrets": "<value>", "hook_send_sms_enabled": false, "hook_send_sms_uri": "https://giving-duster.name/", "hook_send_sms_secrets": "<value>", "hook_send_email_enabled": true, "hook_send_email_uri": "https://muffled-gray.name", "hook_send_email_secrets": "<value>", "mailer_allow_unverified_email_sign_ins": true, "mailer_autoconfirm": true, "mailer_secure_email_change_enabled": true, "mailer_subjects_confirmation": "<value>", "mailer_subjects_email_change": "<value>", "mailer_subjects_invite": "<value>", "mailer_subjects_magic_link": "<value>", "mailer_subjects_reauthentication": "<value>", "mailer_subjects_recovery": "<value>", "mailer_templates_confirmation_content": "<value>", "mailer_templates_email_change_content": "<value>", "mailer_templates_invite_content": "<value>", "mailer_templates_magic_link_content": "<value>", "mailer_templates_reauthentication_content": "<value>", "mailer_templates_recovery_content": "<value>", "mfa_totp_enroll_enabled": true, "mfa_totp_verify_enabled": true, "mfa_phone_enroll_enabled": false, "mfa_phone_verify_enabled": false, "mfa_web_authn_enroll_enabled": true, "mfa_web_authn_verify_enabled": false, "mfa_phone_template": "<value>", "password_hibp_enabled": true, "password_required_characters": "<value>", "refresh_token_rotation_enabled": true, "saml_enabled": true, "saml_external_url": "https://pointless-finer.biz", "saml_allow_encrypted_assertions": false, "security_captcha_enabled": false, "security_captcha_provider": "<value>", "security_captcha_secret": "<value>", "security_manual_linking_enabled": true, "security_update_password_require_reauthentication": false, "sessions_single_per_user": false, "sessions_tags": "<value>", "site_url": "https://scary-relative.net", "sms_autoconfirm": false, "sms_messagebird_access_key": "<value>", "sms_messagebird_originator": "<value>", "sms_provider": "<value>", "sms_template": "<value>", "sms_test_otp": "<value>", "sms_test_otp_valid_until": "<value>", "sms_textlocal_api_key": "<value>", "sms_textlocal_sender": "<value>", "sms_twilio_account_sid": "<id>", "sms_twilio_auth_token": "<value>", "sms_twilio_content_sid": "<id>", "sms_twilio_message_service_sid": "<id>", "sms_twilio_verify_account_sid": "<id>", "sms_twilio_verify_auth_token": "<value>", "sms_twilio_verify_message_service_sid": "<id>", "sms_vonage_api_key": "<value>", "sms_vonage_api_secret": "<value>", "sms_vonage_from": "<value>", "smtp_admin_email": "<value>", "smtp_host": "<value>", "smtp_pass": "<value>", "smtp_port": "<value>", "smtp_sender_name": "<value>", "smtp_user": "<value>", "uri_allow_list": "<value>"}
   v1-update-auth-service-config:
     speakeasy-default-v1-update-auth-service-config:
       parameters:
@@ -891,7 +896,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"api_max_request_duration": 511274, "db_max_pool_size": 971694, "jwt_exp": 746999, "mailer_otp_exp": 699490, "mailer_otp_length": 549347, "mfa_max_enrolled_factors": 860414, "mfa_phone_otp_length": 367509, "mfa_phone_max_frequency": 577668, "password_min_length": 614028, "rate_limit_anonymous_users": 974133, "rate_limit_email_sent": 598896, "rate_limit_sms_sent": 651509, "rate_limit_token_refresh": 404099, "rate_limit_verify": 477587, "rate_limit_otp": 944056, "security_refresh_token_reuse_interval": 789983, "sessions_inactivity_timeout": 612200, "sessions_timebox": 522269, "sms_max_frequency": 947561, "sms_otp_exp": 646177, "sms_otp_length": 148649, "smtp_max_frequency": 651201, "disable_signup": false, "external_anonymous_users_enabled": false, "external_apple_additional_client_ids": "<value>", "external_apple_client_id": "<id>", "external_apple_enabled": false, "external_apple_secret": "<value>", "external_azure_client_id": "<id>", "external_azure_enabled": true, "external_azure_secret": "<value>", "external_azure_url": "https://rapid-density.info", "external_bitbucket_client_id": "<id>", "external_bitbucket_enabled": false, "external_bitbucket_secret": "<value>", "external_discord_client_id": "<id>", "external_discord_enabled": true, "external_discord_secret": "<value>", "external_email_enabled": false, "external_facebook_client_id": "<id>", "external_facebook_enabled": true, "external_facebook_secret": "<value>", "external_figma_client_id": "<id>", "external_figma_enabled": false, "external_figma_secret": "<value>", "external_github_client_id": "<id>", "external_github_enabled": false, "external_github_secret": "<value>", "external_gitlab_client_id": "<id>", "external_gitlab_enabled": true, "external_gitlab_secret": "<value>", "external_gitlab_url": "https://quarterly-behest.name", "external_google_additional_client_ids": "<value>", "external_google_client_id": "<id>", "external_google_enabled": false, "external_google_secret": "<value>", "external_google_skip_nonce_check": false, "external_kakao_client_id": "<id>", "external_kakao_enabled": true, "external_kakao_secret": "<value>", "external_keycloak_client_id": "<id>", "external_keycloak_enabled": true, "external_keycloak_secret": "<value>", "external_keycloak_url": "https://fortunate-statue.info/", "external_linkedin_oidc_client_id": "<id>", "external_linkedin_oidc_enabled": false, "external_linkedin_oidc_secret": "<value>", "external_slack_oidc_client_id": "<id>", "external_slack_oidc_enabled": true, "external_slack_oidc_secret": "<value>", "external_notion_client_id": "<id>", "external_notion_enabled": true, "external_notion_secret": "<value>", "external_phone_enabled": true, "external_slack_client_id": "<id>", "external_slack_enabled": true, "external_slack_secret": "<value>", "external_spotify_client_id": "<id>", "external_spotify_enabled": true, "external_spotify_secret": "<value>", "external_twitch_client_id": "<id>", "external_twitch_enabled": true, "external_twitch_secret": "<value>", "external_twitter_client_id": "<id>", "external_twitter_enabled": false, "external_twitter_secret": "<value>", "external_workos_client_id": "<id>", "external_workos_enabled": false, "external_workos_secret": "<value>", "external_workos_url": "https://knowledgeable-fireplace.net", "external_zoom_client_id": "<id>", "external_zoom_enabled": false, "external_zoom_secret": "<value>", "hook_custom_access_token_enabled": true, "hook_custom_access_token_uri": "https://noxious-amnesty.org", "hook_custom_access_token_secrets": "<value>", "hook_mfa_verification_attempt_enabled": true, "hook_mfa_verification_attempt_uri": "https://yellow-scholarship.biz/", "hook_mfa_verification_attempt_secrets": "<value>", "hook_password_verification_attempt_enabled": false, "hook_password_verification_attempt_uri": "https://strong-doubter.org/", "hook_password_verification_attempt_secrets": "<value>", "hook_send_sms_enabled": false, "hook_send_sms_uri": "https://second-hand-marketplace.info", "hook_send_sms_secrets": "<value>", "hook_send_email_enabled": false, "hook_send_email_uri": "https://diligent-traditionalism.biz", "hook_send_email_secrets": "<value>", "mailer_allow_unverified_email_sign_ins": false, "mailer_autoconfirm": false, "mailer_secure_email_change_enabled": true, "mailer_subjects_confirmation": "<value>", "mailer_subjects_email_change": "<value>", "mailer_subjects_invite": "<value>", "mailer_subjects_magic_link": "<value>", "mailer_subjects_reauthentication": "<value>", "mailer_subjects_recovery": "<value>", "mailer_templates_confirmation_content": "<value>", "mailer_templates_email_change_content": "<value>", "mailer_templates_invite_content": "<value>", "mailer_templates_magic_link_content": "<value>", "mailer_templates_reauthentication_content": "<value>", "mailer_templates_recovery_content": "<value>", "mfa_totp_enroll_enabled": true, "mfa_totp_verify_enabled": false, "mfa_phone_enroll_enabled": false, "mfa_phone_verify_enabled": true, "mfa_web_authn_enroll_enabled": false, "mfa_web_authn_verify_enabled": false, "mfa_phone_template": "<value>", "password_hibp_enabled": true, "password_required_characters": "<value>", "refresh_token_rotation_enabled": false, "saml_enabled": false, "saml_external_url": "https://essential-bandwidth.info", "saml_allow_encrypted_assertions": false, "security_captcha_enabled": true, "security_captcha_provider": "<value>", "security_captcha_secret": "<value>", "security_manual_linking_enabled": true, "security_update_password_require_reauthentication": false, "sessions_single_per_user": true, "sessions_tags": "<value>", "site_url": "https://exotic-fowl.name/", "sms_autoconfirm": false, "sms_messagebird_access_key": "<value>", "sms_messagebird_originator": "<value>", "sms_provider": "<value>", "sms_template": "<value>", "sms_test_otp": "<value>", "sms_test_otp_valid_until": "<value>", "sms_textlocal_api_key": "<value>", "sms_textlocal_sender": "<value>", "sms_twilio_account_sid": "<id>", "sms_twilio_auth_token": "<value>", "sms_twilio_content_sid": "<id>", "sms_twilio_message_service_sid": "<id>", "sms_twilio_verify_account_sid": "<id>", "sms_twilio_verify_auth_token": "<value>", "sms_twilio_verify_message_service_sid": "<id>", "sms_vonage_api_key": "<value>", "sms_vonage_api_secret": "<value>", "sms_vonage_from": "<value>", "smtp_admin_email": "<value>", "smtp_host": "<value>", "smtp_pass": "<value>", "smtp_port": "<value>", "smtp_sender_name": "<value>", "smtp_user": "<value>", "uri_allow_list": "<value>"}
+          application/json: {"api_max_request_duration": 163389, "db_max_pool_size": 364120, "jwt_exp": 823182, "mailer_otp_exp": 850229, "mailer_otp_length": 117322, "mfa_max_enrolled_factors": 645088, "mfa_phone_otp_length": 278624, "mfa_phone_max_frequency": 402142, "password_min_length": 968805, "rate_limit_anonymous_users": 817502, "rate_limit_email_sent": 312082, "rate_limit_sms_sent": 977766, "rate_limit_token_refresh": 106998, "rate_limit_verify": 460309, "rate_limit_otp": 484484, "security_refresh_token_reuse_interval": 258291, "sessions_inactivity_timeout": 173400, "sessions_timebox": 523008, "sms_max_frequency": 690154, "sms_otp_exp": 500963, "sms_otp_length": 280780, "smtp_max_frequency": 825098, "disable_signup": false, "external_anonymous_users_enabled": false, "external_apple_additional_client_ids": "<value>", "external_apple_client_id": "<id>", "external_apple_enabled": true, "external_apple_secret": "<value>", "external_azure_client_id": "<id>", "external_azure_enabled": false, "external_azure_secret": "<value>", "external_azure_url": "https://querulous-ghost.name/", "external_bitbucket_client_id": "<id>", "external_bitbucket_enabled": true, "external_bitbucket_secret": "<value>", "external_discord_client_id": "<id>", "external_discord_enabled": false, "external_discord_secret": "<value>", "external_email_enabled": false, "external_facebook_client_id": "<id>", "external_facebook_enabled": false, "external_facebook_secret": "<value>", "external_figma_client_id": "<id>", "external_figma_enabled": false, "external_figma_secret": "<value>", "external_github_client_id": "<id>", "external_github_enabled": false, "external_github_secret": "<value>", "external_gitlab_client_id": "<id>", "external_gitlab_enabled": true, "external_gitlab_secret": "<value>", "external_gitlab_url": "https://sweet-gown.org", "external_google_additional_client_ids": "<value>", "external_google_client_id": "<id>", "external_google_enabled": true, "external_google_secret": "<value>", "external_google_skip_nonce_check": false, "external_kakao_client_id": "<id>", "external_kakao_enabled": false, "external_kakao_secret": "<value>", "external_keycloak_client_id": "<id>", "external_keycloak_enabled": false, "external_keycloak_secret": "<value>", "external_keycloak_url": "https://dependable-lifestyle.name", "external_linkedin_oidc_client_id": "<id>", "external_linkedin_oidc_enabled": true, "external_linkedin_oidc_secret": "<value>", "external_slack_oidc_client_id": "<id>", "external_slack_oidc_enabled": false, "external_slack_oidc_secret": "<value>", "external_notion_client_id": "<id>", "external_notion_enabled": false, "external_notion_secret": "<value>", "external_phone_enabled": true, "external_slack_client_id": "<id>", "external_slack_enabled": true, "external_slack_secret": "<value>", "external_spotify_client_id": "<id>", "external_spotify_enabled": false, "external_spotify_secret": "<value>", "external_twitch_client_id": "<id>", "external_twitch_enabled": true, "external_twitch_secret": "<value>", "external_twitter_client_id": "<id>", "external_twitter_enabled": true, "external_twitter_secret": "<value>", "external_workos_client_id": "<id>", "external_workos_enabled": false, "external_workos_secret": "<value>", "external_workos_url": "https://spanish-disclosure.name", "external_zoom_client_id": "<id>", "external_zoom_enabled": true, "external_zoom_secret": "<value>", "hook_custom_access_token_enabled": false, "hook_custom_access_token_uri": "https://cloudy-sushi.info/", "hook_custom_access_token_secrets": "<value>", "hook_mfa_verification_attempt_enabled": false, "hook_mfa_verification_attempt_uri": "https://primary-alert.name/", "hook_mfa_verification_attempt_secrets": "<value>", "hook_password_verification_attempt_enabled": false, "hook_password_verification_attempt_uri": "https://weird-jazz.net/", "hook_password_verification_attempt_secrets": "<value>", "hook_send_sms_enabled": false, "hook_send_sms_uri": "https://sweet-humidity.biz/", "hook_send_sms_secrets": "<value>", "hook_send_email_enabled": true, "hook_send_email_uri": "https://juicy-giggle.name/", "hook_send_email_secrets": "<value>", "mailer_allow_unverified_email_sign_ins": false, "mailer_autoconfirm": false, "mailer_secure_email_change_enabled": false, "mailer_subjects_confirmation": "<value>", "mailer_subjects_email_change": "<value>", "mailer_subjects_invite": "<value>", "mailer_subjects_magic_link": "<value>", "mailer_subjects_reauthentication": "<value>", "mailer_subjects_recovery": "<value>", "mailer_templates_confirmation_content": "<value>", "mailer_templates_email_change_content": "<value>", "mailer_templates_invite_content": "<value>", "mailer_templates_magic_link_content": "<value>", "mailer_templates_reauthentication_content": "<value>", "mailer_templates_recovery_content": "<value>", "mfa_totp_enroll_enabled": false, "mfa_totp_verify_enabled": false, "mfa_phone_enroll_enabled": true, "mfa_phone_verify_enabled": true, "mfa_web_authn_enroll_enabled": true, "mfa_web_authn_verify_enabled": false, "mfa_phone_template": "<value>", "password_hibp_enabled": false, "password_required_characters": "<value>", "refresh_token_rotation_enabled": true, "saml_enabled": false, "saml_external_url": "https://average-decongestant.com", "saml_allow_encrypted_assertions": true, "security_captcha_enabled": false, "security_captcha_provider": "<value>", "security_captcha_secret": "<value>", "security_manual_linking_enabled": false, "security_update_password_require_reauthentication": false, "sessions_single_per_user": false, "sessions_tags": "<value>", "site_url": "https://same-solvency.name/", "sms_autoconfirm": true, "sms_messagebird_access_key": "<value>", "sms_messagebird_originator": "<value>", "sms_provider": "<value>", "sms_template": "<value>", "sms_test_otp": "<value>", "sms_test_otp_valid_until": "<value>", "sms_textlocal_api_key": "<value>", "sms_textlocal_sender": "<value>", "sms_twilio_account_sid": "<id>", "sms_twilio_auth_token": "<value>", "sms_twilio_content_sid": "<id>", "sms_twilio_message_service_sid": "<id>", "sms_twilio_verify_account_sid": "<id>", "sms_twilio_verify_auth_token": "<value>", "sms_twilio_verify_message_service_sid": "<id>", "sms_vonage_api_key": "<value>", "sms_vonage_api_secret": "<value>", "sms_vonage_from": "<value>", "smtp_admin_email": "<value>", "smtp_host": "<value>", "smtp_pass": "<value>", "smtp_port": "<value>", "smtp_sender_name": "<value>", "smtp_user": "<value>", "uri_allow_list": "<value>"}
   createTPAForProject:
     speakeasy-default-create-TPA-for-project:
       parameters:
@@ -901,7 +906,7 @@ examples:
         application/json: {}
       responses:
         "201":
-          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1736995842281"}
+          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737582577303"}
   listTPAForProject:
     speakeasy-default-list-TPA-for-project:
       parameters:
@@ -909,7 +914,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: []
+          application/json: [{"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737581023450"}]
   deleteTPAForProject:
     speakeasy-default-delete-TPA-for-project:
       parameters:
@@ -918,7 +923,7 @@ examples:
           tpa_id: "<id>"
       responses:
         "200":
-          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737040984481"}
+          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737512890834"}
   getTPAForProject:
     speakeasy-default-get-TPA-for-project:
       parameters:
@@ -927,7 +932,7 @@ examples:
           tpa_id: "<id>"
       responses:
         "200":
-          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737035931685"}
+          application/json: {"id": "<id>", "type": "<value>", "inserted_at": "<value>", "updated_at": "1737524037546"}
   v1-create-a-sso-provider:
     speakeasy-default-v1-create-a-sso-provider:
       parameters:
@@ -945,7 +950,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"items": [{"id": "<id>"}, {"id": "<id>"}, {"id": "<id>"}]}
+          application/json: {"items": [{"id": "<id>"}, {"id": "<id>"}]}
   v1-get-a-sso-provider:
     speakeasy-default-v1-get-a-sso-provider:
       parameters:
@@ -976,26 +981,6 @@ examples:
         "200":
           application/json: {"id": "<id>"}
   v1-create-a-function:
-    speakeasy-default-v1-create-a-function-json:
-      parameters:
-        path:
-          ref: "<value>"
-        query: {}
-      requestBody:
-        application/json: {"slug": "<value>", "name": "<value>", "body": "<value>"}
-      responses:
-        "201":
-          application/json: {"version": 86288, "created_at": 930855, "updated_at": 901489, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
-    speakeasy-default-v1-create-a-function-raw:
-      parameters:
-        path:
-          ref: "<value>"
-        query: {}
-      requestBody:
-        application/vnd.denoland.eszip: "0xaA7bA55bea"
-      responses:
-        "201":
-          application/json: {"version": 882538, "created_at": 277118, "updated_at": 181599, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
     speakeasy-default-v1-create-a-function:
       parameters:
         path:
@@ -1005,7 +990,7 @@ examples:
         application/json: {"slug": "<value>", "name": "<value>", "body": "<value>"}
       responses:
         "201":
-          application/json: {"version": 128461, "created_at": 693257, "updated_at": 691556, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
+          application/json: {"version": 486589, "created_at": 638424, "updated_at": 417458, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
   v1-list-all-functions:
     speakeasy-default-v1-list-all-functions:
       parameters:
@@ -1013,64 +998,39 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: [{"version": 60083, "created_at": 36260, "updated_at": 474144, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "REMOVED"}, {"version": 414376, "created_at": 421451, "updated_at": 905148, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "THROTTLED"}]
+          application/json: [{"version": 547272, "created_at": 678317, "updated_at": 177706, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}, {"version": 152837, "created_at": 635532, "updated_at": 639387, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}, {"version": 718303, "created_at": 86140, "updated_at": 68504, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "THROTTLED"}]
   v1-get-a-function:
     speakeasy-default-v1-get-a-function:
       parameters:
         path:
           ref: "<value>"
-          function_slug: "<value>"
           slug: "<value>"
       responses:
         "200":
-          application/json: {"version": 399037, "created_at": 137964, "updated_at": 984435, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "ACTIVE"}
+          application/json: {"version": 772146, "created_at": 346259, "updated_at": 753391, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "THROTTLED"}
   v1-update-a-function:
-    speakeasy-default-v1-update-a-function-json:
-      parameters:
-        path:
-          ref: "<value>"
-          function_slug: "<value>"
-        query: {}
-      requestBody:
-        application/json: {}
-      responses:
-        "200":
-          application/json: {"version": 730983, "created_at": 301731, "updated_at": 802025, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "REMOVED"}
-    speakeasy-default-v1-update-a-function-raw:
-      parameters:
-        path:
-          ref: "<value>"
-          function_slug: "<value>"
-        query: {}
-      requestBody:
-        application/vnd.denoland.eszip: "0xAeD0B23dcD"
-      responses:
-        "200":
-          application/json: {"version": 954708, "created_at": 461149, "updated_at": 835142, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "REMOVED"}
     speakeasy-default-v1-update-a-function:
       parameters:
         path:
           ref: "<value>"
-          function_slug: "<value>"
           slug: "<value>"
         query: {}
       requestBody:
         application/json: {}
       responses:
         "200":
-          application/json: {"version": 694192, "created_at": 809155, "updated_at": 280742, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "THROTTLED"}
+          application/json: {"version": 575026, "created_at": 948880, "updated_at": 172106, "id": "<id>", "slug": "<value>", "name": "<value>", "status": "THROTTLED"}
   v1-delete-a-function:
     speakeasy-default-v1-delete-a-function:
       parameters:
         path:
           ref: "<value>"
-          function_slug: "<value>"
           slug: "<value>"
   v1-get-a-function-body:
     speakeasy-default-v1-get-a-function-body:
       parameters:
         path:
           ref: "<value>"
-          function_slug: "<value>"
           slug: "<value>"
+examplesVersion: 1.0.0
 generatedTests: {}

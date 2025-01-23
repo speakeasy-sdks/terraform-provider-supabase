@@ -2,5 +2,3 @@
 .terraform*
 *.tfstate*
 .DS_Store
-*.key
-*.orgid

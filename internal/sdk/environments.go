@@ -25,9 +25,9 @@ func newEnvironments(sdkConfig sdkConfiguration) *Environments {
 	}
 }
 
-// V1GetABranchConfig - Get database branch config
-// Fetches configurations of the specified database branch
-func (s *Environments) V1GetABranchConfig(ctx context.Context, request operations.V1GetABranchConfigRequest, opts ...operations.Option) (*operations.V1GetABranchConfigResponse, error) {
+// GetBranchConfig - Get database branch config
+// Fetches configura.   tions of the specified database branch
+func (s *Environments) GetBranchConfig(ctx context.Context, request operations.V1GetABranchConfigRequest, opts ...operations.Option) (*operations.V1GetABranchConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-a-branch-config",
@@ -153,9 +153,9 @@ func (s *Environments) V1GetABranchConfig(ctx context.Context, request operation
 
 }
 
-// V1UpdateABranchConfig - Update database branch config
+// UpdateBranchConfig - Update database branch config
 // Updates the configuration of the specified database branch
-func (s *Environments) V1UpdateABranchConfig(ctx context.Context, request operations.V1UpdateABranchConfigRequest, opts ...operations.Option) (*operations.V1UpdateABranchConfigResponse, error) {
+func (s *Environments) UpdateBranchConfig(ctx context.Context, request operations.V1UpdateABranchConfigRequest, opts ...operations.Option) (*operations.V1UpdateABranchConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-update-a-branch-config",
@@ -289,9 +289,9 @@ func (s *Environments) V1UpdateABranchConfig(ctx context.Context, request operat
 
 }
 
-// V1DeleteABranch - Delete a database branch
+// DeleteBranch - Delete a database branch
 // Deletes the specified database branch
-func (s *Environments) V1DeleteABranch(ctx context.Context, request operations.V1DeleteABranchRequest, opts ...operations.Option) (*operations.V1DeleteABranchResponse, error) {
+func (s *Environments) DeleteBranch(ctx context.Context, request operations.V1DeleteABranchRequest, opts ...operations.Option) (*operations.V1DeleteABranchResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-delete-a-branch",
@@ -417,9 +417,9 @@ func (s *Environments) V1DeleteABranch(ctx context.Context, request operations.V
 
 }
 
-// V1ResetABranch - Resets a database branch
+// ResetBranch - Resets a database branch
 // Resets the specified database branch
-func (s *Environments) V1ResetABranch(ctx context.Context, request operations.V1ResetABranchRequest, opts ...operations.Option) (*operations.V1ResetABranchResponse, error) {
+func (s *Environments) ResetBranch(ctx context.Context, request operations.V1ResetABranchRequest, opts ...operations.Option) (*operations.V1ResetABranchResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-reset-a-branch",
@@ -545,9 +545,9 @@ func (s *Environments) V1ResetABranch(ctx context.Context, request operations.V1
 
 }
 
-// V1ListAllBranches - List all database branches
+// ListBranches - List all database branches
 // Returns all database branches of the specified project.
-func (s *Environments) V1ListAllBranches(ctx context.Context, request operations.V1ListAllBranchesRequest, opts ...operations.Option) (*operations.V1ListAllBranchesResponse, error) {
+func (s *Environments) ListBranches(ctx context.Context, request operations.V1ListAllBranchesRequest, opts ...operations.Option) (*operations.V1ListAllBranchesResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-list-all-branches",
@@ -673,9 +673,9 @@ func (s *Environments) V1ListAllBranches(ctx context.Context, request operations
 
 }
 
-// V1CreateABranch - Create a database branch
+// CreateBranch - Create a database branch
 // Creates a database branch from the specified project.
-func (s *Environments) V1CreateABranch(ctx context.Context, request operations.V1CreateABranchRequest, opts ...operations.Option) (*operations.V1CreateABranchResponse, error) {
+func (s *Environments) CreateBranch(ctx context.Context, request operations.V1CreateABranchRequest, opts ...operations.Option) (*operations.V1CreateABranchResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-create-a-branch",
@@ -809,9 +809,9 @@ func (s *Environments) V1CreateABranch(ctx context.Context, request operations.V
 
 }
 
-// V1DisablePreviewBranching - Disables preview branching
+// DisablePreviewBranching - Disables preview branching
 // Disables preview branching for the specified project
-func (s *Environments) V1DisablePreviewBranching(ctx context.Context, request operations.V1DisablePreviewBranchingRequest, opts ...operations.Option) (*operations.V1DisablePreviewBranchingResponse, error) {
+func (s *Environments) DisablePreviewBranching(ctx context.Context, request operations.V1DisablePreviewBranchingRequest, opts ...operations.Option) (*operations.V1DisablePreviewBranchingResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-disable-preview-branching",

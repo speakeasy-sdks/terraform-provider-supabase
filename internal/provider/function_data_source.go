@@ -147,7 +147,7 @@ func (r *FunctionDataSource) Read(ctx context.Context, req datasource.ReadReques
 		Ref:  ref,
 		Slug: slug,
 	}
-	res, err := r.client.EdgeFunctions.V1GetAFunction(ctx, request)
+	res, err := r.client.EdgeFunctions.GetFunction(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

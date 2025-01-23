@@ -36,7 +36,7 @@ func (p *SupabaseProvider) Metadata(ctx context.Context, req provider.MetadataRe
 
 func (p *SupabaseProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: `Supabase API (v1): Supabase API generated from the OpenAPI specification.<br>Visit [https://supabase.com/docs](https://supabase.com/docs) for a complete documentation.`,
+		Description: `Supabase API: Supabase API`,
 		Attributes: map[string]schema.Attribute{
 			"server_url": schema.StringAttribute{
 				MarkdownDescription: "Server URL (defaults to https://api.supabase.com)",

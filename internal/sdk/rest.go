@@ -25,8 +25,8 @@ func newRest(sdkConfig sdkConfiguration) *Rest {
 	}
 }
 
-// V1GetPostgrestServiceConfig - Gets project's postgrest config
-func (s *Rest) V1GetPostgrestServiceConfig(ctx context.Context, request operations.V1GetPostgrestServiceConfigRequest, opts ...operations.Option) (*operations.V1GetPostgrestServiceConfigResponse, error) {
+// GetConfig - Gets project's postgrest config
+func (s *Rest) GetConfig(ctx context.Context, request operations.V1GetPostgrestServiceConfigRequest, opts ...operations.Option) (*operations.V1GetPostgrestServiceConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-postgrest-service-config",
@@ -153,8 +153,8 @@ func (s *Rest) V1GetPostgrestServiceConfig(ctx context.Context, request operatio
 
 }
 
-// V1UpdatePostgrestServiceConfig - Updates project's postgrest config
-func (s *Rest) V1UpdatePostgrestServiceConfig(ctx context.Context, request operations.V1UpdatePostgrestServiceConfigRequest, opts ...operations.Option) (*operations.V1UpdatePostgrestServiceConfigResponse, error) {
+// UpdatePostgrestConfig - Updates project's postgrest config
+func (s *Rest) UpdatePostgrestConfig(ctx context.Context, request operations.V1UpdatePostgrestServiceConfigRequest, opts ...operations.Option) (*operations.V1UpdatePostgrestServiceConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-update-postgrest-service-config",

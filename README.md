@@ -21,7 +21,7 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 <!-- Start Summary [summary] -->
 ## Summary
 
-Supabase API (v1): Supabase API generated from the OpenAPI specification.<br>Visit [https://supabase.com/docs](https://supabase.com/docs) for a complete documentation.
+Supabase API: Supabase API
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
@@ -47,7 +47,7 @@ terraform {
   required_providers {
     supabase = {
       source  = "speakeasy/supabase"
-      version = "0.0.11"
+      version = "0.0.5"
     }
   }
 }

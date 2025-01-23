@@ -26,9 +26,9 @@ func newOrganizations(sdkConfig sdkConfiguration) *Organizations {
 	}
 }
 
-// V1ListAllOrganizations - List all organizations
+// List all organizations
 // Returns a list of organizations that you currently belong to.
-func (s *Organizations) V1ListAllOrganizations(ctx context.Context, opts ...operations.Option) (*operations.V1ListAllOrganizationsResponse, error) {
+func (s *Organizations) List(ctx context.Context, opts ...operations.Option) (*operations.V1ListAllOrganizationsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-list-all-organizations",
@@ -154,8 +154,8 @@ func (s *Organizations) V1ListAllOrganizations(ctx context.Context, opts ...oper
 
 }
 
-// V1CreateAnOrganization - Create an organization
-func (s *Organizations) V1CreateAnOrganization(ctx context.Context, request shared.CreateOrganizationV1Dto, opts ...operations.Option) (*operations.V1CreateAnOrganizationResponse, error) {
+// Create an organization
+func (s *Organizations) Create(ctx context.Context, request shared.CreateOrganizationV1Dto, opts ...operations.Option) (*operations.V1CreateAnOrganizationResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-create-an-organization",
@@ -289,8 +289,8 @@ func (s *Organizations) V1CreateAnOrganization(ctx context.Context, request shar
 
 }
 
-// V1ListOrganizationMembers - List members of an organization
-func (s *Organizations) V1ListOrganizationMembers(ctx context.Context, request operations.V1ListOrganizationMembersRequest, opts ...operations.Option) (*operations.V1ListOrganizationMembersResponse, error) {
+// ListMembers - List members of an organization
+func (s *Organizations) ListMembers(ctx context.Context, request operations.V1ListOrganizationMembersRequest, opts ...operations.Option) (*operations.V1ListOrganizationMembersResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-list-organization-members",
@@ -415,8 +415,8 @@ func (s *Organizations) V1ListOrganizationMembers(ctx context.Context, request o
 
 }
 
-// V1GetAnOrganization - Gets information about the organization
-func (s *Organizations) V1GetAnOrganization(ctx context.Context, request operations.V1GetAnOrganizationRequest, opts ...operations.Option) (*operations.V1GetAnOrganizationResponse, error) {
+// Get - Gets information about the organization
+func (s *Organizations) Get(ctx context.Context, request operations.V1GetAnOrganizationRequest, opts ...operations.Option) (*operations.V1GetAnOrganizationResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-an-organization",

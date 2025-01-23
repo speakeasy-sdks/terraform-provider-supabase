@@ -114,7 +114,7 @@ func (r *PgbouncerDataSource) Read(ctx context.Context, req datasource.ReadReque
 	request := operations.V1GetProjectPgbouncerConfigRequest{
 		Ref: ref,
 	}
-	res, err := r.client.Database.V1GetProjectPgbouncerConfig(ctx, request)
+	res, err := r.client.Database.GetPgbouncerConfig(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

@@ -1,18 +1,44 @@
-speakeasyVersion: 1.468.9
-sources: {}
+speakeasyVersion: 1.471.0
+sources:
+    supabase-provider:
+        sourceNamespace: supabase-provider
+        sourceRevisionDigest: sha256:3a17887902e0a84435125861fb30f7873d7339a2813e79ef050c169028d47ea8
+        sourceBlobDigest: sha256:e1e400dd409472c899e3caba0287fadba8cd88b385eca30cd2f456dc93a2525b
+        tags:
+            - latest
+            - 1.0.0
 targets:
-    supabase:
-        source: Supabase API (v1)
+    supabase-ts:
+        source: supabase-provider
+        sourceNamespace: supabase-provider
+        sourceRevisionDigest: sha256:3a17887902e0a84435125861fb30f7873d7339a2813e79ef050c169028d47ea8
+        sourceBlobDigest: sha256:e1e400dd409472c899e3caba0287fadba8cd88b385eca30cd2f456dc93a2525b
+        codeSamplesNamespace: supabase-provider-typescript-code-samples
+        codeSamplesRevisionDigest: sha256:c6b56287b1c7703362215f5eb553094b8f0b6518c507dcb24ec549f4def10276
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
     sources:
-        Supabase API (v1):
+        supabase-provider:
             inputs:
-                - location: beta.yaml
+                - location: ./beta.yaml
+            overlays:
+                - location: ./transformations.yaml
+                - location: ./beta_errors.yaml
+            output: output.yaml
             registry:
-                location: registry.speakeasyapi.dev/supabase/terraform-provider/supabase-api-(v-1)
+                location: registry.speakeasyapi.dev/speakeasy-onboarding/onboarding/supabase-provider
     targets:
         supabase:
             target: terraform
-            source: Supabase API (v1)
+            source: supabase-provider
+        supabase-ts:
+            target: typescript
+            source: supabase-provider
+            output: ./speakeasy-ts
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/speakeasy-onboarding/onboarding/supabase-provider-typescript-code-samples
+                labelOverride:
+                    fixedValue: Typescript (SDK)
+                blocking: false

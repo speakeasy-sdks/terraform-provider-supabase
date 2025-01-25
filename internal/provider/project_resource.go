@@ -6,12 +6,15 @@ import (
 	"context"
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
+	tfTypes "github.com/speakeasy/terraform-provider-supabase/internal/provider/types"
 	"github.com/speakeasy/terraform-provider-supabase/internal/sdk"
+	"github.com/speakeasy/terraform-provider-supabase/internal/sdk/models/operations"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -29,17 +32,19 @@ type ProjectResource struct {
 
 // ProjectResourceModel describes the resource data model.
 type ProjectResourceModel struct {
-	CreatedAt           types.String `tfsdk:"created_at"`
-	DbPass              types.String `tfsdk:"db_pass"`
-	DesiredInstanceSize types.String `tfsdk:"desired_instance_size"`
-	ID                  types.String `tfsdk:"id"`
-	Name                types.String `tfsdk:"name"`
-	OrganizationID      types.String `tfsdk:"organization_id"`
-	PostgresEngine      types.String `tfsdk:"postgres_engine"`
-	Region              types.String `tfsdk:"region"`
-	ReleaseChannel      types.String `tfsdk:"release_channel"`
-	Status              types.String `tfsdk:"status"`
-	TemplateURL         types.String `tfsdk:"template_url"`
+	CreatedAt           types.String               `tfsdk:"created_at"`
+	Database            tfTypes.V1DatabaseResponse `tfsdk:"database"`
+	DbPass              types.String               `tfsdk:"db_pass"`
+	DesiredInstanceSize types.String               `tfsdk:"desired_instance_size"`
+	ID                  types.String               `tfsdk:"id"`
+	Name                types.String               `tfsdk:"name"`
+	OrganizationID      types.String               `tfsdk:"organization_id"`
+	PostgresEngine      types.String               `tfsdk:"postgres_engine"`
+	Ref                 types.String               `tfsdk:"ref"`
+	Region              types.String               `tfsdk:"region"`
+	ReleaseChannel      types.String               `tfsdk:"release_channel"`
+	Status              types.String               `tfsdk:"status"`
+	TemplateURL         types.String               `tfsdk:"template_url"`
 }
 
 func (r *ProjectResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,6 +58,27 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 			"created_at": schema.StringAttribute{
 				Computed:    true,
 				Description: `Creation timestamp`,
+			},
+			"database": schema.SingleNestedAttribute{
+				Computed: true,
+				Attributes: map[string]schema.Attribute{
+					"host": schema.StringAttribute{
+						Computed:    true,
+						Description: `Database host`,
+					},
+					"postgres_engine": schema.StringAttribute{
+						Computed:    true,
+						Description: `Database engine`,
+					},
+					"release_channel": schema.StringAttribute{
+						Computed:    true,
+						Description: `Release channel`,
+					},
+					"version": schema.StringAttribute{
+						Computed:    true,
+						Description: `Database version`,
+					},
+				},
 			},
 			"db_pass": schema.StringAttribute{
 				Required:    true,
@@ -94,6 +120,13 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Description: `Postgres engine version. If not provided, the latest version will be used. must be "15"`,
 				Validators: []validator.String{
 					stringvalidator.OneOf("15"),
+				},
+			},
+			"ref": schema.StringAttribute{
+				Required:    true,
+				Description: `Project ref`,
+				Validators: []validator.String{
+					stringvalidator.UTF8LengthBetween(20, 20),
 				},
 			},
 			"region": schema.StringAttribute{
@@ -205,7 +238,7 @@ func (r *ProjectResource) Create(ctx context.Context, req resource.CreateRequest
 	}
 
 	request := *data.ToSharedV1CreateProjectBodyDto()
-	res, err := r.client.Projects.V1CreateAProject(ctx, request)
+	res, err := r.client.Projects.Create(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -226,6 +259,34 @@ func (r *ProjectResource) Create(ctx context.Context, req resource.CreateRequest
 		return
 	}
 	data.RefreshFromSharedV1ProjectResponse(res.V1ProjectResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var id string
+	id = data.ID.ValueString()
+
+	request1 := operations.V1GetProjectRequest{
+		ID: id,
+	}
+	res1, err := r.client.Projects.Get(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if !(res1.V1ProjectWithDatabaseResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedV1ProjectWithDatabaseResponse(res1.V1ProjectWithDatabaseResponse)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -250,7 +311,37 @@ func (r *ProjectResource) Read(ctx context.Context, req resource.ReadRequest, re
 		return
 	}
 
-	// Not Implemented; we rely entirely on CREATE API request response
+	var id string
+	id = data.ID.ValueString()
+
+	request := operations.V1GetProjectRequest{
+		ID: id,
+	}
+	res, err := r.client.Projects.Get(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	}
+	if res.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+	if !(res.V1ProjectWithDatabaseResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromSharedV1ProjectWithDatabaseResponse(res.V1ProjectWithDatabaseResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -271,7 +362,7 @@ func (r *ProjectResource) Update(ctx context.Context, req resource.UpdateRequest
 	}
 
 	request := *data.ToSharedV1CreateProjectBodyDto()
-	res, err := r.client.Projects.V1CreateAProject(ctx, request)
+	res, err := r.client.Projects.Create(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -292,6 +383,34 @@ func (r *ProjectResource) Update(ctx context.Context, req resource.UpdateRequest
 		return
 	}
 	data.RefreshFromSharedV1ProjectResponse(res.V1ProjectResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var id string
+	id = data.ID.ValueString()
+
+	request1 := operations.V1GetProjectRequest{
+		ID: id,
+	}
+	res1, err := r.client.Projects.Get(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if !(res1.V1ProjectWithDatabaseResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedV1ProjectWithDatabaseResponse(res1.V1ProjectWithDatabaseResponse)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -316,9 +435,31 @@ func (r *ProjectResource) Delete(ctx context.Context, req resource.DeleteRequest
 		return
 	}
 
-	// Not Implemented; entity does not have a configured DELETE operation
+	var ref string
+	ref = data.Ref.ValueString()
+
+	request := operations.V1DeleteAProjectRequest{
+		Ref: ref,
+	}
+	res, err := r.client.Projects.Delete(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+
 }
 
 func (r *ProjectResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resp.Diagnostics.AddError("Not Implemented", "No available import state operation is available for resource project.")
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), req.ID)...)
 }

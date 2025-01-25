@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: b4b7b7b2-a0a8-440d-aa19-4e992089d1f6
 management:
-  docChecksum: bc239074e436c506fa92966aca910c78
+  docChecksum: f2734d4389529862038de65c8b617d5b
   docVersion: 1.0.0
-  speakeasyVersion: 1.474.0
-  generationVersion: 2.495.0
-  releaseVersion: 0.4.3
-  configChecksum: 8aaf4053b6057b45cd6a77bb87686233
+  speakeasyVersion: 1.476.1
+  generationVersion: 2.495.1
+  releaseVersion: 0.5.3
+  configChecksum: d12edbd9d910dade6f7c7477d87d2d55
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -15,6 +15,8 @@ features:
     envVarSecurityUsage: 0.1.0
     globalSecurity: 2.81.9
     globalServerURLs: 2.82.1
+    groups: 2.81.2
+    nameOverrides: 2.81.2
     nullables: 0.0.0
     unions: 2.81.17
 generatedFiles:
@@ -26,10 +28,12 @@ generatedFiles:
   - examples/data-sources/supabase_pgbouncer/data-source.tf
   - examples/data-sources/supabase_pooler/data-source.tf
   - examples/data-sources/supabase_postgres/data-source.tf
+  - examples/data-sources/supabase_project/data-source.tf
   - examples/provider/provider.tf
   - examples/resources/supabase_function/import.sh
   - examples/resources/supabase_function/resource.tf
   - examples/resources/supabase_organization/resource.tf
+  - examples/resources/supabase_project/import.sh
   - examples/resources/supabase_project/resource.tf
   - go.mod
   - go.sum
@@ -57,6 +61,8 @@ generatedFiles:
   - internal/provider/pooler_data_source_sdk.go
   - internal/provider/postgres_data_source.go
   - internal/provider/postgres_data_source_sdk.go
+  - internal/provider/project_data_source.go
+  - internal/provider/project_data_source_sdk.go
   - internal/provider/project_resource.go
   - internal/provider/project_resource_sdk.go
   - internal/provider/provider.go
@@ -75,10 +81,12 @@ generatedFiles:
   - internal/provider/reflect/slice.go
   - internal/provider/reflect/struct.go
   - internal/provider/types/supavisor_config_response.go
+  - internal/provider/types/v1_database_response.go
   - internal/provider/utils.go
   - internal/sdk/.gitattributes
   - internal/sdk/auth.go
   - internal/sdk/database.go
+  - internal/sdk/databases.go
   - internal/sdk/domains.go
   - internal/sdk/edgefunctions.go
   - internal/sdk/internal/hooks/hooks.go

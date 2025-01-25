@@ -107,8 +107,8 @@ paths:
       security:
         - bearer: []
   /v1/projects:
-    x-speakeasy-entity-operation: Project#list
     get:
+      x-speakeasy-entity-operation: Project#list
       operationId: v1-list-all-projects
       summary: List all projects
       description: Returns a list of all projects you've previously created.
@@ -127,7 +127,7 @@ paths:
       security:
         - bearer: []
     post:
-      x-speakeasy-entity-operation: Project#create,update
+      x-speakeasy-entity-operation: Project#create
       operationId: v1-create-a-project
       summary: Create a project
       parameters: []
@@ -499,6 +499,7 @@ paths:
         - bearer: []
   /v1/projects/{ref}/branches:
     get:
+      x-speakeasy-entity-operation: Branch#list
       operationId: v1-list-all-branches
       summary: List all database branches
       description: Returns all database branches of the specified project.
@@ -527,6 +528,7 @@ paths:
       security:
         - bearer: []
     post:
+      x-speakeasy-entity-operation: Branch#create
       operationId: v1-create-a-branch
       summary: Create a database branch
       description: Creates a database branch from the specified project.
@@ -559,6 +561,7 @@ paths:
       security:
         - bearer: []
     delete:
+      x-speakeasd-entity-operation: Branch#delete
       operationId: v1-disable-preview-branching
       summary: Disables preview branching
       description: Disables preview branching for the specified project
@@ -969,11 +972,13 @@ paths:
         - bearer: []
   /v1/projects/{ref}:
     get:
+      x-speakeasy-entity-operation: Project#read
       operationId: v1-get-project
       summary: Gets a specific project that belongs to the authenticated user
       parameters:
         - name: ref
           required: true
+          x-speakeasy-name-override: id
           in: path
           description: Project ref
           schema:
@@ -994,6 +999,7 @@ paths:
       security:
         - bearer: []
     delete:
+      x-speakeasy-entity-operation: Project#delete
       operationId: v1-delete-a-project
       summary: Deletes the given project
       parameters:
@@ -2670,6 +2676,7 @@ components:
           refreshUrl: https://test.com/oauth/refresh
   schemas:
     BranchDetailResponse:
+      x-speakeasy-entity: Branch
       type: object
       properties:
         db_port:
@@ -2717,6 +2724,7 @@ components:
         - status
         - db_host
     UpdateBranchBody:
+      x-speakeasy-entity: Branch
       type: object
       properties:
         branch_name:
@@ -2737,6 +2745,7 @@ components:
             - FUNCTIONS_FAILED
           type: string
     BranchResponse:
+      x-speakeasy-entity: Branch
       type: object
       properties:
         pr_number:
@@ -2872,6 +2881,7 @@ components:
         - database
         - status
     V1CreateProjectBodyDto:
+      x-speakeasy-entity: Project
       type: object
       properties:
         db_pass:

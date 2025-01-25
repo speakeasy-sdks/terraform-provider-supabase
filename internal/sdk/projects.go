@@ -26,9 +26,9 @@ func newProjects(sdkConfig sdkConfiguration) *Projects {
 	}
 }
 
-// V1ListAllProjects - List all projects
+// List all projects
 // Returns a list of all projects you've previously created.
-func (s *Projects) V1ListAllProjects(ctx context.Context, opts ...operations.Option) (*operations.V1ListAllProjectsResponse, error) {
+func (s *Projects) List(ctx context.Context, opts ...operations.Option) (*operations.V1ListAllProjectsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-list-all-projects",
@@ -153,8 +153,8 @@ func (s *Projects) V1ListAllProjects(ctx context.Context, opts ...operations.Opt
 
 }
 
-// V1CreateAProject - Create a project
-func (s *Projects) V1CreateAProject(ctx context.Context, request shared.V1CreateProjectBodyDto, opts ...operations.Option) (*operations.V1CreateAProjectResponse, error) {
+// Create a project
+func (s *Projects) Create(ctx context.Context, request shared.V1CreateProjectBodyDto, opts ...operations.Option) (*operations.V1CreateAProjectResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-create-a-project",
@@ -287,8 +287,8 @@ func (s *Projects) V1CreateAProject(ctx context.Context, request shared.V1Create
 
 }
 
-// V1ListAllNetworkBans - [Beta] Gets project's network bans
-func (s *Projects) V1ListAllNetworkBans(ctx context.Context, request operations.V1ListAllNetworkBansRequest, opts ...operations.Option) (*operations.V1ListAllNetworkBansResponse, error) {
+// GetNetworkBans - [Beta] Gets project's network bans
+func (s *Projects) GetNetworkBans(ctx context.Context, request operations.V1ListAllNetworkBansRequest, opts ...operations.Option) (*operations.V1ListAllNetworkBansResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-list-all-network-bans",
@@ -415,8 +415,8 @@ func (s *Projects) V1ListAllNetworkBans(ctx context.Context, request operations.
 
 }
 
-// V1DeleteNetworkBans - [Beta] Remove network bans.
-func (s *Projects) V1DeleteNetworkBans(ctx context.Context, request operations.V1DeleteNetworkBansRequest, opts ...operations.Option) (*operations.V1DeleteNetworkBansResponse, error) {
+// RemoveNetworkBans - [Beta] Remove network bans.
+func (s *Projects) RemoveNetworkBans(ctx context.Context, request operations.V1DeleteNetworkBansRequest, opts ...operations.Option) (*operations.V1DeleteNetworkBansResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-delete-network-bans",
@@ -531,8 +531,8 @@ func (s *Projects) V1DeleteNetworkBans(ctx context.Context, request operations.V
 
 }
 
-// V1GetNetworkRestrictions - [Beta] Gets project's network restrictions
-func (s *Projects) V1GetNetworkRestrictions(ctx context.Context, request operations.V1GetNetworkRestrictionsRequest, opts ...operations.Option) (*operations.V1GetNetworkRestrictionsResponse, error) {
+// GetNetworkRestrictions - [Beta] Gets project's network restrictions
+func (s *Projects) GetNetworkRestrictions(ctx context.Context, request operations.V1GetNetworkRestrictionsRequest, opts ...operations.Option) (*operations.V1GetNetworkRestrictionsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-network-restrictions",
@@ -659,8 +659,8 @@ func (s *Projects) V1GetNetworkRestrictions(ctx context.Context, request operati
 
 }
 
-// V1UpdateNetworkRestrictions - [Beta] Updates project's network restrictions
-func (s *Projects) V1UpdateNetworkRestrictions(ctx context.Context, request operations.V1UpdateNetworkRestrictionsRequest, opts ...operations.Option) (*operations.V1UpdateNetworkRestrictionsResponse, error) {
+// UpdateNetworkRestrictions - [Beta] Updates project's network restrictions
+func (s *Projects) UpdateNetworkRestrictions(ctx context.Context, request operations.V1UpdateNetworkRestrictionsRequest, opts ...operations.Option) (*operations.V1UpdateNetworkRestrictionsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-update-network-restrictions",
@@ -795,8 +795,8 @@ func (s *Projects) V1UpdateNetworkRestrictions(ctx context.Context, request oper
 
 }
 
-// V1GetProject - Gets a specific project that belongs to the authenticated user
-func (s *Projects) V1GetProject(ctx context.Context, request operations.V1GetProjectRequest, opts ...operations.Option) (*operations.V1GetProjectResponse, error) {
+// Get - Gets a specific project that belongs to the authenticated user
+func (s *Projects) Get(ctx context.Context, request operations.V1GetProjectRequest, opts ...operations.Option) (*operations.V1GetProjectResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-project",
@@ -922,8 +922,8 @@ func (s *Projects) V1GetProject(ctx context.Context, request operations.V1GetPro
 
 }
 
-// V1DeleteAProject - Deletes the given project
-func (s *Projects) V1DeleteAProject(ctx context.Context, request operations.V1DeleteAProjectRequest, opts ...operations.Option) (*operations.V1DeleteAProjectResponse, error) {
+// Delete - Deletes the given project
+func (s *Projects) Delete(ctx context.Context, request operations.V1DeleteAProjectRequest, opts ...operations.Option) (*operations.V1DeleteAProjectResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-delete-a-project",
@@ -1049,8 +1049,8 @@ func (s *Projects) V1DeleteAProject(ctx context.Context, request operations.V1De
 
 }
 
-// V1UpgradePostgresVersion - [Beta] Upgrades the project's Postgres version
-func (s *Projects) V1UpgradePostgresVersion(ctx context.Context, request operations.V1UpgradePostgresVersionRequest, opts ...operations.Option) (*operations.V1UpgradePostgresVersionResponse, error) {
+// UpgradePostgres - [Beta] Upgrades the project's Postgres version
+func (s *Projects) UpgradePostgres(ctx context.Context, request operations.V1UpgradePostgresVersionRequest, opts ...operations.Option) (*operations.V1UpgradePostgresVersionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-upgrade-postgres-version",
@@ -1185,8 +1185,8 @@ func (s *Projects) V1UpgradePostgresVersion(ctx context.Context, request operati
 
 }
 
-// V1GetPostgresUpgradeEligibility - [Beta] Returns the project's eligibility for upgrades
-func (s *Projects) V1GetPostgresUpgradeEligibility(ctx context.Context, request operations.V1GetPostgresUpgradeEligibilityRequest, opts ...operations.Option) (*operations.V1GetPostgresUpgradeEligibilityResponse, error) {
+// CheckUpgradeEligibility - [Beta] Returns the project's eligibility for upgrades
+func (s *Projects) CheckUpgradeEligibility(ctx context.Context, request operations.V1GetPostgresUpgradeEligibilityRequest, opts ...operations.Option) (*operations.V1GetPostgresUpgradeEligibilityResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-postgres-upgrade-eligibility",
@@ -1313,8 +1313,8 @@ func (s *Projects) V1GetPostgresUpgradeEligibility(ctx context.Context, request 
 
 }
 
-// V1GetPostgresUpgradeStatus - [Beta] Gets the latest status of the project's upgrade
-func (s *Projects) V1GetPostgresUpgradeStatus(ctx context.Context, request operations.V1GetPostgresUpgradeStatusRequest, opts ...operations.Option) (*operations.V1GetPostgresUpgradeStatusResponse, error) {
+// GetUpgradeStatus - [Beta] Gets the latest status of the project's upgrade
+func (s *Projects) GetUpgradeStatus(ctx context.Context, request operations.V1GetPostgresUpgradeStatusRequest, opts ...operations.Option) (*operations.V1GetPostgresUpgradeStatusResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-postgres-upgrade-status",
@@ -1445,8 +1445,8 @@ func (s *Projects) V1GetPostgresUpgradeStatus(ctx context.Context, request opera
 
 }
 
-// V1GetServicesHealth - Gets project's service health status
-func (s *Projects) V1GetServicesHealth(ctx context.Context, request operations.V1GetServicesHealthRequest, opts ...operations.Option) (*operations.V1GetServicesHealthResponse, error) {
+// GetHealth - Gets project's service health status
+func (s *Projects) GetHealth(ctx context.Context, request operations.V1GetServicesHealthRequest, opts ...operations.Option) (*operations.V1GetServicesHealthResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-services-health",

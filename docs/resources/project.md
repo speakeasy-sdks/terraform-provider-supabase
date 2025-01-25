@@ -19,6 +19,7 @@ resource "supabase_project" "my_project" {
   name                  = "...my_name..."
   organization_id       = "...my_organization_id..."
   postgres_engine       = "15"
+  ref                   = "...my_ref..."
   region                = "us-east-1"
   release_channel       = "withdrawn"
   template_url          = "https://github.com/supabase/supabase/tree/master/examples/slack-clone/nextjs-slack-clone"
@@ -33,6 +34,7 @@ resource "supabase_project" "my_project" {
 - `db_pass` (String, Sensitive) Database password
 - `name` (String) Name of your project, should not contain dots
 - `organization_id` (String) Slug of your organization
+- `ref` (String) Project ref
 - `region` (String) Region you want your server to reside in. must be one of ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ap-east-1", "ap-southeast-1", "ap-northeast-1", "ap-northeast-2", "ap-southeast-2", "eu-west-1", "eu-west-2", "eu-west-3", "eu-north-1", "eu-central-1", "eu-central-2", "ca-central-1", "ap-south-1", "sa-east-1"]
 
 ### Optional
@@ -45,5 +47,24 @@ resource "supabase_project" "my_project" {
 ### Read-Only
 
 - `created_at` (String) Creation timestamp
+- `database` (Attributes) (see [below for nested schema](#nestedatt--database))
 - `id` (String) Id of your project
 - `status` (String) must be one of ["ACTIVE_HEALTHY", "ACTIVE_UNHEALTHY", "COMING_UP", "GOING_DOWN", "INACTIVE", "INIT_FAILED", "REMOVED", "RESTARTING", "UNKNOWN", "UPGRADING", "PAUSING", "RESTORING", "RESTORE_FAILED", "PAUSE_FAILED", "RESIZING"]
+
+<a id="nestedatt--database"></a>
+### Nested Schema for `database`
+
+Read-Only:
+
+- `host` (String) Database host
+- `postgres_engine` (String) Database engine
+- `release_channel` (String) Release channel
+- `version` (String) Database version
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+terraform import supabase_project.my_supabase_project ""
+```

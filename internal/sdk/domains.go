@@ -25,8 +25,8 @@ func newDomains(sdkConfig sdkConfiguration) *Domains {
 	}
 }
 
-// V1GetHostnameConfig - [Beta] Gets project's custom hostname config
-func (s *Domains) V1GetHostnameConfig(ctx context.Context, request operations.V1GetHostnameConfigRequest, opts ...operations.Option) (*operations.V1GetHostnameConfigResponse, error) {
+// GetHostnameConfig - [Beta] Gets project's custom hostname config
+func (s *Domains) GetHostnameConfig(ctx context.Context, request operations.V1GetHostnameConfigRequest, opts ...operations.Option) (*operations.V1GetHostnameConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-hostname-config",
@@ -153,8 +153,8 @@ func (s *Domains) V1GetHostnameConfig(ctx context.Context, request operations.V1
 
 }
 
-// V1DeleteHostnameConfig - [Beta] Deletes a project's custom hostname configuration
-func (s *Domains) V1DeleteHostnameConfig(ctx context.Context, request operations.V1DeleteHostnameConfigRequest, opts ...operations.Option) (*operations.V1DeleteHostnameConfigResponse, error) {
+// DeleteHostnameConfig - [Beta] Deletes a project's custom hostname configuration
+func (s *Domains) DeleteHostnameConfig(ctx context.Context, request operations.V1DeleteHostnameConfigRequest, opts ...operations.Option) (*operations.V1DeleteHostnameConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-Delete hostname config",
@@ -261,8 +261,8 @@ func (s *Domains) V1DeleteHostnameConfig(ctx context.Context, request operations
 
 }
 
-// V1UpdateHostnameConfig - [Beta] Updates project's custom hostname configuration
-func (s *Domains) V1UpdateHostnameConfig(ctx context.Context, request operations.V1UpdateHostnameConfigRequest, opts ...operations.Option) (*operations.V1UpdateHostnameConfigResponse, error) {
+// UpdateHostnameConfig - [Beta] Updates project's custom hostname configuration
+func (s *Domains) UpdateHostnameConfig(ctx context.Context, request operations.V1UpdateHostnameConfigRequest, opts ...operations.Option) (*operations.V1UpdateHostnameConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-update-hostname-config",
@@ -397,8 +397,8 @@ func (s *Domains) V1UpdateHostnameConfig(ctx context.Context, request operations
 
 }
 
-// V1VerifyDNSConfig - [Beta] Attempts to verify the DNS configuration for project's custom hostname configuration
-func (s *Domains) V1VerifyDNSConfig(ctx context.Context, request operations.V1VerifyDNSConfigRequest, opts ...operations.Option) (*operations.V1VerifyDNSConfigResponse, error) {
+// VerifyDNSConfig - [Beta] Attempts to verify the DNS configuration for project's custom hostname configuration
+func (s *Domains) VerifyDNSConfig(ctx context.Context, request operations.V1VerifyDNSConfigRequest, opts ...operations.Option) (*operations.V1VerifyDNSConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-verify-dns-config",
@@ -525,8 +525,8 @@ func (s *Domains) V1VerifyDNSConfig(ctx context.Context, request operations.V1Ve
 
 }
 
-// V1ActivateCustomHostname - [Beta] Activates a custom hostname for a project.
-func (s *Domains) V1ActivateCustomHostname(ctx context.Context, request operations.V1ActivateCustomHostnameRequest, opts ...operations.Option) (*operations.V1ActivateCustomHostnameResponse, error) {
+// ActivateCustomHostname - [Beta] Activates a custom hostname for a project.
+func (s *Domains) ActivateCustomHostname(ctx context.Context, request operations.V1ActivateCustomHostnameRequest, opts ...operations.Option) (*operations.V1ActivateCustomHostnameResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-activate-custom-hostname",
@@ -653,8 +653,8 @@ func (s *Domains) V1ActivateCustomHostname(ctx context.Context, request operatio
 
 }
 
-// V1GetVanitySubdomainConfig - [Beta] Gets current vanity subdomain config
-func (s *Domains) V1GetVanitySubdomainConfig(ctx context.Context, request operations.V1GetVanitySubdomainConfigRequest, opts ...operations.Option) (*operations.V1GetVanitySubdomainConfigResponse, error) {
+// GetVanitySubdomain - [Beta] Gets current vanity subdomain config
+func (s *Domains) GetVanitySubdomain(ctx context.Context, request operations.V1GetVanitySubdomainConfigRequest, opts ...operations.Option) (*operations.V1GetVanitySubdomainConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-vanity-subdomain-config",
@@ -781,8 +781,8 @@ func (s *Domains) V1GetVanitySubdomainConfig(ctx context.Context, request operat
 
 }
 
-// V1DeactivateVanitySubdomainConfig - [Beta] Deletes a project's vanity subdomain configuration
-func (s *Domains) V1DeactivateVanitySubdomainConfig(ctx context.Context, request operations.V1DeactivateVanitySubdomainConfigRequest, opts ...operations.Option) (*operations.V1DeactivateVanitySubdomainConfigResponse, error) {
+// DeactivateVanitySubdomain - [Beta] Deletes a project's vanity subdomain configuration
+func (s *Domains) DeactivateVanitySubdomain(ctx context.Context, request operations.V1DeactivateVanitySubdomainConfigRequest, opts ...operations.Option) (*operations.V1DeactivateVanitySubdomainConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-deactivate-vanity-subdomain-config",
@@ -889,8 +889,8 @@ func (s *Domains) V1DeactivateVanitySubdomainConfig(ctx context.Context, request
 
 }
 
-// V1CheckVanitySubdomainAvailability - [Beta] Checks vanity subdomain availability
-func (s *Domains) V1CheckVanitySubdomainAvailability(ctx context.Context, request operations.V1CheckVanitySubdomainAvailabilityRequest, opts ...operations.Option) (*operations.V1CheckVanitySubdomainAvailabilityResponse, error) {
+// CheckVanitySubdomainAvailability - [Beta] Checks vanity subdomain availability
+func (s *Domains) CheckVanitySubdomainAvailability(ctx context.Context, request operations.V1CheckVanitySubdomainAvailabilityRequest, opts ...operations.Option) (*operations.V1CheckVanitySubdomainAvailabilityResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-check-vanity-subdomain-availability",
@@ -1025,8 +1025,8 @@ func (s *Domains) V1CheckVanitySubdomainAvailability(ctx context.Context, reques
 
 }
 
-// V1ActivateVanitySubdomainConfig - [Beta] Activates a vanity subdomain for a project.
-func (s *Domains) V1ActivateVanitySubdomainConfig(ctx context.Context, request operations.V1ActivateVanitySubdomainConfigRequest, opts ...operations.Option) (*operations.V1ActivateVanitySubdomainConfigResponse, error) {
+// ActivateVanitySubdomain - [Beta] Activates a vanity subdomain for a project.
+func (s *Domains) ActivateVanitySubdomain(ctx context.Context, request operations.V1ActivateVanitySubdomainConfigRequest, opts ...operations.Option) (*operations.V1ActivateVanitySubdomainConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-activate-vanity-subdomain-config",

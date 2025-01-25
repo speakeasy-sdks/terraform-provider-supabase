@@ -15,19 +15,18 @@ import (
 	"net/url"
 )
 
-// OAuth related endpoints
-type OAuth struct {
+type Oauth struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newOAuth(sdkConfig sdkConfiguration) *OAuth {
-	return &OAuth{
+func newOauth(sdkConfig sdkConfiguration) *Oauth {
+	return &Oauth{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
-// V1AuthorizeUser - [Beta] Authorize user through oauth
-func (s *OAuth) V1AuthorizeUser(ctx context.Context, request operations.V1AuthorizeUserRequest, opts ...operations.Option) (*operations.V1AuthorizeUserResponse, error) {
+// AuthorizeUser - [Beta] Authorize user through oauth
+func (s *Oauth) AuthorizeUser(ctx context.Context, request operations.V1AuthorizeUserRequest, opts ...operations.Option) (*operations.V1AuthorizeUserResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-authorize-user",
@@ -136,8 +135,8 @@ func (s *OAuth) V1AuthorizeUser(ctx context.Context, request operations.V1Author
 
 }
 
-// V1ExchangeOauthToken - [Beta] Exchange auth code for user's access and refresh token
-func (s *OAuth) V1ExchangeOauthToken(ctx context.Context, request shared.OAuthTokenBody, opts ...operations.Option) (*operations.V1ExchangeOauthTokenResponse, error) {
+// ExchangeToken - [Beta] Exchange auth code for user's access and refresh token
+func (s *Oauth) ExchangeToken(ctx context.Context, request shared.OAuthTokenBody, opts ...operations.Option) (*operations.V1ExchangeOauthTokenResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-exchange-oauth-token",

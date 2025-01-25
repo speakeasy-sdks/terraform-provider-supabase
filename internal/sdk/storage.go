@@ -25,8 +25,8 @@ func newStorage(sdkConfig sdkConfiguration) *Storage {
 	}
 }
 
-// V1GetStorageConfig - Gets project's storage config
-func (s *Storage) V1GetStorageConfig(ctx context.Context, request operations.V1GetStorageConfigRequest, opts ...operations.Option) (*operations.V1GetStorageConfigResponse, error) {
+// GetConfig - Gets project's storage config
+func (s *Storage) GetConfig(ctx context.Context, request operations.V1GetStorageConfigRequest, opts ...operations.Option) (*operations.V1GetStorageConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-storage-config",
@@ -153,8 +153,8 @@ func (s *Storage) V1GetStorageConfig(ctx context.Context, request operations.V1G
 
 }
 
-// V1UpdateStorageConfig - Updates project's storage config
-func (s *Storage) V1UpdateStorageConfig(ctx context.Context, request operations.V1UpdateStorageConfigRequest, opts ...operations.Option) (*operations.V1UpdateStorageConfigResponse, error) {
+// UpdateConfig - Updates project's storage config
+func (s *Storage) UpdateConfig(ctx context.Context, request operations.V1UpdateStorageConfigRequest, opts ...operations.Option) (*operations.V1UpdateStorageConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-update-storage-config",
@@ -269,8 +269,8 @@ func (s *Storage) V1UpdateStorageConfig(ctx context.Context, request operations.
 
 }
 
-// V1ListAllBuckets - Lists all buckets
-func (s *Storage) V1ListAllBuckets(ctx context.Context, request operations.V1ListAllBucketsRequest, opts ...operations.Option) (*operations.V1ListAllBucketsResponse, error) {
+// ListBuckets - Lists all buckets
+func (s *Storage) ListBuckets(ctx context.Context, request operations.V1ListAllBucketsRequest, opts ...operations.Option) (*operations.V1ListAllBucketsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-list-all-buckets",

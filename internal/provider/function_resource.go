@@ -221,7 +221,7 @@ func (r *FunctionResource) Create(ctx context.Context, req resource.CreateReques
 		ComputeMultiplier:    computeMultiplier,
 		V1CreateFunctionBody: v1CreateFunctionBody,
 	}
-	res, err := r.client.EdgeFunctions.V1CreateAFunction(ctx, request)
+	res, err := r.client.EdgeFunctions.CreateFunction(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -253,7 +253,7 @@ func (r *FunctionResource) Create(ctx context.Context, req resource.CreateReques
 		Ref:  ref1,
 		Slug: slug1,
 	}
-	res1, err := r.client.EdgeFunctions.V1GetAFunction(ctx, request1)
+	res1, err := r.client.EdgeFunctions.GetFunction(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -308,7 +308,7 @@ func (r *FunctionResource) Read(ctx context.Context, req resource.ReadRequest, r
 		Ref:  ref,
 		Slug: slug,
 	}
-	res, err := r.client.EdgeFunctions.V1GetAFunction(ctx, request)
+	res, err := r.client.EdgeFunctions.GetFunction(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -406,7 +406,7 @@ func (r *FunctionResource) Update(ctx context.Context, req resource.UpdateReques
 		ComputeMultiplier:    computeMultiplier,
 		V1UpdateFunctionBody: v1UpdateFunctionBody,
 	}
-	res, err := r.client.EdgeFunctions.V1UpdateAFunction(ctx, request)
+	res, err := r.client.EdgeFunctions.UpdateFunction(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -438,7 +438,7 @@ func (r *FunctionResource) Update(ctx context.Context, req resource.UpdateReques
 		Ref:  ref1,
 		Slug: slug1,
 	}
-	res1, err := r.client.EdgeFunctions.V1GetAFunction(ctx, request1)
+	res1, err := r.client.EdgeFunctions.GetFunction(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -493,7 +493,7 @@ func (r *FunctionResource) Delete(ctx context.Context, req resource.DeleteReques
 		Ref:  ref,
 		Slug: slug,
 	}
-	res, err := r.client.EdgeFunctions.V1DeleteAFunction(ctx, request)
+	res, err := r.client.EdgeFunctions.DeleteFunction(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

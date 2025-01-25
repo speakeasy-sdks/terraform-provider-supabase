@@ -774,7 +774,7 @@ func (r *AuthDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 	request := operations.V1GetAuthServiceConfigRequest{
 		Ref: ref,
 	}
-	res, err := r.client.Auth.V1GetAuthServiceConfig(ctx, request)
+	res, err := r.client.Auth.GetConfig(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

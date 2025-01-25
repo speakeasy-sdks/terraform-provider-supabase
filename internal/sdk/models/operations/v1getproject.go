@@ -9,14 +9,14 @@ import (
 
 type V1GetProjectRequest struct {
 	// Project ref
-	Ref string `pathParam:"style=simple,explode=false,name=ref"`
+	ID string `pathParam:"style=simple,explode=false,name=ref"`
 }
 
-func (o *V1GetProjectRequest) GetRef() string {
+func (o *V1GetProjectRequest) GetID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Ref
+	return o.ID
 }
 
 type V1GetProjectResponse struct {

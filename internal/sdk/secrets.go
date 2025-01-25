@@ -25,8 +25,8 @@ func newSecrets(sdkConfig sdkConfiguration) *Secrets {
 	}
 }
 
-// V1GetProjectAPIKeys - Get project api keys
-func (s *Secrets) V1GetProjectAPIKeys(ctx context.Context, request operations.V1GetProjectAPIKeysRequest, opts ...operations.Option) (*operations.V1GetProjectAPIKeysResponse, error) {
+// GetAPIKeys - Get project api keys
+func (s *Secrets) GetAPIKeys(ctx context.Context, request operations.V1GetProjectAPIKeysRequest, opts ...operations.Option) (*operations.V1GetProjectAPIKeysResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-project-api-keys",
@@ -692,8 +692,8 @@ func (s *Secrets) DeleteAPIKey(ctx context.Context, request operations.DeleteAPI
 
 }
 
-// V1GetPgsodiumConfig - [Beta] Gets project's pgsodium config
-func (s *Secrets) V1GetPgsodiumConfig(ctx context.Context, request operations.V1GetPgsodiumConfigRequest, opts ...operations.Option) (*operations.V1GetPgsodiumConfigResponse, error) {
+// GetPgsodiumConfig - [Beta] Gets project's pgsodium config
+func (s *Secrets) GetPgsodiumConfig(ctx context.Context, request operations.V1GetPgsodiumConfigRequest, opts ...operations.Option) (*operations.V1GetPgsodiumConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-pgsodium-config",
@@ -820,8 +820,8 @@ func (s *Secrets) V1GetPgsodiumConfig(ctx context.Context, request operations.V1
 
 }
 
-// V1UpdatePgsodiumConfig - [Beta] Updates project's pgsodium config. Updating the root_key can cause all data encrypted with the older key to become inaccessible.
-func (s *Secrets) V1UpdatePgsodiumConfig(ctx context.Context, request operations.V1UpdatePgsodiumConfigRequest, opts ...operations.Option) (*operations.V1UpdatePgsodiumConfigResponse, error) {
+// UpdatePgsodiumConfig - [Beta] Updates project's pgsodium config. Updating the root_key can cause all data encrypted with the older key to become inaccessible.
+func (s *Secrets) UpdatePgsodiumConfig(ctx context.Context, request operations.V1UpdatePgsodiumConfigRequest, opts ...operations.Option) (*operations.V1UpdatePgsodiumConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-update-pgsodium-config",
@@ -956,9 +956,9 @@ func (s *Secrets) V1UpdatePgsodiumConfig(ctx context.Context, request operations
 
 }
 
-// V1ListAllSecrets - List all secrets
+// List all secrets
 // Returns all secrets you've previously added to the specified project.
-func (s *Secrets) V1ListAllSecrets(ctx context.Context, request operations.V1ListAllSecretsRequest, opts ...operations.Option) (*operations.V1ListAllSecretsResponse, error) {
+func (s *Secrets) List(ctx context.Context, request operations.V1ListAllSecretsRequest, opts ...operations.Option) (*operations.V1ListAllSecretsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-list-all-secrets",
@@ -1085,9 +1085,9 @@ func (s *Secrets) V1ListAllSecrets(ctx context.Context, request operations.V1Lis
 
 }
 
-// V1BulkCreateSecrets - Bulk create secrets
+// BulkCreate - Bulk create secrets
 // Creates multiple secrets and adds them to the specified project.
-func (s *Secrets) V1BulkCreateSecrets(ctx context.Context, request operations.V1BulkCreateSecretsRequest, opts ...operations.Option) (*operations.V1BulkCreateSecretsResponse, error) {
+func (s *Secrets) BulkCreate(ctx context.Context, request operations.V1BulkCreateSecretsRequest, opts ...operations.Option) (*operations.V1BulkCreateSecretsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-bulk-create-secrets",
@@ -1202,9 +1202,9 @@ func (s *Secrets) V1BulkCreateSecrets(ctx context.Context, request operations.V1
 
 }
 
-// V1BulkDeleteSecrets - Bulk delete secrets
+// BulkDelete - Bulk delete secrets
 // Deletes all secrets with the given names from the specified project
-func (s *Secrets) V1BulkDeleteSecrets(ctx context.Context, request operations.V1BulkDeleteSecretsRequest, opts ...operations.Option) (*operations.V1BulkDeleteSecretsResponse, error) {
+func (s *Secrets) BulkDelete(ctx context.Context, request operations.V1BulkDeleteSecretsRequest, opts ...operations.Option) (*operations.V1BulkDeleteSecretsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-bulk-delete-secrets",

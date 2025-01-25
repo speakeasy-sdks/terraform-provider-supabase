@@ -182,7 +182,7 @@ func (r *PostgresDataSource) Read(ctx context.Context, req datasource.ReadReques
 	request := operations.V1GetPostgresConfigRequest{
 		Ref: ref,
 	}
-	res, err := r.client.Database.V1GetPostgresConfig(ctx, request)
+	res, err := r.client.Database.GetPostgresConfig(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

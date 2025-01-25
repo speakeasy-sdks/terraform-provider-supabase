@@ -65,3 +65,18 @@ func (r *ProjectResourceModel) RefreshFromSharedV1ProjectResponse(resp *shared.V
 		r.Status = types.StringValue(string(resp.Status))
 	}
 }
+
+func (r *ProjectResourceModel) RefreshFromSharedV1ProjectWithDatabaseResponse(resp *shared.V1ProjectWithDatabaseResponse) {
+	if resp != nil {
+		r.CreatedAt = types.StringValue(resp.CreatedAt)
+		r.Database.Host = types.StringValue(resp.Database.Host)
+		r.Database.Version = types.StringValue(resp.Database.Version)
+		r.Database.PostgresEngine = types.StringValue(resp.Database.PostgresEngine)
+		r.Database.ReleaseChannel = types.StringValue(resp.Database.ReleaseChannel)
+		r.ID = types.StringValue(resp.ID)
+		r.Name = types.StringValue(resp.Name)
+		r.OrganizationID = types.StringValue(resp.OrganizationID)
+		r.Region = types.StringValue(string(resp.Region))
+		r.Status = types.StringValue(string(resp.Status))
+	}
+}

@@ -36,7 +36,7 @@ terraform {
   required_providers {
     supabase = {
       source  = "speakeasy/supabase"
-      version = "0.4.4"
+      version = "0.5.3"
     }
   }
 }
@@ -62,6 +62,7 @@ provider "supabase" {
 * [supabase_pgbouncer](docs/data-sources/pgbouncer.md)
 * [supabase_pooler](docs/data-sources/pooler.md)
 * [supabase_postgres](docs/data-sources/postgres.md)
+* [supabase_project](docs/data-sources/project.md)
 <!-- End Available Resources and Data Sources [operations] -->
 
 <!-- Start Testing the provider locally [usage] -->

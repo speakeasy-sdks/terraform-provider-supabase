@@ -25,8 +25,8 @@ func newAuth(sdkConfig sdkConfiguration) *Auth {
 	}
 }
 
-// V1GetAuthServiceConfig - Gets project's auth config
-func (s *Auth) V1GetAuthServiceConfig(ctx context.Context, request operations.V1GetAuthServiceConfigRequest, opts ...operations.Option) (*operations.V1GetAuthServiceConfigResponse, error) {
+// GetConfig - Gets project's auth config
+func (s *Auth) GetConfig(ctx context.Context, request operations.V1GetAuthServiceConfigRequest, opts ...operations.Option) (*operations.V1GetAuthServiceConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-auth-service-config",
@@ -153,8 +153,8 @@ func (s *Auth) V1GetAuthServiceConfig(ctx context.Context, request operations.V1
 
 }
 
-// V1UpdateAuthServiceConfig - Updates a project's auth config
-func (s *Auth) V1UpdateAuthServiceConfig(ctx context.Context, request operations.V1UpdateAuthServiceConfigRequest, opts ...operations.Option) (*operations.V1UpdateAuthServiceConfigResponse, error) {
+// UpdateConfig - Updates a project's auth config
+func (s *Auth) UpdateConfig(ctx context.Context, request operations.V1UpdateAuthServiceConfigRequest, opts ...operations.Option) (*operations.V1UpdateAuthServiceConfigResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-update-auth-service-config",
@@ -289,8 +289,8 @@ func (s *Auth) V1UpdateAuthServiceConfig(ctx context.Context, request operations
 
 }
 
-// CreateTPAForProject - Creates a new third-party auth integration
-func (s *Auth) CreateTPAForProject(ctx context.Context, request operations.CreateTPAForProjectRequest, opts ...operations.Option) (*operations.CreateTPAForProjectResponse, error) {
+// CreateThirdPartyAuth - Creates a new third-party auth integration
+func (s *Auth) CreateThirdPartyAuth(ctx context.Context, request operations.CreateTPAForProjectRequest, opts ...operations.Option) (*operations.CreateTPAForProjectResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "createTPAForProject",
@@ -424,8 +424,8 @@ func (s *Auth) CreateTPAForProject(ctx context.Context, request operations.Creat
 
 }
 
-// ListTPAForProject - [Alpha] Lists all third-party auth integrations
-func (s *Auth) ListTPAForProject(ctx context.Context, request operations.ListTPAForProjectRequest, opts ...operations.Option) (*operations.ListTPAForProjectResponse, error) {
+// ListTpa - [Alpha] Lists all third-party auth integrations
+func (s *Auth) ListTpa(ctx context.Context, request operations.ListTPAForProjectRequest, opts ...operations.Option) (*operations.ListTPAForProjectResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "listTPAForProject",
@@ -551,8 +551,8 @@ func (s *Auth) ListTPAForProject(ctx context.Context, request operations.ListTPA
 
 }
 
-// DeleteTPAForProject - [Alpha] Removes a third-party auth integration
-func (s *Auth) DeleteTPAForProject(ctx context.Context, request operations.DeleteTPAForProjectRequest, opts ...operations.Option) (*operations.DeleteTPAForProjectResponse, error) {
+// DeleteTpa - [Alpha] Removes a third-party auth integration
+func (s *Auth) DeleteTpa(ctx context.Context, request operations.DeleteTPAForProjectRequest, opts ...operations.Option) (*operations.DeleteTPAForProjectResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "deleteTPAForProject",
@@ -678,8 +678,8 @@ func (s *Auth) DeleteTPAForProject(ctx context.Context, request operations.Delet
 
 }
 
-// GetTPAForProject - [Alpha] Get a third-party integration
-func (s *Auth) GetTPAForProject(ctx context.Context, request operations.GetTPAForProjectRequest, opts ...operations.Option) (*operations.GetTPAForProjectResponse, error) {
+// GetThirdPartyIntegration - [Alpha] Get a third-party integration
+func (s *Auth) GetThirdPartyIntegration(ctx context.Context, request operations.GetTPAForProjectRequest, opts ...operations.Option) (*operations.GetTPAForProjectResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "getTPAForProject",
@@ -805,8 +805,8 @@ func (s *Auth) GetTPAForProject(ctx context.Context, request operations.GetTPAFo
 
 }
 
-// V1CreateASsoProvider - Creates a new SSO provider
-func (s *Auth) V1CreateASsoProvider(ctx context.Context, request operations.V1CreateASsoProviderRequest, opts ...operations.Option) (*operations.V1CreateASsoProviderResponse, error) {
+// CreateSSOProvider - Creates a new SSO provider
+func (s *Auth) CreateSSOProvider(ctx context.Context, request operations.V1CreateASsoProviderRequest, opts ...operations.Option) (*operations.V1CreateASsoProviderResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-create-a-sso-provider",
@@ -942,8 +942,8 @@ func (s *Auth) V1CreateASsoProvider(ctx context.Context, request operations.V1Cr
 
 }
 
-// V1ListAllSsoProvider - Lists all SSO providers
-func (s *Auth) V1ListAllSsoProvider(ctx context.Context, request operations.V1ListAllSsoProviderRequest, opts ...operations.Option) (*operations.V1ListAllSsoProviderResponse, error) {
+// ListSsoProviders - Lists all SSO providers
+func (s *Auth) ListSsoProviders(ctx context.Context, request operations.V1ListAllSsoProviderRequest, opts ...operations.Option) (*operations.V1ListAllSsoProviderResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-list-all-sso-provider",
@@ -1071,8 +1071,8 @@ func (s *Auth) V1ListAllSsoProvider(ctx context.Context, request operations.V1Li
 
 }
 
-// V1GetASsoProvider - Gets a SSO provider by its UUID
-func (s *Auth) V1GetASsoProvider(ctx context.Context, request operations.V1GetASsoProviderRequest, opts ...operations.Option) (*operations.V1GetASsoProviderResponse, error) {
+// GetSsoProvider - Gets a SSO provider by its UUID
+func (s *Auth) GetSsoProvider(ctx context.Context, request operations.V1GetASsoProviderRequest, opts ...operations.Option) (*operations.V1GetASsoProviderResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-a-sso-provider",
@@ -1200,8 +1200,8 @@ func (s *Auth) V1GetASsoProvider(ctx context.Context, request operations.V1GetAS
 
 }
 
-// V1UpdateASsoProvider - Updates a SSO provider by its UUID
-func (s *Auth) V1UpdateASsoProvider(ctx context.Context, request operations.V1UpdateASsoProviderRequest, opts ...operations.Option) (*operations.V1UpdateASsoProviderResponse, error) {
+// UpdateSsoProvider - Updates a SSO provider by its UUID
+func (s *Auth) UpdateSsoProvider(ctx context.Context, request operations.V1UpdateASsoProviderRequest, opts ...operations.Option) (*operations.V1UpdateASsoProviderResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-update-a-sso-provider",
@@ -1337,8 +1337,8 @@ func (s *Auth) V1UpdateASsoProvider(ctx context.Context, request operations.V1Up
 
 }
 
-// V1DeleteASsoProvider - Removes a SSO provider by its UUID
-func (s *Auth) V1DeleteASsoProvider(ctx context.Context, request operations.V1DeleteASsoProviderRequest, opts ...operations.Option) (*operations.V1DeleteASsoProviderResponse, error) {
+// DeleteSsoProvider - Removes a SSO provider by its UUID
+func (s *Auth) DeleteSsoProvider(ctx context.Context, request operations.V1DeleteASsoProviderRequest, opts ...operations.Option) (*operations.V1DeleteASsoProviderResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-delete-a-sso-provider",

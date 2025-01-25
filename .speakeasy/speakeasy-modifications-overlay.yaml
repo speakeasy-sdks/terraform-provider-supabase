@@ -1,7 +1,7 @@
 overlay: 1.0.0
 info:
   title: Speakeasy Modifications
-  version: 0.0.4
+  version: 0.0.5
   x-speakeasy-metadata:
     after: ""
     before: ""
@@ -48,3 +48,617 @@ actions:
     x-speakeasy-metadata:
       created_at: 1737675594321
       type: user-edit
+  - target: $["paths"]["/v1/branches/{branch_id}"]
+    remove: true
+    x-speakeasy-metadata:
+      created_at: 1737675451499
+      type: user-edit
+  - target: $["paths"]["/v1/branches/{branch_id}/reset"]
+    remove: true
+    x-speakeasy-metadata:
+      created_at: 1737675451499
+      type: user-edit
+  - target: $["paths"]["/v1/projects/{ref}/branches"]
+    remove: true
+    x-speakeasy-metadata:
+      created_at: 1737675451499
+      type: user-edit
+  - target: $["components"]["schemas"]["V1CreateProjectBodyDto"]["properties"]["db_pass"]
+    update:
+      x-speakeasy-param-sensitive: true
+    x-speakeasy-metadata:
+      created_at: 1737675594321
+      type: user-edit
+  - target: $["paths"]["/v1/projects/{ref}/ssl-enforcement"]["put"]
+    update:
+      x-speakeasy-name-override: updateSSLEnforcementConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-update-ssl-enforcement-config()
+      after: sdk.database.updateSSLEnforcementConfig()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/database/query"]["post"]
+    update:
+      x-speakeasy-name-override: runQuery
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-run-a-query()
+      after: sdk.database.runQuery()
+      created_at: 1737728202613
+  - target: $["paths"]["/v1/projects/{ref}/readonly"]["get"]
+    update:
+      x-speakeasy-name-override: getReadonlyModeStatus
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-get-readonly-mode-status()
+      after: sdk.database.getReadonlyModeStatus()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/config/database/pooler"]["patch"]
+    update:
+      x-speakeasy-name-override: updateSupavisorConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-update-supavisor-config()
+      after: sdk.database.updateSupavisorConfig()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-list-all-projects()
+      after: sdk.projects.list()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/functions/{slug}"]["patch"]
+    update:
+      x-speakeasy-group: edgeFunctions
+      x-speakeasy-name-override: updateFunction
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Edge Functions.v1-update-a-function()
+      after: sdk.edgeFunctions.updateFunction()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/upgrade/status"]["get"]
+    update:
+      x-speakeasy-name-override: getUpgradeStatus
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-get-postgres-upgrade-status()
+      after: sdk.projects.getUpgradeStatus()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/config/auth/third-party-auth/{tpa_id}"]["get"]
+    update:
+      x-speakeasy-name-override: getThirdPartyIntegration
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auth.getTPAForProject()
+      after: sdk.auth.getThirdPartyIntegration()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/readonly/temporary-disable"]["post"]
+    update:
+      x-speakeasy-name-override: disableReadonlyModeTemporarily
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-disable-readonly-mode-temporarily()
+      after: sdk.database.disableReadonlyModeTemporarily()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/config/auth/third-party-auth/{tpa_id}"]["delete"]
+    update:
+      x-speakeasy-name-override: deleteTpa
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auth.deleteTPAForProject()
+      after: sdk.auth.deleteTpa()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/snippets"]["get"]
+    update:
+      x-speakeasy-name-override: listSnippets
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-list-all-snippets()
+      after: sdk.database.listSnippets()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/config/auth/sso/providers"]["post"]
+    update:
+      x-speakeasy-name-override: createSSOProvider
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auth.v1-create-a-sso-provider()
+      after: sdk.auth.createSSOProvider()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/config/auth/third-party-auth"]["post"]
+    update:
+      x-speakeasy-name-override: createThirdPartyAuth
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auth.createTPAForProject()
+      after: sdk.auth.createThirdPartyAuth()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/upgrade/eligibility"]["get"]
+    update:
+      x-speakeasy-name-override: checkUpgradeEligibility
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-get-postgres-upgrade-eligibility()
+      after: sdk.projects.checkUpgradeEligibility()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/functions"]["post"]
+    update:
+      x-speakeasy-group: edgeFunctions
+      x-speakeasy-name-override: createFunction
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Edge Functions.v1-create-a-function()
+      after: sdk.edgeFunctions.createFunction()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/organizations/{slug}/members"]["get"]
+    update:
+      x-speakeasy-name-override: listMembers
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Organizations.v1-list-organization-members()
+      after: sdk.organizations.listMembers()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/types/typescript"]["get"]
+    update:
+      x-speakeasy-group: databases
+      x-speakeasy-name-override: getTypescriptTypes
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-generate-typescript-types()
+      after: sdk.databases.getTypescriptTypes()
+      created_at: 1737728202613
+  - target: $["paths"]["/v1/projects/{ref}/config/auth"]["get"]
+    update:
+      x-speakeasy-name-override: getConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auth.v1-get-auth-service-config()
+      after: sdk.auth.getConfig()
+      created_at: 1737728202613
+  - target: $["paths"]["/v1/organizations"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Organizations.v1-create-an-organization()
+      after: sdk.organizations.create()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/postgrest"]["patch"]
+    update:
+      x-speakeasy-name-override: updateConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Rest.v1-update-postgrest-service-config()
+      after: sdk.rest.updateConfig()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/database/backups/restore-pitr"]["post"]
+    update:
+      x-speakeasy-name-override: restorePitrBackup
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-restore-pitr-backup()
+      after: sdk.database.restorePitrBackup()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/postgrest"]["get"]
+    update:
+      x-speakeasy-name-override: getPostgrestConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Rest.v1-get-postgrest-service-config()
+      after: sdk.rest.getPostgrestConfig()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/organizations"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Organizations.v1-list-all-organizations()
+      after: sdk.organizations.list()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/config/database/postgres"]["get"]
+    update:
+      x-speakeasy-name-override: getPostgresConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-get-postgres-config()
+      after: sdk.database.getPostgresConfig()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/config/database/pooler"]["get"]
+    update:
+      x-speakeasy-name-override: getSupavisorConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-get-supavisor-config()
+      after: sdk.database.getSupavisorConfig()
+      created_at: 1737728202613
+  - target: $["paths"]["/v1/projects/{ref}/config/database/pgbouncer"]["get"]
+    update:
+      x-speakeasy-name-override: getPgbouncerConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-get-project-pgbouncer-config()
+      after: sdk.database.getPgbouncerConfig()
+      created_at: 1737728202613
+  - target: $["paths"]["/v1/projects/{ref}/ssl-enforcement"]["get"]
+    update:
+      x-speakeasy-name-override: getSslEnforcement
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-get-ssl-enforcement-config()
+      after: sdk.database.getSslEnforcement()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/network-restrictions"]["get"]
+    update:
+      x-speakeasy-name-override: getNetworkRestrictions
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-get-network-restrictions()
+      after: sdk.projects.getNetworkRestrictions()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/custom-hostname"]["get"]
+    update:
+      x-speakeasy-name-override: getHostnameConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Domains.v1-get-hostname-config()
+      after: sdk.domains.getHostnameConfig()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/storage/buckets"]["get"]
+    update:
+      x-speakeasy-name-override: listBuckets
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Storage.v1-list-all-buckets()
+      after: sdk.storage.listBuckets()
+      created_at: 1737728202613
+  - target: $["paths"]["/v1/projects/{ref}/config/database/postgres"]["put"]
+    update:
+      x-speakeasy-name-override: updatePostgresConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-update-postgres-config()
+      after: sdk.database.updatePostgresConfig()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/config/auth/sso/providers"]["get"]
+    update:
+      x-speakeasy-name-override: listSsoProviders
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auth.v1-list-all-sso-provider()
+      after: sdk.auth.listSsoProviders()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-get-project()
+      after: sdk.projects.get()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/oauth/authorize"]["get"]
+    update:
+      x-speakeasy-group: oauth
+      x-speakeasy-name-override: authorizeUser
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.OAuth.v1-authorize-user()
+      after: sdk.oauth.authorizeUser()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/secrets"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Secrets.v1-list-all-secrets()
+      after: sdk.secrets.list()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/organizations/{slug}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Organizations.v1-get-an-organization()
+      after: sdk.organizations.get()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/custom-hostname"]["delete"]
+    update:
+      x-speakeasy-name-override: deleteHostnameConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Domains.v1-Delete hostname config()
+      after: sdk.domains.deleteHostnameConfig()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/custom-hostname/activate"]["post"]
+    update:
+      x-speakeasy-name-override: activateCustomHostname
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Domains.v1-activate-custom-hostname()
+      after: sdk.domains.activateCustomHostname()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/secrets"]["post"]
+    update:
+      x-speakeasy-name-override: bulkCreate
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Secrets.v1-bulk-create-secrets()
+      after: sdk.secrets.bulkCreate()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/config/storage"]["patch"]
+    update:
+      x-speakeasy-name-override: updateConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Storage.v1-update-storage-config()
+      after: sdk.storage.updateConfig()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/network-bans/retrieve"]["post"]
+    update:
+      x-speakeasy-name-override: getNetworkBans
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-list-all-network-bans()
+      after: sdk.projects.getNetworkBans()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/vanity-subdomain/check-availability"]["post"]
+    update:
+      x-speakeasy-name-override: checkVanitySubdomainAvailability
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Domains.v1-check-vanity-subdomain-availability()
+      after: sdk.domains.checkVanitySubdomainAvailability()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-create-a-project()
+      after: sdk.projects.create()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/upgrade"]["post"]
+    update:
+      x-speakeasy-name-override: upgradePostgres
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-upgrade-postgres-version()
+      after: sdk.projects.upgradePostgres()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/api-keys"]["get"]
+    update:
+      x-speakeasy-name-override: getApiKeys
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Secrets.v1-get-project-api-keys()
+      after: sdk.secrets.getApiKeys()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/oauth/token"]["post"]
+    update:
+      x-speakeasy-group: oauth
+      x-speakeasy-name-override: exchangeToken
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.OAuth.v1-exchange-oauth-token()
+      after: sdk.oauth.exchangeToken()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/config/storage"]["get"]
+    update:
+      x-speakeasy-name-override: getConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Storage.v1-get-storage-config()
+      after: sdk.storage.getConfig()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/functions/{slug}/body"]["get"]
+    update:
+      x-speakeasy-group: edgeFunctions
+      x-speakeasy-name-override: getFunctionBody
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Edge Functions.v1-get-a-function-body()
+      after: sdk.edgeFunctions.getFunctionBody()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/config/auth/sso/providers/{provider_id}"]["get"]
+    update:
+      x-speakeasy-name-override: getSsoProvider
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auth.v1-get-a-sso-provider()
+      after: sdk.auth.getSsoProvider()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/functions/{slug}"]["delete"]
+    update:
+      x-speakeasy-group: edgeFunctions
+      x-speakeasy-name-override: deleteFunction
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Edge Functions.v1-delete-a-function()
+      after: sdk.edgeFunctions.deleteFunction()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/config/auth"]["patch"]
+    update:
+      x-speakeasy-name-override: updateConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auth.v1-update-auth-service-config()
+      after: sdk.auth.updateConfig()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/snippets/{id}"]["get"]
+    update:
+      x-speakeasy-name-override: getSnippet
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-get-a-snippet()
+      after: sdk.database.getSnippet()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/network-bans"]["delete"]
+    update:
+      x-speakeasy-name-override: removeNetworkBans
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-delete-network-bans()
+      after: sdk.projects.removeNetworkBans()
+      created_at: 1737728202613
+  - target: $["paths"]["/v1/projects/{ref}/vanity-subdomain"]["delete"]
+    update:
+      x-speakeasy-name-override: deactivateVanitySubdomain
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Domains.v1-deactivate-vanity-subdomain-config()
+      after: sdk.domains.deactivateVanitySubdomain()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}"]["delete"]
+    update:
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-delete-a-project()
+      after: sdk.projects.delete()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/database/webhooks/enable"]["post"]
+    update:
+      x-speakeasy-name-override: enableWebhooks
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-enable-database-webhook()
+      after: sdk.database.enableWebhooks()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/pgsodium"]["put"]
+    update:
+      x-speakeasy-name-override: updatePgsodiumConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Secrets.v1-update-pgsodium-config()
+      after: sdk.secrets.updatePgsodiumConfig()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/network-restrictions/apply"]["post"]
+    update:
+      x-speakeasy-name-override: updateNetworkRestrictions
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-update-network-restrictions()
+      after: sdk.projects.updateNetworkRestrictions()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/functions"]["get"]
+    update:
+      x-speakeasy-group: edgeFunctions
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Edge Functions.v1-list-all-functions()
+      after: sdk.edgeFunctions.list()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/read-replicas/setup"]["post"]
+    update:
+      x-speakeasy-name-override: setupReadReplica
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-setup-a-read-replica()
+      after: sdk.database.setupReadReplica()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/config/auth/sso/providers/{provider_id}"]["put"]
+    update:
+      x-speakeasy-name-override: updateSsoProvider
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auth.v1-update-a-sso-provider()
+      after: sdk.auth.updateSsoProvider()
+      created_at: 1737728202611
+  - target: $["paths"]["/v1/projects/{ref}/custom-hostname/initialize"]["post"]
+    update:
+      x-speakeasy-name-override: updateHostnameConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Domains.v1-update-hostname-config()
+      after: sdk.domains.updateHostnameConfig()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/config/auth/sso/providers/{provider_id}"]["delete"]
+    update:
+      x-speakeasy-name-override: deleteSsoProvider
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auth.v1-delete-a-sso-provider()
+      after: sdk.auth.deleteSsoProvider()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/pgsodium"]["get"]
+    update:
+      x-speakeasy-name-override: getPgsodiumConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Secrets.v1-get-pgsodium-config()
+      after: sdk.secrets.getPgsodiumConfig()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/database/backups"]["get"]
+    update:
+      x-speakeasy-name-override: listBackups
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-list-all-backups()
+      after: sdk.database.listBackups()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/vanity-subdomain/activate"]["post"]
+    update:
+      x-speakeasy-name-override: activateVanitySubdomain
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Domains.v1-activate-vanity-subdomain-config()
+      after: sdk.domains.activateVanitySubdomain()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/secrets"]["delete"]
+    update:
+      x-speakeasy-name-override: bulkDelete
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Secrets.v1-bulk-delete-secrets()
+      after: sdk.secrets.bulkDelete()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/read-replicas/remove"]["post"]
+    update:
+      x-speakeasy-name-override: removeReadReplica
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Database.v1-remove-a-read-replica()
+      after: sdk.database.removeReadReplica()
+      created_at: 1737728202613
+  - target: $["paths"]["/v1/projects/{ref}/custom-hostname/reverify"]["post"]
+    update:
+      x-speakeasy-name-override: verifyDnsConfig
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Domains.v1-verify-dns-config()
+      after: sdk.domains.verifyDnsConfig()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/health"]["get"]
+    update:
+      x-speakeasy-name-override: getHealth
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Projects.v1-get-services-health()
+      after: sdk.projects.getHealth()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/functions/{slug}"]["get"]
+    update:
+      x-speakeasy-group: edgeFunctions
+      x-speakeasy-name-override: getFunction
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Edge Functions.v1-get-a-function()
+      after: sdk.edgeFunctions.getFunction()
+      created_at: 1737728202613
+  - target: $["paths"]["/v1/projects/{ref}/vanity-subdomain"]["get"]
+    update:
+      x-speakeasy-name-override: getVanitySubdomain
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Domains.v1-get-vanity-subdomain-config()
+      after: sdk.domains.getVanitySubdomain()
+      created_at: 1737728202612
+  - target: $["paths"]["/v1/projects/{ref}/config/auth/third-party-auth"]["get"]
+    update:
+      x-speakeasy-name-override: listTpa
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auth.listTPAForProject()
+      after: sdk.auth.listTpa()
+      created_at: 1737728202612

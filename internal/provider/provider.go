@@ -105,6 +105,7 @@ func (p *SupabaseProvider) DataSources(ctx context.Context) []func() datasource.
 		NewPgbouncerDataSource,
 		NewPoolerDataSource,
 		NewPostgresDataSource,
+		NewProjectDataSource,
 	}
 }
 

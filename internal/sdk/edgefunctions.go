@@ -14,7 +14,6 @@ import (
 	"net/http"
 )
 
-// EdgeFunctions - Edge related endpoints
 type EdgeFunctions struct {
 	sdkConfiguration sdkConfiguration
 }
@@ -25,9 +24,9 @@ func newEdgeFunctions(sdkConfig sdkConfiguration) *EdgeFunctions {
 	}
 }
 
-// V1CreateAFunction - Create a function
+// CreateFunction - Create a function
 // Creates a function and adds it to the specified project.
-func (s *EdgeFunctions) V1CreateAFunction(ctx context.Context, request operations.V1CreateAFunctionRequest, opts ...operations.Option) (*operations.V1CreateAFunctionResponse, error) {
+func (s *EdgeFunctions) CreateFunction(ctx context.Context, request operations.V1CreateAFunctionRequest, opts ...operations.Option) (*operations.V1CreateAFunctionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-create-a-function",
@@ -166,9 +165,9 @@ func (s *EdgeFunctions) V1CreateAFunction(ctx context.Context, request operation
 
 }
 
-// V1ListAllFunctions - List all functions
+// List all functions
 // Returns all functions you've previously added to the specified project.
-func (s *EdgeFunctions) V1ListAllFunctions(ctx context.Context, request operations.V1ListAllFunctionsRequest, opts ...operations.Option) (*operations.V1ListAllFunctionsResponse, error) {
+func (s *EdgeFunctions) List(ctx context.Context, request operations.V1ListAllFunctionsRequest, opts ...operations.Option) (*operations.V1ListAllFunctionsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-list-all-functions",
@@ -295,9 +294,9 @@ func (s *EdgeFunctions) V1ListAllFunctions(ctx context.Context, request operatio
 
 }
 
-// V1GetAFunction - Retrieve a function
+// GetFunction - Retrieve a function
 // Retrieves a function with the specified slug and project.
-func (s *EdgeFunctions) V1GetAFunction(ctx context.Context, request operations.V1GetAFunctionRequest, opts ...operations.Option) (*operations.V1GetAFunctionResponse, error) {
+func (s *EdgeFunctions) GetFunction(ctx context.Context, request operations.V1GetAFunctionRequest, opts ...operations.Option) (*operations.V1GetAFunctionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-a-function",
@@ -424,9 +423,9 @@ func (s *EdgeFunctions) V1GetAFunction(ctx context.Context, request operations.V
 
 }
 
-// V1UpdateAFunction - Update a function
+// UpdateFunction - Update a function
 // Updates a function with the specified slug and project.
-func (s *EdgeFunctions) V1UpdateAFunction(ctx context.Context, request operations.V1UpdateAFunctionRequest, opts ...operations.Option) (*operations.V1UpdateAFunctionResponse, error) {
+func (s *EdgeFunctions) UpdateFunction(ctx context.Context, request operations.V1UpdateAFunctionRequest, opts ...operations.Option) (*operations.V1UpdateAFunctionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-update-a-function",
@@ -565,9 +564,9 @@ func (s *EdgeFunctions) V1UpdateAFunction(ctx context.Context, request operation
 
 }
 
-// V1DeleteAFunction - Delete a function
+// DeleteFunction - Delete a function
 // Deletes a function with the specified slug from the specified project.
-func (s *EdgeFunctions) V1DeleteAFunction(ctx context.Context, request operations.V1DeleteAFunctionRequest, opts ...operations.Option) (*operations.V1DeleteAFunctionResponse, error) {
+func (s *EdgeFunctions) DeleteFunction(ctx context.Context, request operations.V1DeleteAFunctionRequest, opts ...operations.Option) (*operations.V1DeleteAFunctionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-delete-a-function",
@@ -674,9 +673,9 @@ func (s *EdgeFunctions) V1DeleteAFunction(ctx context.Context, request operation
 
 }
 
-// V1GetAFunctionBody - Retrieve a function body
+// GetFunctionBody - Retrieve a function body
 // Retrieves a function body for the specified slug and project.
-func (s *EdgeFunctions) V1GetAFunctionBody(ctx context.Context, request operations.V1GetAFunctionBodyRequest, opts ...operations.Option) (*operations.V1GetAFunctionBodyResponse, error) {
+func (s *EdgeFunctions) GetFunctionBody(ctx context.Context, request operations.V1GetAFunctionBodyRequest, opts ...operations.Option) (*operations.V1GetAFunctionBodyResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "v1-get-a-function-body",

@@ -9,7 +9,7 @@ import (
 
 // UpdateSupavisorConfigBodyPoolMode - This field is deprecated and is ignored in this request
 //
-// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+// Deprecated: This field is deprecated and will be ignored. Refer to documentation for more info..
 type UpdateSupavisorConfigBodyPoolMode string
 
 const (
@@ -40,7 +40,7 @@ type UpdateSupavisorConfigBody struct {
 	DefaultPoolSize *int64 `json:"default_pool_size,omitempty"`
 	// This field is deprecated and is ignored in this request
 	//
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This field is deprecated and will be ignored. Refer to documentation for more info..
 	PoolMode *UpdateSupavisorConfigBodyPoolMode `json:"pool_mode,omitempty"`
 }
 

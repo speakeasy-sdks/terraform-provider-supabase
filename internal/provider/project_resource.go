@@ -126,7 +126,7 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				PlanModifiers: []planmodifier.Bool{
 					boolplanmodifier.RequiresReplaceIfConfigured(),
 				},
-				DeprecationMessage: `This will be removed in a future release, please migrate away from it as soon as possible`,
+				DeprecationMessage: `This field is deprecated and will be ignored. Refer to documentation for more info.`,
 				Description:        `This field is deprecated and is ignored in this request. Requires replacement if changed.`,
 			},
 			"name": schema.StringAttribute{
@@ -150,7 +150,7 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
-				DeprecationMessage: `This will be removed in a future release, please migrate away from it as soon as possible`,
+				DeprecationMessage: `This field is deprecated and will be ignored. Refer to documentation for more info.`,
 				Description:        `Subscription Plan is now set on organization level and is ignored in this request. must be one of ["free", "pro"]; Requires replacement if changed.`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(

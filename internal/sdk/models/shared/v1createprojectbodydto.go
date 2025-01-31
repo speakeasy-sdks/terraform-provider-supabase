@@ -9,7 +9,7 @@ import (
 
 // Subscription Plan is now set on organization level and is ignored in this request
 //
-// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+// Deprecated: This field is deprecated and will be ignored. Refer to documentation for more info..
 type Plan string
 
 const (
@@ -230,13 +230,13 @@ type V1CreateProjectBodyDto struct {
 	OrganizationID string `json:"organization_id"`
 	// Subscription Plan is now set on organization level and is ignored in this request
 	//
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This field is deprecated and will be ignored. Refer to documentation for more info..
 	Plan *Plan `json:"plan,omitempty"`
 	// Region you want your server to reside in
 	Region Region `json:"region"`
 	// This field is deprecated and is ignored in this request
 	//
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This field is deprecated and will be ignored. Refer to documentation for more info..
 	KpsEnabled          *bool                `json:"kps_enabled,omitempty"`
 	DesiredInstanceSize *DesiredInstanceSize `json:"desired_instance_size,omitempty"`
 	// Template URL used to create the project from the CLI.

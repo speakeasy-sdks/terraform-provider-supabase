@@ -7,6 +7,35 @@ import (
 	"fmt"
 )
 
+// Subscription Plan is now set on organization level and is ignored in this request
+//
+// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+type Plan string
+
+const (
+	PlanFree Plan = "free"
+	PlanPro  Plan = "pro"
+)
+
+func (e Plan) ToPointer() *Plan {
+	return &e
+}
+func (e *Plan) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "free":
+		fallthrough
+	case "pro":
+		*e = Plan(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Plan: %v", v)
+	}
+}
+
 // Region you want your server to reside in
 type Region string
 
@@ -199,8 +228,16 @@ type V1CreateProjectBodyDto struct {
 	Name string `json:"name"`
 	// Slug of your organization
 	OrganizationID string `json:"organization_id"`
+	// Subscription Plan is now set on organization level and is ignored in this request
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Plan *Plan `json:"plan,omitempty"`
 	// Region you want your server to reside in
-	Region              Region               `json:"region"`
+	Region Region `json:"region"`
+	// This field is deprecated and is ignored in this request
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	KpsEnabled          *bool                `json:"kps_enabled,omitempty"`
 	DesiredInstanceSize *DesiredInstanceSize `json:"desired_instance_size,omitempty"`
 	// Template URL used to create the project from the CLI.
 	TemplateURL *string `json:"template_url,omitempty"`
@@ -231,11 +268,25 @@ func (o *V1CreateProjectBodyDto) GetOrganizationID() string {
 	return o.OrganizationID
 }
 
+func (o *V1CreateProjectBodyDto) GetPlan() *Plan {
+	if o == nil {
+		return nil
+	}
+	return o.Plan
+}
+
 func (o *V1CreateProjectBodyDto) GetRegion() Region {
 	if o == nil {
 		return Region("")
 	}
 	return o.Region
+}
+
+func (o *V1CreateProjectBodyDto) GetKpsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.KpsEnabled
 }
 
 func (o *V1CreateProjectBodyDto) GetDesiredInstanceSize() *DesiredInstanceSize {

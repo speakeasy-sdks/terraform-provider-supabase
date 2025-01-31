@@ -3,14 +3,14 @@
 package shared
 
 type V1ProjectRefResponse struct {
-	ID   int64  `json:"id"`
+	ID   string `json:"id"`
 	Ref  string `json:"ref"`
 	Name string `json:"name"`
 }
 
-func (o *V1ProjectRefResponse) GetID() int64 {
+func (o *V1ProjectRefResponse) GetID() string {
 	if o == nil {
-		return 0
+		return ""
 	}
 	return o.ID
 }

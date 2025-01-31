@@ -1005,6 +1005,7 @@ paths:
       parameters:
         - name: ref
           required: true
+          x-speakeasy-name-override: id
           in: path
           description: Project ref
           schema:

@@ -9,14 +9,14 @@ import (
 
 type V1DeleteAProjectRequest struct {
 	// Project ref
-	Ref string `pathParam:"style=simple,explode=false,name=ref"`
+	ID string `pathParam:"style=simple,explode=false,name=ref"`
 }
 
-func (o *V1DeleteAProjectRequest) GetRef() string {
+func (o *V1DeleteAProjectRequest) GetID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Ref
+	return o.ID
 }
 
 type V1DeleteAProjectResponse struct {

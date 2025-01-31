@@ -17,7 +17,19 @@ func (r *ProjectResourceModel) ToSharedV1CreateProjectBodyDto() *shared.V1Create
 	var organizationID string
 	organizationID = r.OrganizationID.ValueString()
 
+	plan := new(shared.Plan)
+	if !r.Plan.IsUnknown() && !r.Plan.IsNull() {
+		*plan = shared.Plan(r.Plan.ValueString())
+	} else {
+		plan = nil
+	}
 	region := shared.Region(r.Region.ValueString())
+	kpsEnabled := new(bool)
+	if !r.KpsEnabled.IsUnknown() && !r.KpsEnabled.IsNull() {
+		*kpsEnabled = r.KpsEnabled.ValueBool()
+	} else {
+		kpsEnabled = nil
+	}
 	desiredInstanceSize := new(shared.DesiredInstanceSize)
 	if !r.DesiredInstanceSize.IsUnknown() && !r.DesiredInstanceSize.IsNull() {
 		*desiredInstanceSize = shared.DesiredInstanceSize(r.DesiredInstanceSize.ValueString())
@@ -46,7 +58,9 @@ func (r *ProjectResourceModel) ToSharedV1CreateProjectBodyDto() *shared.V1Create
 		DbPass:              dbPass,
 		Name:                name,
 		OrganizationID:      organizationID,
+		Plan:                plan,
 		Region:              region,
+		KpsEnabled:          kpsEnabled,
 		DesiredInstanceSize: desiredInstanceSize,
 		TemplateURL:         templateURL,
 		ReleaseChannel:      releaseChannel,

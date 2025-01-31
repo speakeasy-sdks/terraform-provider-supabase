@@ -2,8 +2,46 @@
 
 package shared
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
+// UpdateSupavisorConfigBodyPoolMode - This field is deprecated and is ignored in this request
+//
+// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+type UpdateSupavisorConfigBodyPoolMode string
+
+const (
+	UpdateSupavisorConfigBodyPoolModeTransaction UpdateSupavisorConfigBodyPoolMode = "transaction"
+	UpdateSupavisorConfigBodyPoolModeSession     UpdateSupavisorConfigBodyPoolMode = "session"
+)
+
+func (e UpdateSupavisorConfigBodyPoolMode) ToPointer() *UpdateSupavisorConfigBodyPoolMode {
+	return &e
+}
+func (e *UpdateSupavisorConfigBodyPoolMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "transaction":
+		fallthrough
+	case "session":
+		*e = UpdateSupavisorConfigBodyPoolMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateSupavisorConfigBodyPoolMode: %v", v)
+	}
+}
+
 type UpdateSupavisorConfigBody struct {
 	DefaultPoolSize *int64 `json:"default_pool_size,omitempty"`
+	// This field is deprecated and is ignored in this request
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	PoolMode *UpdateSupavisorConfigBodyPoolMode `json:"pool_mode,omitempty"`
 }
 
 func (o *UpdateSupavisorConfigBody) GetDefaultPoolSize() *int64 {
@@ -11,4 +49,11 @@ func (o *UpdateSupavisorConfigBody) GetDefaultPoolSize() *int64 {
 		return nil
 	}
 	return o.DefaultPoolSize
+}
+
+func (o *UpdateSupavisorConfigBody) GetPoolMode() *UpdateSupavisorConfigBodyPoolMode {
+	if o == nil {
+		return nil
+	}
+	return o.PoolMode
 }

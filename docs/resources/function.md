@@ -41,7 +41,7 @@ resource "supabase_function" "my_function" {
 - `import_map` (Boolean)
 - `import_map_path` (String)
 - `name` (String)
-- `slug` (String)
+- `slug` (String) Function slug
 - `verify_jwt` (Boolean)
 
 ### Read-Only

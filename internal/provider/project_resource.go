@@ -9,9 +9,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
+	speakeasy_stringplanmodifier "github.com/speakeasy/terraform-provider-supabase/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/speakeasy/terraform-provider-supabase/internal/provider/types"
 	"github.com/speakeasy/terraform-provider-supabase/internal/sdk"
 	"github.com/speakeasy/terraform-provider-supabase/internal/sdk/models/operations"
@@ -37,10 +41,11 @@ type ProjectResourceModel struct {
 	DbPass              types.String               `tfsdk:"db_pass"`
 	DesiredInstanceSize types.String               `tfsdk:"desired_instance_size"`
 	ID                  types.String               `tfsdk:"id"`
+	KpsEnabled          types.Bool                 `tfsdk:"kps_enabled"`
 	Name                types.String               `tfsdk:"name"`
 	OrganizationID      types.String               `tfsdk:"organization_id"`
+	Plan                types.String               `tfsdk:"plan"`
 	PostgresEngine      types.String               `tfsdk:"postgres_engine"`
-	Ref                 types.String               `tfsdk:"ref"`
 	Region              types.String               `tfsdk:"region"`
 	ReleaseChannel      types.String               `tfsdk:"release_channel"`
 	Status              types.String               `tfsdk:"status"`
@@ -81,13 +86,19 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"db_pass": schema.StringAttribute{
-				Required:    true,
-				Sensitive:   true,
-				Description: `Database password`,
+				Required:  true,
+				Sensitive: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Description: `Database password. Requires replacement if changed.`,
 			},
 			"desired_instance_size": schema.StringAttribute{
-				Optional:    true,
-				Description: `must be one of ["micro", "small", "medium", "large", "xlarge", "2xlarge", "4xlarge", "8xlarge", "12xlarge", "16xlarge"]`,
+				Optional: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Description: `must be one of ["micro", "small", "medium", "large", "xlarge", "2xlarge", "4xlarge", "8xlarge", "12xlarge", "16xlarge"]; Requires replacement if changed.`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"micro",
@@ -106,32 +117,65 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 			"id": schema.StringAttribute{
 				Computed:    true,
 				Description: `Id of your project`,
-			},
-			"name": schema.StringAttribute{
-				Required:    true,
-				Description: `Name of your project, should not contain dots`,
-			},
-			"organization_id": schema.StringAttribute{
-				Required:    true,
-				Description: `Slug of your organization`,
-			},
-			"postgres_engine": schema.StringAttribute{
-				Optional:    true,
-				Description: `Postgres engine version. If not provided, the latest version will be used. must be "15"`,
-				Validators: []validator.String{
-					stringvalidator.OneOf("15"),
-				},
-			},
-			"ref": schema.StringAttribute{
-				Required:    true,
-				Description: `Project ref`,
 				Validators: []validator.String{
 					stringvalidator.UTF8LengthBetween(20, 20),
 				},
 			},
+			"kps_enabled": schema.BoolAttribute{
+				Optional: true,
+				PlanModifiers: []planmodifier.Bool{
+					boolplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				DeprecationMessage: `This will be removed in a future release, please migrate away from it as soon as possible`,
+				Description:        `This field is deprecated and is ignored in this request. Requires replacement if changed.`,
+			},
+			"name": schema.StringAttribute{
+				Required: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Description: `Name of your project, should not contain dots. Requires replacement if changed.`,
+			},
+			"organization_id": schema.StringAttribute{
+				Required: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Description: `Slug of your organization. Requires replacement if changed.`,
+			},
+			"plan": schema.StringAttribute{
+				Optional: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				DeprecationMessage: `This will be removed in a future release, please migrate away from it as soon as possible`,
+				Description:        `Subscription Plan is now set on organization level and is ignored in this request. must be one of ["free", "pro"]; Requires replacement if changed.`,
+				Validators: []validator.String{
+					stringvalidator.OneOf(
+						"free",
+						"pro",
+					),
+				},
+			},
+			"postgres_engine": schema.StringAttribute{
+				Optional: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Description: `Postgres engine version. If not provided, the latest version will be used. must be "15"; Requires replacement if changed.`,
+				Validators: []validator.String{
+					stringvalidator.OneOf("15"),
+				},
+			},
 			"region": schema.StringAttribute{
-				Required:    true,
-				Description: `Region you want your server to reside in. must be one of ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ap-east-1", "ap-southeast-1", "ap-northeast-1", "ap-northeast-2", "ap-southeast-2", "eu-west-1", "eu-west-2", "eu-west-3", "eu-north-1", "eu-central-1", "eu-central-2", "ca-central-1", "ap-south-1", "sa-east-1"]`,
+				Required: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Description: `Region you want your server to reside in. must be one of ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ap-east-1", "ap-southeast-1", "ap-northeast-1", "ap-northeast-2", "ap-southeast-2", "eu-west-1", "eu-west-2", "eu-west-3", "eu-north-1", "eu-central-1", "eu-central-2", "ca-central-1", "ap-south-1", "sa-east-1"]; Requires replacement if changed.`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"us-east-1",
@@ -156,8 +200,11 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"release_channel": schema.StringAttribute{
-				Optional:    true,
-				Description: `Release channel. If not provided, GA will be used. must be one of ["internal", "alpha", "beta", "ga", "withdrawn"]`,
+				Optional: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Description: `Release channel. If not provided, GA will be used. must be one of ["internal", "alpha", "beta", "ga", "withdrawn"]; Requires replacement if changed.`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"internal",
@@ -192,8 +239,11 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"template_url": schema.StringAttribute{
-				Optional:    true,
-				Description: `Template URL used to create the project from the CLI.`,
+				Optional: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Description: `Template URL used to create the project from the CLI. Requires replacement if changed.`,
 			},
 		},
 	}
@@ -361,57 +411,7 @@ func (r *ProjectResource) Update(ctx context.Context, req resource.UpdateRequest
 		return
 	}
 
-	request := *data.ToSharedV1CreateProjectBodyDto()
-	res, err := r.client.Projects.Create(ctx, request)
-	if err != nil {
-		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
-		}
-		return
-	}
-	if res == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
-		return
-	}
-	if res.StatusCode != 201 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
-		return
-	}
-	if !(res.V1ProjectResponse != nil) {
-		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
-		return
-	}
-	data.RefreshFromSharedV1ProjectResponse(res.V1ProjectResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var id string
-	id = data.ID.ValueString()
-
-	request1 := operations.V1GetProjectRequest{
-		ID: id,
-	}
-	res1, err := r.client.Projects.Get(ctx, request1)
-	if err != nil {
-		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res1 != nil && res1.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
-		}
-		return
-	}
-	if res1 == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
-		return
-	}
-	if res1.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
-		return
-	}
-	if !(res1.V1ProjectWithDatabaseResponse != nil) {
-		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
-		return
-	}
-	data.RefreshFromSharedV1ProjectWithDatabaseResponse(res1.V1ProjectWithDatabaseResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	// Not Implemented; all attributes marked as RequiresReplace
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -435,11 +435,11 @@ func (r *ProjectResource) Delete(ctx context.Context, req resource.DeleteRequest
 		return
 	}
 
-	var ref string
-	ref = data.Ref.ValueString()
+	var id string
+	id = data.ID.ValueString()
 
 	request := operations.V1DeleteAProjectRequest{
-		Ref: ref,
+		ID: id,
 	}
 	res, err := r.client.Projects.Delete(ctx, request)
 	if err != nil {

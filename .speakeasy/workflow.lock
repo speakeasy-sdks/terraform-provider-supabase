@@ -1,4 +1,4 @@
-speakeasyVersion: 1.476.1
+speakeasyVersion: 1.481.1
 sources: {}
 targets:
     supabase:
@@ -12,6 +12,7 @@ workflow:
                 - location: beta.yaml
             overlays:
                 - location: .speakeasy/speakeasy-modifications-overlay.yaml
+                - location: .speakeasy/speakeasy-deprecation-overlay.yaml
             registry:
                 location: registry.speakeasyapi.dev/supabase/terraform-provider/supabase-api-(v-1)
     targets:

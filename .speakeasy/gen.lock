@@ -1,17 +1,18 @@
 lockVersion: 2.0.0
 id: b4b7b7b2-a0a8-440d-aa19-4e992089d1f6
 management:
-  docChecksum: f2734d4389529862038de65c8b617d5b
+  docChecksum: 5eeced75daefee00823b8ebafe7bda82
   docVersion: 1.0.0
-  speakeasyVersion: 1.476.1
-  generationVersion: 2.495.1
-  releaseVersion: 0.5.3
-  configChecksum: d12edbd9d910dade6f7c7477d87d2d55
+  speakeasyVersion: 1.481.1
+  generationVersion: 2.500.5
+  releaseVersion: 0.6.12
+  configChecksum: 910da13e3972aa0ff6c2b73cdd833ffe
 features:
   terraform:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.2.0
-    core: 3.28.0
+    core: 3.29.3
+    deprecations: 2.82.0
     envVarSecurityUsage: 0.1.0
     globalSecurity: 2.81.9
     globalServerURLs: 2.82.1
@@ -425,7 +426,7 @@ examples:
           ref: "<value>"
       responses:
         "200":
-          application/json: {"id": 697429, "ref": "<value>", "name": "<value>"}
+          application/json: {"id": "697429", "ref": "<value>", "name": "<value>"}
   v1-upgrade-postgres-version:
     speakeasy-default-v1-upgrade-postgres-version:
       parameters:

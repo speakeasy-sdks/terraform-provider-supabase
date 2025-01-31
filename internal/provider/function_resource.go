@@ -95,8 +95,9 @@ func (r *FunctionResource) Schema(ctx context.Context, req resource.SchemaReques
 				},
 			},
 			"slug": schema.StringAttribute{
-				Computed: true,
-				Optional: true,
+				Computed:    true,
+				Optional:    true,
+				Description: `Function slug`,
 				Validators: []validator.String{
 					stringvalidator.RegexMatches(regexp.MustCompile(`/^[A-Za-z0-9_-]+$/`), "must match pattern "+regexp.MustCompile(`/^[A-Za-z0-9_-]+$/`).String()),
 				},

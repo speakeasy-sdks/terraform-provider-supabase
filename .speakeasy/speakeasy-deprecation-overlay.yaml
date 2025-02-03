@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: Speakeasy Deprecation Modifications
+  version: 0.0.8
+  x-speakeasy-metadata:
+    after: ""
+    before: ""
+    type: speakeasy-modifications
+actions:
+  - target: $["components"]["schemas"]["V1CreateProjectBodyDto"]["properties"]["plan"]
+    update:
+      x-speakeasy-deprecation-message: >-
+        This field is deprecated and will be ignored. Refer to documentation for more info.
+    x-speakeasy-metadata:
+      created_at: 1738365449116
+      type: user-edit
+  - target: $["components"]["schemas"]["V1CreateProjectBodyDto"]["properties"]["kps_enabled"]
+    update:
+      x-speakeasy-deprecation-message: >-
+        This field is deprecated and will be ignored. Refer to documentation for more info.
+    x-speakeasy-metadata:
+      created_at: 1738365449116
+      type: user-edit
+  - target: $["components"]["schemas"]["UpdateSupavisorConfigBody"]["properties"]["pool_mode"]
+    update:
+      x-speakeasy-deprecation-message: >-
+        This field is deprecated and will be ignored. Refer to documentation for more info.
+    x-speakeasy-metadata:
+      created_at: 1738365449116
+      type: user-edit
